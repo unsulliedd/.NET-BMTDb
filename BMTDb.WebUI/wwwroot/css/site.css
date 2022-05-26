@@ -17,3 +17,31 @@ html {
 body {
     margin-bottom: 60px;
 }
+
+/************** Navbar **************/
+
+.navbar {
+    background-color: transparent;
+    background: #000000a9;
+    position: fixed;
+    top: 0px;
+    width: 100%;
+    transition: top 0.3s;
+    z-index: 999;
+    opacity: 1;
+    flex-direction: row;
+    align-items: center;
+}
+
+.nav-link {
+    background: none;
+    border: none;
+    color: white;
+}
+
+.nav-link:hover, .nav-link:focus {color: white}
+.navbar-brand {padding: 8px}
+.navbar-logo  {margin-right: 10px}
+.navbar-login, .navbar-search {display: inline-flex}
+
+/************** Navbar **************/
