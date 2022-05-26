@@ -1,9 +1,20 @@
 /********** Responsive **********/
 
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+@media (max-width: 768px) {
+      html {
+        font-size: 16px;
+      }
+
+      .dropdown-menu-toggle{
+        width: 100%;
+        text-align: start;
+      }
+
+    .navbar-login, .navbar-search {
+        display: flex !important;
+        margin: 0px !important;
+        margin-bottom: 8px;
+    }
 }
 
 /********** Responsive **********/
