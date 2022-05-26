@@ -10,7 +10,7 @@
                     data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon">   
-                    <i class="fas fa-bars" style="color:#fff; font-size:28px;"></i>
+                    <i class="fas fa-bars" style="color:#fff; border:hidden; font-size:28px;"></i>
                 </span>
             </button>
 
@@ -26,6 +26,16 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-controller="" asp-action="">Tv Shows</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <button class="dropdown-toggle nav-link" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            More
+                            </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="#">Action</a>
+                                    <a class="dropdown-item" href="#">Admin</a>
+                                    <a class="dropdown-item" asp-controller="Home" asp-action="About">About</a>
+                                </div>
                         </li>
                     </ul>
                 </div>

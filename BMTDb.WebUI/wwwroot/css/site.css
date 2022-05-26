@@ -67,6 +67,26 @@ a:hover{
 .nav-link:hover, .nav-link:focus {color: white}
 .navbar-brand {padding: 8px}
 .navbar-logo  {margin-right: 10px}
+.nav-item     {margin-right: 5px}
 .navbar-login, .navbar-search {display: inline-flex}
+
+.dropdown-menu {
+    background: linear-gradient(to right, #8e9eab, #eef2f3);
+    padding: 10px;
+    border: 5px;
+    border-radius: 5px;
+}
+
+.dropdown-item {
+    border-radius: 5px;
+    border: hidden;
+    margin:2px
+}
+
+.dropdown-item:hover {
+    background: linear-gradient(to right, #000000, #434343); 
+    color:white;
+}
+
 
 /************** Navbar **************/
