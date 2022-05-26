@@ -17,3 +17,42 @@ window.onscroll = function ()                           //Function
 }
 
 /************** Hide Navbar When Scroll **************/
+
+
+/************** Dark Mode Script **************/
+
+let darkMode = localStorage.getItem('darkMode');        // check for saved 'darkMode' in localStorage
+
+const darkModeToggle = document.querySelector('#dark-mode-toggle');
+
+const enableDarkMode = () => {
+
+    document.body.classList.add('darkmode');            //Add the class to the body
+    localStorage.setItem('darkMode', 'enabled');        //Update darkMode in localStorage
+}
+
+const disableDarkMode = () => {
+
+    document.body.classList.remove('darkmode');         // Remove the class from the body
+    localStorage.setItem('darkMode', null);             // Update darkMode in localStorage 
+}
+
+if (darkMode === 'enabled') {           // If the user already visited and enabled darkMode
+
+    enableDarkMode();                   // start things off with it on
+}
+
+darkModeToggle.addEventListener('click', () => {        // When someone clicks the button
+
+    darkMode = localStorage.getItem('darkMode');        // get their darkMode setting
+
+    if (darkMode !== 'enabled') {       // if it not current enabled, enable it
+        enableDarkMode();
+    }
+    else {                              // if it has been enabled, turn it off
+        disableDarkMode();
+    }
+}
+);
+
+/************** Dark Mode Script **************/
