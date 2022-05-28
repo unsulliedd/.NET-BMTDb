@@ -3,9 +3,9 @@
 
 /************** Hide Navbar When Scroll **************/
 
-var firstScrollPosition = window.pageYOffset;           //Assigns page height to 'firstScrollPosition'
+var firstScrollPosition = window.pageYOffset;                       //Assigns page height to 'firstScrollPosition'
 
-window.onscroll = function ()                           //Function
+window.onscroll = function ()                           
 {
     var currentScrollPosition = window.pageYOffset;
     if (firstScrollPosition > currentScrollPosition) {
@@ -13,7 +13,7 @@ window.onscroll = function ()                           //Function
     } else {
         document.getElementById("navbar").style.top = "-60px";      //Hides Navbar
     }
-    firstScrollPosition = currentScrollPosition;        //Update scroll position
+    firstScrollPosition = currentScrollPosition;                    //Update scroll position
 }
 
 /************** Hide Navbar When Scroll **************/
