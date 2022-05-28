@@ -147,3 +147,20 @@ a:hover{
 }
 
 /************** Navbar **************/
+
+
+/************** Footer **************/
+
+footer {
+    position: absolute;
+    width: 100%;
+}
+.footer-logo {
+    max-width: 250px;
+    width: 100%;
+    height: auto;
+    margin-left: 34px;
+}
+
+/************** Footer **************/
+
