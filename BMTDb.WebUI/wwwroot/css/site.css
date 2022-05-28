@@ -167,3 +167,44 @@ footer {
 /************** Footer **************/
 
 
+/*********** SpotlightView ***********/
+
+.spotlight-backdrop {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 512px;
+    object-fit: cover;
+    object-position: top;
+    opacity: 0.9;
+}
+
+.carousel-item {
+    height: 512px;
+    background: #000000;
+    min-width: 100%;
+}
+
+.spotlight-logos-position1 {
+    object-fit: fill;
+    margin-bottom: 10px;
+    width: 240px;
+    height: 105px;
+}
+
+.spotlight-logos-position2 {
+    object-fit: fill;
+    width: 390px;
+    height: 88px;
+}
+
+.spotlight-logos-position3 {
+    object-fit: fill;
+    width: 236px;
+    height: 40px;
+    margin-bottom: 10px;
+}
+
+/*********** SpotlightView ***********/
+
+
