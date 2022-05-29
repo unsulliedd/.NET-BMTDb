@@ -37,14 +37,14 @@ body {
 a, a:after {
     color: white;
     text-decoration: none;
-    border:none;
+    border:hidden;
 }
 
 a:hover{
     color:red;
     text-decoration: none;
     font: bold;
-    border:none;
+    border:hidden
 }
 
 /************** Dark Mode CSS **************/
@@ -68,7 +68,6 @@ a:hover{
 /************** Navbar **************/
 
 .navbar {
-    background-color: transparent;
     background: #000000a9;
     position: fixed;
     top: 0px;
@@ -183,6 +182,22 @@ footer {
     height: 512px;
     background: #000000;
     min-width: 100%;
+}
+
+.btn-spotlight {
+    color: #fff;
+    background: linear-gradient(to right, #000000, #434343);
+    border: hidden;
+    padding: 0.5rem 1rem;
+    font-size: 1.25rem;
+    border-radius: 5px;
+}
+
+.btn-spotlight:hover {
+    background: linear-gradient(to right, #e6dada, #274046);
+    color:black;
+    transition: background 0.3s linear;
+    border:hidden;
 }
 
 .spotlight-logos-position1 {
