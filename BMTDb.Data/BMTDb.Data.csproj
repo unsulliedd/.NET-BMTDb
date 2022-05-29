@@ -7,8 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Abstract\" />
     <Folder Include="Concrete\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BMTDb.Entity\BMTDb.Entity.csproj" />
   </ItemGroup>
 
 </Project>
