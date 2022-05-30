@@ -8,31 +8,8 @@ using System.Threading.Tasks;
 
 namespace BMTDb.Data.Concrete.EFCore
 {
-    public class EfCoreMovieRepository : IMovieRepository
+    public class EfCoreMovieRepository : EFCoreGenericRepository<Movie, BMTDbContext>, IMovieRepository
     {
-        public void Create(Movie entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Delete(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<Movie> GetAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Movie GetById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Update(Movie entity)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }

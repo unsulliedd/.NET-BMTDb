@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BMTDb.Data.Concrete.EFCore
 {
-    public class EfCoreGenreRepository : EFCoreGenericRepository<Genre ,BMTDbContext>,IGenreRepository
+    public class EFCorePersonRepository : EFCoreGenericRepository<Person, BMTDbContext>, IPersonRepository
     {
 
     }

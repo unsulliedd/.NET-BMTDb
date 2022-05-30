@@ -8,31 +8,8 @@ using System.Threading.Tasks;
 
 namespace BMTDb.Data.Concrete.EFCore
 {
-    public class EFCoreStudioRepository : IStudioRepository
+    public class EFCoreStudioRepository : EFCoreGenericRepository<Studio, BMTDbContext>,IStudioRepository
     {
-        public void Create(Studio entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Delete(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<Studio> GetAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Studio GetById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Update(Studio entity)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }
