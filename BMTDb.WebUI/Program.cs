@@ -1,7 +1,15 @@
+using BMTDb.Data.Abstract;
+using BMTDb.Data.Concrete.EFCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews();     //MVC
+
+builder.Services.AddScoped<IMovieRepository, EfCoreMovieRepository>();      //Calls concrete version
+builder.Services.AddScoped<IGenreRepository, EfCoreGenreRepository>();
+builder.Services.AddScoped<IStudioRepository,EFCoreStudioRepository>();
+builder.Services.AddScoped<IPersonRepository,EFCorePersonRepository>();
 
 var app = builder.Build();
 
