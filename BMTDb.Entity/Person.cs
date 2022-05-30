@@ -15,5 +15,7 @@ namespace BMTDb.Entity
         public string? Birthday { get; set; }
         public string? PlaceOfBirth { get; set; }
         public string? Job { get; set; }
+
+        public List<Crew>? Crews { get; set; }
     }
 }

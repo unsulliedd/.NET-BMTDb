@@ -32,6 +32,7 @@ namespace BMTDb.Entity
         public List<TvShowNetwork>? TvShowNetworks { get; set; }
         public List<TvShowSeason>? TvShowSeasons { get; set; }
         public List<TvShowGenre>? TvShowGenres { get; set; }
+        public List<Crew>? Crews { get; set; }
 
     }
 }

@@ -31,6 +31,7 @@ namespace BMTDb.Entity
 
         public List<MovieStudio>? MovieStudios { get; set; }
         public List<MovieGenre>? MovieGenres { get; set; }
+        public List<Crew>? Crews { get; set; }
 
     }
 }

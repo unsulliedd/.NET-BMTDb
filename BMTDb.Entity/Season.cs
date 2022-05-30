@@ -13,5 +13,10 @@ namespace BMTDb.Entity
         public string? Name { get; set; }
         public string? Season_poster { get; set; }
         public int? Season_Number { get; set; }
+
+        public List<TvShowSeason>? TvShowSeasons { get; set; }
+        public List<SeasonEpisode>? SeasonEpisodes { get; set; }
+
+
     }
 }

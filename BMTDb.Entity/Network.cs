@@ -11,5 +11,8 @@ namespace BMTDb.Entity
         public int NetworkId { get; set; }
         public string? Network_Name { get; set; }
         public string? Netwotk_logo { get; set; }
+
+        public List<TvShowNetwork>? TvShowNetworks { get; set; }
+
     }
 }
