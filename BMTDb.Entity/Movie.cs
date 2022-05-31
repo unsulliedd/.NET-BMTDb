@@ -13,7 +13,7 @@ namespace BMTDb.Entity
         public int MovieId { get; set; }
         public string? Title { get; set; }
         public string? Director { get; set; }
-        public DateTime? Release_Date { get; set; }
+        public DateTime ReleaseDate { get; set; }
         public string? MovieInfo { get; set; }
         public string? Trailer { get; set; }
         public string? MoviePoster { get; set; }
