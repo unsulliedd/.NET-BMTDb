@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BMTDb.Data.Migrations
 {
     [DbContext(typeof(BMTDbContext))]
-    [Migration("20220530184555_InitialCreate")]
+    [Migration("20220531222946_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -122,7 +122,7 @@ namespace BMTDb.Data.Migrations
                     b.Property<string>("MovieTagline")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("Release_Date")
+                    b.Property<DateTime>("ReleaseDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("RunTime")

@@ -120,7 +120,7 @@ namespace BMTDb.Data.Migrations
                     b.Property<string>("MovieTagline")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("Release_Date")
+                    b.Property<DateTime>("ReleaseDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("RunTime")

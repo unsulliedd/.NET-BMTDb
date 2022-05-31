@@ -45,7 +45,7 @@ namespace BMTDb.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Director = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Release_Date = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ReleaseDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     MovieInfo = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Trailer = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     MoviePoster = table.Column<string>(type: "nvarchar(max)", nullable: true),
