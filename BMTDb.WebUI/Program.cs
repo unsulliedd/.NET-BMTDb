@@ -1,5 +1,7 @@
 using BMTDb.Data.Abstract;
 using BMTDb.Data.Concrete.EFCore;
+using BMTDb.Service.Abstract;
+using BMTDb.Service.Concrete;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,7 +9,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();     //MVC
 
 builder.Services.AddScoped<IMovieRepository, EfCoreMovieRepository>();      //Calls concrete version
+builder.Services.AddScoped<IMovieService, MovieManager>();
+
 builder.Services.AddScoped<IGenreRepository, EfCoreGenreRepository>();
+builder.Services.AddScoped<IGenreService, GenreManager>();
+
 builder.Services.AddScoped<IStudioRepository,EFCoreStudioRepository>();
 builder.Services.AddScoped<IPersonRepository,EFCorePersonRepository>();
 
