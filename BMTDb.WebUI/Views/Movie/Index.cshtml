@@ -1,5 +1,36 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model MovieViewModel
+
+<link rel="stylesheet" href="~/css/movie.css" asp-append-version="true" />
+
 @{
+    ViewData["Title"] = "Movies";
 }
+
+<section class="container content">
+    <div class="title">
+        <h1>Movies</h1>
+    </div>
+
+    <div class="movie-list">
+        <div class="filter-panel col-md-3">
+
+        </div>
+    
+        <div class="container-movie col-md-10">
+            <div id="page">
+                <div class="movie-card-list">
+                    @if(Model.Movies.Count == 0)
+                    {
+                        @await Html.PartialAsync("_nocontent")
+                    }
+                    else
+                        @foreach (var movie in Model.Movies)
+                        {    
+                            @await Html.PartialAsync("_MovieCard", movie)      
+                        } 
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>

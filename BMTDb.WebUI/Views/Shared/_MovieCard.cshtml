@@ -1,0 +1,14 @@
+﻿@model Movie
+
+<div class= "movie-card">
+    <div class="movie-card-inner">
+        <div class="wrapper">
+        <a asp-controller="Movie" asp-action="Details" asp-route-id="@Model.MovieId"> 
+        <img class="poster" src="@Model.MoviePoster"/></a>
+            <div class="poster-content">
+                <h3><a asp-controller="Movie" asp-action="Details" asp-route-id="@Model.MovieId">@Model.Title</a></h3>
+                <p>@Model.ReleaseDate.ToShortDateString()</p>
+            </div>
+        </div>
+    </div>
+</div>
