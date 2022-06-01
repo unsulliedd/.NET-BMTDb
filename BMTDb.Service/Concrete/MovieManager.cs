@@ -38,7 +38,7 @@ namespace BMTDb.Service.Concrete
 
         public Movie GetById(int id)
         {
-            return _movieRepository.GetById(Id);
+            return _movieRepository.GetById(id);
         }
 
     }
