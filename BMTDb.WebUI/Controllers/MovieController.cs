@@ -1,4 +1,5 @@
 ﻿using BMTDb.Service.Abstract;
+using BMTDb.WebUI.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BMTDb.WebUI.Controllers
@@ -13,7 +14,11 @@ namespace BMTDb.WebUI.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var movieViewModel = new MovieViewModel()
+            {
+                Movies = _movieService.GetAll()
+            };
+            return View(movieViewModel);
         }
     }
 }
