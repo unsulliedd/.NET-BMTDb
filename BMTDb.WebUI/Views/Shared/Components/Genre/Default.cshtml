@@ -1,0 +1,35 @@
+﻿@model List<Genre>
+
+@foreach (var item in Model)
+{
+    <a asp-controller="Movie" 
+    asp-action="Index" 
+    asp-route-genre="@item.Name"
+    class="genre-list genre-list-active @(ViewBag.SelectedGenre == item.Name?"active":"")">
+        @item.Name</a>
+}
+
+<style>
+    .genre-list{
+        display: inline-flex;
+        border: 1px solid #9e9e9e;
+        border-radius: 14px;
+        padding: 4px 12px;
+        font-size: 0.9em;
+        margin-right: 6px;
+        margin-top: 8px;
+    }
+
+    .genre-list:active{
+        cursor:pointer;
+        background-color: grey;
+    }
+
+    .genre-list:hover{
+        background-color: grey;
+    }
+
+    a:hover{
+        color: white;
+    }
+</style>

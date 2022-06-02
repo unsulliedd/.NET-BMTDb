@@ -1,0 +1,12 @@
+﻿@model List<Studio>
+
+@foreach (var item in Model)
+{
+    <option>
+    <a asp-controller="Movie" 
+    asp-action="Index" 
+    asp-route-genre="@item.Studio_Name"
+    class="studio-list studio-list-active @(ViewBag.SelectedGenre == item.Studio_Name?"active":"")">
+        @item.Studio_Name</a>
+    </option>
+}
