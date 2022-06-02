@@ -23,7 +23,6 @@ namespace BMTDb.Data.Concrete.EFCore
         public DbSet<Network>? Networks { get; set; }
 
         //For People
-        public DbSet<Crew>? Crews { get; set; }
         public DbSet<Person>? Persons { get; set; }
 
 
@@ -41,8 +40,10 @@ namespace BMTDb.Data.Concrete.EFCore
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)  //Fluent Api
         {
-            modelBuilder.Entity<Crew>()
-                .HasKey(c => new { c.CrewId, c.MovieId, c.TvShowId, c.PersonId });
+            modelBuilder.Entity<MovieCrew>()
+                .HasKey(c => new { c.MovieId, c.PersonId });
+            modelBuilder.Entity<TvShowCrew>()
+                .HasKey(c => new { c.TvShowId, c.PersonId });
             modelBuilder.Entity<MovieGenre>()
                 .HasKey(c => new { c.MovieId, c.GenreId });
             modelBuilder.Entity<MovieStudio>()
