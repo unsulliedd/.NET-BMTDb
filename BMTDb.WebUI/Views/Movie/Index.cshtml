@@ -12,11 +12,59 @@
     </div>
 
     <div class="movie-list">
-        <div class="filter-panel col-md-3">
+        <div class="filter-panel">
 
+            <div class="filter-card card mb-3">
+                <div class="filter-title">
+                    <h2>Sort</h2>
+                </div>
+                <div class="filter-card-select px-2">
+                    <select class="form-select form-select-lg mb-3" aria-label="Sort">
+                        <option selected>Sort</option>
+
+                    </select>
+                </div>
+            </div>
+
+            <div class="filter-card card mb-3">
+                <div class="filter-title">
+                    <h2>Genres</h2>
+                </div>
+                <div class="accordion px-2">
+                    <button type="button" class="accordion_button">Genres</button>
+                        <div class="accordion_content">
+                            <div class="filter">
+                               @await Component.InvokeAsync("Genre")
+                            </div>
+                        </div>
+                </div> 
+            </div>
+
+            <div class="filter-card card mb-3">
+                <div class="filter-title">
+                    <h2>Filters</h2>
+                </div>
+                <hr />
+                <div class="filter-card-select px-2">
+                    <h3>Studios</h3>
+                    <select class="form-select form-select-lg" aria-label="Select Studio">
+                        <option selected>Select Studio</option>
+                        @await Component.InvokeAsync("Studio")
+                    </select>
+                </div>
+                <hr />
+                <div class="filter-card-select px-2">
+                    <h3>Language</h3>
+                    <select class="form-select form-select-lg" aria-label="Select Language">
+                        <option selected>All</option>
+
+                    </select>
+                </div>
+                <hr />
+            </div>
         </div>
     
-        <div class="container-movie col-md-10">
+        <div class="container-movie col-sm-10">
             <div id="page">
                 <div class="movie-card-list">
                     @if(Model.Movies.Count == 0)
