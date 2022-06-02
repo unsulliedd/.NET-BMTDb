@@ -15,6 +15,8 @@ builder.Services.AddScoped<IGenreRepository, EfCoreGenreRepository>();
 builder.Services.AddScoped<IGenreService, GenreManager>();
 
 builder.Services.AddScoped<IStudioRepository,EFCoreStudioRepository>();
+builder.Services.AddScoped<IStudioService, StudioManager>();
+
 builder.Services.AddScoped<IPersonRepository,EFCorePersonRepository>();
 
 var app = builder.Build();
