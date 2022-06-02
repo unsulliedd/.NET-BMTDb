@@ -1,11 +1,29 @@
-﻿h1 {font-size: 2em;}
+﻿@media (max-width: 576px) {
+    .filter-panel {
+        margin-right: 10px !important;
+    }
+
+    .movie-list {
+        flex-direction:column;
+        align-content:center!important;
+        align-items:center!important;
+        flex-wrap:wrap;
+    }
+}
+
+h1 {font-size: 2em;}
 h2 {font-size: 1.5em;}
 h3 {font-size: 1.1em;}
-p {font-size: 0.85em;}
+p  {font-size: 0.85em;}
 
 a {
     text-decoration: none !important;
     color: var(--foreground);
+}
+
+hr {
+    margin-bottom: 10px;
+    margin-top: 10px;
 }
 
 .content {
@@ -19,19 +37,100 @@ a {
 }
 
 .movie-list {
-    min-width: min-content;
     width: 100%;
     display: flex;
     align-items: flex-start;
     align-content: flex-start;
+    justify-content: flex-start;
 }
 
 /************ Filter Panel ************/
-
-.filter-panel.col-md-3 {
-    width:22%;
+.filter-card {
+    width: 260px;
+    background-color: var(--background);
+    border: 1px solid #e3e3e3;
+    border-radius: 5px;
+    box-shadow: 0 2px 8px rgb(0 0 0 / 10%);
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    overflow: hidden;
 }
 
+.filter-title {
+    min-width: min-content;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    padding: 14px 16px;
+}
+
+.filter {
+    min-width: min-content;
+    width: 100%;
+    border-top: 1px solid #eee;
+    padding: 14px 16px 16px 16px;
+}
+
+.filter-card h3 {
+    font-weight:200;
+}
+
+.filter-card-select {
+    display: flex;
+    align-items: baseline;
+    flex-direction: column;
+}
+
+.form-select {
+    width:100%;
+}
+
+/****** Accordion *******/
+.accordion {
+    width:100%;
+    padding: 0 0.5rem 0.5rem 0.5rem;
+}
+
+.accordion_button {
+    min-width: min-content;
+    display: block;
+    width: 100%;
+    padding: 12px;
+    border: hidden;
+    outline: none;
+    cursor: pointer;
+    transition: background 0.2s ease-out;
+    border-radius: 5px;
+}
+
+.accordion_button::after {
+    min-width: min-content;
+    content: '\25be';
+    float: right;
+    transform: scale(1.5);
+}
+
+.accordion_button--active::after {
+    min-width: min-content;
+    content: '\25b4';
+}
+
+.accordion_button--active {
+    min-width: min-content;
+    background: #cbcbcb
+}
+
+.accordion_content {
+    min-width: min-content;
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.2s;
+    background: var(--background);
+}
+/****** Accordion *******/
 
 /************ Filter Panel ************/
 
@@ -53,7 +152,7 @@ a {
     left: 0;
     flex-wrap: wrap;
     align-content: flex-start;
-    border: 1px solid #e3e3e3;
+    border: 1.5px solid #e3e3e3;
     border-radius: 10px;
     box-shadow: 0 2px 8px rgb(0 0 0 / 10%);
     position: relative;
@@ -73,6 +172,8 @@ a {
     height: auto;
     cursor: pointer;
     display: inline-block;
+    object-fit: cover;
+    border-radius: 5px
 }
 
 .poster-content {
