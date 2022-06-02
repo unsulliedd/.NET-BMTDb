@@ -1,4 +1,6 @@
-﻿using System;
+﻿#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -29,9 +31,9 @@ namespace BMTDb.Entity
         public string? TMDbId { get; set; }
 
 
-        public List<MovieStudio>? MovieStudios { get; set; }
-        public List<MovieGenre>? MovieGenres { get; set; }
-        public List<Crew>? Crews { get; set; }
+        public List<MovieStudio> MovieStudios { get; set; }
+        public List<MovieGenre> MovieGenres { get; set; }
+        public List<MovieCrew> MovieCrews { get; set; }
 
     }
 }
