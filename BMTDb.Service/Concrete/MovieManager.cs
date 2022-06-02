@@ -41,5 +41,9 @@ namespace BMTDb.Service.Concrete
             return _movieRepository.GetById(id);
         }
 
+        public Movie GetMovieDetails(int id)
+        {
+            return _movieRepository.GetMovieDetails(id);
+        }
     }
 }
