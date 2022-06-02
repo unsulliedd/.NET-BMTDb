@@ -10,6 +10,11 @@ namespace BMTDb.Service.Concrete
 {
     public class PersonManager : IPersonService
     {
+        private readonly IPersonService _personService;
+        public PersonManager (IPersonService personService)
+        {
+            _personService = personService;
+        }
         public void Create(Person entity)
         {
             throw new NotImplementedException();
@@ -19,10 +24,14 @@ namespace BMTDb.Service.Concrete
         {
             throw new NotImplementedException();
         }
+        public void Update(Person entity)
+        {
+            throw new NotImplementedException();
+        }
 
         public List<Person> GetAll()
         {
-            throw new NotImplementedException();
+            return _personService.GetAll();
         }
 
         public Person GetById(int id)
@@ -30,9 +39,5 @@ namespace BMTDb.Service.Concrete
             throw new NotImplementedException();
         }
 
-        public void Update(Person entity)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
