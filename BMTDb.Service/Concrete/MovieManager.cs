@@ -45,5 +45,10 @@ namespace BMTDb.Service.Concrete
         {
             return _movieRepository.GetMovieDetails(id);
         }
+
+        public List<Movie> GetMoviebyFilter(string name, string Studio_Name)
+        {
+            return _movieRepository.GetMoviebyFilter(name, Studio_Name);
+        }
     }
 }

@@ -13,79 +13,84 @@
 <div class="container container-details">
     <div class="info-bar">
         <div class="details-logo">
-            <img class="details-img" src="@Model.Movie.MovieLogo"/>
+            <img class="logo-img" src="@Model.Movie.MovieLogo"/>
         </div>
         
         <div class="details-poster">
-            <img class="details-img" src="@Model.Movie.MoviePoster"/>
+            <img class="poster-img" src="@Model.Movie.MoviePoster"/>
         </div>
 
-        <div class="details-info">
-            <div class="details-row">
-                <div style="display:inline-flex">
-                    <h2>@Model.Movie.Title</h2> <h2 class="text-muted px-1">(@Model.Movie.ReleaseDate.Year)</h2>
+        <div class="details-info info-inside">
+            <div class="info-inside-main">
+
+                <div class="details-row">
+                    <div style="display:inline-flex">
+                        <h2>@Model.Movie.Title</h2> <h2 class="text-muted px-1">(@Model.Movie.ReleaseDate.Year)</h2>
+                    </div>
+
+                    <div>
+                        <span>@Model.Movie.ReleaseDate.ToLongDateString()</span>
+                            <span class="dot mx-2"></span>
+                        <span class="genre-list">
+                            @foreach (var item in Model.Genres)
+                            {   
+                                <a asp-controller="Movie" 
+                                asp-action="Index" 
+                                asp-route-genre="@item.Name" 
+                                class="genrelink">@item.Name</a>
+                            }
+                        </span>
+                            <span class="dot mx-2"></span>
+                        <span class="box">@(Model.Movie.RunTime / 60)h @(Model.Movie.RunTime % 60)m</span>
+                    </div>
                 </div>
+
+                <div class="details-rating my-2">
+                    <span style="padding-right:0.5rem"><img class="ratings-logo" src="/img/ratinglogo/Metacritic.svg"/>
+                        @Model.Movie.MovieRatings</span>
+                    <span class="px-2"><img class="ratings-logo" src="/img/ratinglogo/Trakt_RED.svg"/>
+                        @Model.Movie.MovieRatings </span>
+                    <span class="px-2"><img class="ratings-logo" src="/img/ratinglogo/RT_AUDIENCE_SCORE.svg"/>
+                        @Model.Movie.MovieRatings</span>
+                    <span class="px-2"><img class="ratings-logo" src="/img/ratinglogo/RT_CERTIFICATE_FRESH.svg"/>
+                        @Model.Movie.MovieRatings</span>
+                    <span class="px-2"><img class="ratings-logo" src="/img/ratinglogo/IMDB.svg"/>
+                        @Model.Movie.MovieRatings</span>
+                    <span><img class="ratings-logo" src="/img/ratinglogo/TMDb.svg"/>
+                        @Model.Movie.MovieRatings</span>
+                </div>
+
                 <div>
-                    <span>@Model.Movie.ReleaseDate.ToLongDateString()</span>
-                        <span class="dot mx-2"></span>
-                    <span class="genre-list">
-                        @foreach (var item in Model.Genres)
-                        {   
-                            <a asp-controller="Movie" 
+                    <h5 class="text-muted my-2">@Model.Movie.MovieTagline</h5>
+                </div>
+
+                <div class="info">
+                    <p>@Model.Movie.MovieInfo</p>
+                </div>
+
+                <div class="details-crew">
+                    Director: @Model.Movie.Director
+                </div>
+
+            </div>
+
+            <div class="info-inside-footer">
+                <div class="details-studio">     
+                    @foreach (var item in Model.Studios)
+                    {
+                        <a asp-controller="Movie" 
                             asp-action="Index" 
-                            asp-route-genre="@item.Name" 
-                            class="genrelink">@item.Name</a>
-                        }
-                    </span>
-                        <span class="dot mx-2"></span>
-                    <span class="box">@(Model.Movie.RunTime / 60)h @(Model.Movie.RunTime % 60)m</span>
+                            asp-route-studio="@item.Studio_Name" 
+                            class="studiolink"><img style="width: 3rem; height: 3rem;" src="@item.Studio_logo"/></a>
+                    }
                 </div>
             </div>
-            <div class="details-rating my-2">
-                <span style="padding-right:0.5rem"><img class="ratings-logo" src="/img/ratinglogo/Metacritic.svg"/>
-                    @Model.Movie.MovieRatings</span>
-                <span class="px-2"><img class="ratings-logo" src="/img/ratinglogo/Trakt_RED.svg"/>
-                    @Model.Movie.MovieRatings </span>
-                <span class="px-2"><img class="ratings-logo" src="/img/ratinglogo/RT_AUDIENCE_SCORE.svg"/>
-                    @Model.Movie.MovieRatings</span>
-                <span class="px-2"><img class="ratings-logo" src="/img/ratinglogo/RT_CERTIFICATE_FRESH.svg"/>
-                    @Model.Movie.MovieRatings</span>
-                <span class="px-2"><img class="ratings-logo" src="/img/ratinglogo/IMDB.svg"/>
-                    @Model.Movie.MovieRatings</span>
-                <span><img class="ratings-logo" src="/img/ratinglogo/TMDb.svg"/>
-                    @Model.Movie.MovieRatings</span>
-            </div>
-            <div><h5 class="text-muted my-2">@Model.Movie.MovieTagline</h5></div>
-            <div class="info">
-                <p>@Model.Movie.MovieInfo</p>
-            </div>
 
-            <div class="details-crew">
-                Director: @Model.Movie.Director
-            </div>
-
-            <div class="details-studio">
-                @foreach (var item in Model.Studios)
-                {
-                    <p><a asp-controller="Movie" 
-                        asp-action="Index" 
-                        asp-route-studio="@item.Studio_Name" 
-                        class="studiolink">@item.Studio_Name</a></p>
-                }
-                             
-                @foreach (var item in Model.Studios)
-                {
-                    <p><a asp-controller="Movie" 
-                        asp-action="Index" 
-                        asp-route-studio="@item.Studio_logo" 
-                        class="studiolink"><img class="ratings-logo" src="@item.Studio_logo"/></a></p>
-                }
-            </div>        
         </div>
 
-        <div class="details-cast mt-5">
-            <div class="actor-card">
-                <ol style="list-style:none">
+        <div class="details-cast">
+            <div class="actor-card px-3">
+                <ol style="list-style:none; padding-inline-start:0">
                     <li>
                         @foreach (var item in Model.Persons)
                         {

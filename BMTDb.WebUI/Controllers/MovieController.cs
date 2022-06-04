@@ -13,11 +13,11 @@ namespace BMTDb.WebUI.Controllers
             _movieService = movieService;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string genre, string studio)
         {
             var movieViewModel = new MovieViewModel()
             {
-                Movies = _movieService.GetAll()
+                Movies = _movieService.GetMoviebyFilter(genre, studio)
             };
             return View(movieViewModel);
         }

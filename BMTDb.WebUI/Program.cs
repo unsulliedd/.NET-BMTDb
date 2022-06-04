@@ -37,6 +37,16 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapControllerRoute(
+    name: "Movies",
+    pattern: "Movies/{studios?}",
+    defaults: new { controller = "Movie", action = "Index" });
+
+app.MapControllerRoute(
+    name: "Movies",
+    pattern: "Movies/{genre?}",
+    defaults: new { controller = "Movie", action = "Index" });
+
+app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 

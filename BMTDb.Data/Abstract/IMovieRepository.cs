@@ -10,6 +10,6 @@ namespace BMTDb.Data.Abstract
     public interface IMovieRepository:IRepository<Movie>
     {
         Movie GetMovieDetails(int id);
-
+        List<Movie> GetMoviebyFilter(string name, string Studio_Name);
     }
 }
