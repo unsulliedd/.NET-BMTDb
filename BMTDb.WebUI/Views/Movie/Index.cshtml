@@ -45,17 +45,22 @@
                     <h2>Filters</h2>
                 </div>
                 <hr />
-                <div class="filter-card-select px-2">
+                <div class="px-2">
                     <h3>Studios</h3>
-                    <select class="form-select form-select-lg" aria-label="Select Studio">
-                        <option selected>Select Studio</option>
-                        @await Component.InvokeAsync("Studio")
-                    </select>
+                    <div class="dropdown" style="width:100%">
+                        <button class="btn btn-select dropdown-toggle" type="button" data-bs-toggle="dropdown">Select Studio
+                        </button>
+                        <ul class="dropdown-menu" style="padding: 0.5rem 0.5rem 0.5rem 0.5rem;">
+                            @await Component.InvokeAsync("Studio")
+                        </ul>
+                    </div>
                 </div>
+
                 <hr />
+
                 <div class="filter-card-select px-2">
                     <h3>Language</h3>
-                    <select class="form-select form-select-lg" aria-label="Select Language">
+                    <select class="btn-select form-select-lg" aria-label="Select Language">
                         <option selected>All</option>
 
                     </select>
