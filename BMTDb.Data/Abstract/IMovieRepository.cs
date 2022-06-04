@@ -9,7 +9,7 @@ namespace BMTDb.Data.Abstract
 {
     public interface IMovieRepository:IRepository<Movie>
     {
-        Movie GetMovieDetails(int id);
+        Movie GetMovieDetails(string Title);
         List<Movie> GetMoviebyFilter(string name, string Studio_Name);
     }
 }

@@ -40,12 +40,12 @@ namespace BMTDb.Data.Concrete.EFCore
             }
         }
 
-        public Movie GetMovieDetails(int id)
+        public Movie GetMovieDetails(string Title)
         {
             using var context = new BMTDbContext();
 
             return context.Movies
-                            .Where(i => i.MovieId == id)
+                            .Where(i => i.Title == Title)
                             .Include(i => i.MovieGenres)
                             .ThenInclude(i => i.Genre)
                             .Include(i => i.MovieCrews)

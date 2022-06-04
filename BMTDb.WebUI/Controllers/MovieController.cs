@@ -22,16 +22,16 @@ namespace BMTDb.WebUI.Controllers
             return View(movieViewModel);
         }
 
-        public IActionResult Details(int? id)
+        public IActionResult Details(string? Title)
         {
-            if (id == null)
+            if (Title == null)
             {
                 return View("Error");
             }
 
-            Movie movie = _movieService.GetMovieDetails((int)id);
+            Movie movie = _movieService.GetMovieDetails(Title);
 
-            if (id == null)
+            if (Title == null)
             {
                 return View("Error");
             }

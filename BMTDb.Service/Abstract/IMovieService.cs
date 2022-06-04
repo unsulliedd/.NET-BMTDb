@@ -9,7 +9,7 @@ namespace BMTDb.Service.Abstract
 {
     public interface IMovieService
     {
-        Movie GetMovieDetails(int id);
+        Movie GetMovieDetails(string Title);
         List<Movie> GetMoviebyFilter(string name, string Studio_Name);
         Movie GetById(int id);
         List<Movie> GetAll();
