@@ -2,11 +2,11 @@
 
 @foreach (var item in Model)
 {
-    <option>
+    <li style="padding:5px">
     <a asp-controller="Movie" 
     asp-action="Index" 
-    asp-route-genre="@item.Studio_Name"
-    class="studio-list studio-list-active @(ViewBag.SelectedGenre == item.Studio_Name?"active":"")">
+    asp-route-studio="@item.Studio_Name"
+    class="studio-list">
         @item.Studio_Name</a>
-    </option>
+    </li>
 }

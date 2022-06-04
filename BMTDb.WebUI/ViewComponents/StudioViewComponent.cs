@@ -15,8 +15,6 @@ namespace BMTDb.WebUI.ViewComponents
         }
         public IViewComponentResult Invoke() 
         {
-            if (RouteData.Values["studio"] != null)
-                ViewBag.SelectedStudio = RouteData?.Values["studio"];
             return View(_studioService.GetAll());
         }
     }
