@@ -37,14 +37,11 @@ body {
 a, a:after {
     color: white;
     text-decoration: none;
-    border:hidden;
 }
 
 a:hover{
-    color:red;
     text-decoration: none;
-    font: bold;
-    border:hidden
+    color: dodgerblue
 }
 
 /************** Dark Mode CSS **************/
@@ -110,7 +107,7 @@ a:hover{
     margin-right: 4px;
 }
 
-.dropdown-menu {
+.dropdown-menu-navbar {
     background: linear-gradient(to right, #8e9eab, #eef2f3);
     padding: 10px;
     border: 5px;
