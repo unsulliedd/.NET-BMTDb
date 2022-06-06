@@ -13,34 +13,43 @@ namespace BMTDb.WebUI.Controllers
             _movieService = movieService;
         }
 
-        public IActionResult Index(string genre, string studio)
+        public IActionResult Index(string genre, string studio, int page = 1)
         {
+            const int pageSize = 2;
             var movieViewModel = new MovieViewModel()
             {
-                Movies = _movieService.GetMoviebyFilter(genre, studio)
+                PageInfo = new PageInfo()
+                {
+                    TotalItem = _movieService.GetCountbyFilter(genre, studio),
+                    CurrentPage = page,
+                    ItemPerPage = pageSize,
+                    CurrentGenre = genre,
+                    CurrentStudio = studio
+                },
+                Movies = _movieService.GetMoviebyFilter(genre, studio, page, pageSize)
             };
             return View(movieViewModel);
         }
 
-        public IActionResult Details(string? Title)
+        public IActionResult Details(int? id)
         {
-            if (Title == null)
+            if (id == null)
             {
                 return View("Error");
             }
 
-            Movie movie = _movieService.GetMovieDetails(Title);
+            Movie movies = _movieService.GetMovieDetails((int)id);
 
-            if (Title == null)
+            if (id == null)
             {
                 return View("Error");
             }
             return View(new MovieDetailModel
             {
-                Movie = movie,
-                Genres = movie.MovieGenres.Select(i => i.Genre).ToList(),
-                Studios = movie.MovieStudios.Select(i => i.Studios).ToList(),
-                Persons = movie.MovieCrews.Select(i => i.Person).ToList()
+                Movie = movies,
+                Genres =  movies.MovieGenres.Select(i => i.Genre).ToList(),
+                Studios = movies.MovieStudios.Select(i => i.Studios).ToList(),
+                Persons = movies.MovieCrews.Select(i => i.Person).ToList()
             });
         }
     }

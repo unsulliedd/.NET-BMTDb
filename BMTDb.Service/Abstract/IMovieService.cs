@@ -9,12 +9,13 @@ namespace BMTDb.Service.Abstract
 {
     public interface IMovieService
     {
-        Movie GetMovieDetails(string Title);
-        List<Movie> GetMoviebyFilter(string name, string Studio_Name);
+        Movie GetMovieDetails(int id);
+        List<Movie> GetMoviebyFilter(string name, string Studio_Name, int page, int pageSize);
         Movie GetById(int id);
         List<Movie> GetAll();
         void Create(Movie entity);
         void Update(Movie entity);
         void Delete(Movie entity);
+        int GetCountbyFilter(string genre, string studio);
     }
 }

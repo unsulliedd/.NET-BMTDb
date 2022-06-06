@@ -9,7 +9,8 @@ namespace BMTDb.Data.Abstract
 {
     public interface IMovieRepository:IRepository<Movie>
     {
-        Movie GetMovieDetails(string Title);
-        List<Movie> GetMoviebyFilter(string name, string Studio_Name);
+        Movie GetMovieDetails(int id);
+        List<Movie> GetMoviebyFilter(string name, string Studio_Name, int page, int pageSize);
+        int GetCountbyFilter(string genre, string studio);
     }
 }

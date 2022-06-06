@@ -41,14 +41,19 @@ namespace BMTDb.Service.Concrete
             return _movieRepository.GetById(id);
         }
 
-        public Movie GetMovieDetails(string Title)
+        public Movie GetMovieDetails(int id)
         {
-            return _movieRepository.GetMovieDetails(Title);
+            return _movieRepository.GetMovieDetails(id);
         }
 
-        public List<Movie> GetMoviebyFilter(string name, string Studio_Name)
+        public List<Movie> GetMoviebyFilter(string name, string Studio_Name, int page, int pageSize)
         {
-            return _movieRepository.GetMoviebyFilter(name, Studio_Name);
+            return _movieRepository.GetMoviebyFilter(name, Studio_Name, page, pageSize);
+        }
+
+        public int GetCountbyFilter(string genre, string studio)
+        {
+            return _movieRepository.GetCountbyFilter(genre, studio);
         }
     }
 }
