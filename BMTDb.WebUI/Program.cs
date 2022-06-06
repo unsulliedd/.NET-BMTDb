@@ -37,13 +37,8 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapControllerRoute(
-    name: "MoviesDetails",
-    pattern: "Movies/{Title}",
-    defaults: new { controller = "Movie", action = "Details" });
-
-app.MapControllerRoute(
-    name: "Movies",
-    pattern: "Movies/{studios?}",
+    name: "MovieStudio",
+    pattern: "Movie/{studio?}",
     defaults: new { controller = "Movie", action = "Index" });
 
 app.MapControllerRoute(
