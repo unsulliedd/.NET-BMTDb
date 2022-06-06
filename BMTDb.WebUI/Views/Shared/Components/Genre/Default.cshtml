@@ -5,6 +5,6 @@
     <a asp-controller="Movie" 
     asp-action="Index" 
     asp-route-genre="@item.Name"
-    class="genre-list genre-list-active">
+    class="genre-list @(ViewBag.SelectedGenre == item.Name?"active":"")">
         @item.Name</a>
 }

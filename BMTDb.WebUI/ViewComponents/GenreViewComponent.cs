@@ -15,6 +15,8 @@ namespace BMTDb.WebUI.ViewComponents
         }
         public IViewComponentResult Invoke() 
         {
+            if (RouteData.Values["genre"] != null)
+                ViewBag.SelectedGenre = RouteData?.Values["genre"];
             return View(_genreService.GetAll());
         }
     }
