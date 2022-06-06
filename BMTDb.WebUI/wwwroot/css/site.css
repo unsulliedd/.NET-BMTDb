@@ -30,7 +30,7 @@ html {
 
 body {
     margin-bottom: 60px;
-    background: var(--background);
+    background-color: var(--background);
     color: var(--foreground);
 }
 
@@ -47,8 +47,8 @@ a:hover{
 /************** Dark Mode CSS **************/
 
 .darkmode {
-    --clr-light: #fff;
-    --clr-dark: #121212;
+    --clr-light: #fff;              /*linear-gradient(to right, #e6dada, #274046)*/
+    --clr-dark: #121212;            /*linear-gradient(to right, #232526, #414345)*/
     --foreground: var(--clr-light);
     --background: var(--clr-dark);
 }
@@ -220,3 +220,37 @@ footer {
 /*********** SpotlightView ***********/
 
 
+/************ Pagination ************/
+
+.pagination-row {
+    display: flex;
+    margin-top: 30px;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-content: center;
+}
+
+.pagination-number {
+    margin: 6px;
+    border-radius: 6px;
+    width: 38px;
+    height: 38px;
+    background: linear-gradient(to right, #232526, #414345);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pagination-number-link {
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+}
+
+.pagination-number.active {background: linear-gradient(to right, #1a2980, #26d0ce)}
+a.pagination-number-link:hover {background: linear-gradient(to right, #ff512f, #dd2476)}
+a.pagination-number-link {color: white}

@@ -51,6 +51,7 @@
                         <button class="btn btn-select dropdown-toggle" type="button" data-bs-toggle="dropdown">Select Studio
                         </button>
                         <ul class="dropdown-menu" style="padding: 0.5rem 0.5rem 0.5rem 0.5rem;">
+                            <li class="dropdown active" style="padding:5px"><a style="color:black" href="/Movies">All</a></li>
                             @await Component.InvokeAsync("Studio")
                         </ul>
                     </div>
@@ -70,7 +71,7 @@
         </div>
     
         <div class="container-movie col-sm-10">
-            <div id="page">
+            <div id="movie-page">
                 <div class="movie-card-list">
                     @if(Model.Movies.Count == 0)
                     {
@@ -82,8 +83,38 @@
                             @await Html.PartialAsync("_MovieCard", movie)      
                         } 
                 </div>
-
             </div>
+
+            <div class="pagination-row">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+
+                        @for (int i = 0; i < Model.PageInfo.TotalPages(); i++)
+                        {
+                            @if (Model.PageInfo.CurrentGenre != null)
+                            {
+                                <li class="pagination-number @(Model.PageInfo.CurrentPage==i-1?"active":"")">
+                                    <a class="pagination-number-link" href="/movies/@Model.PageInfo.CurrentGenre?page=@(i+1)">@(i+1)</a></li>
+                            }
+                            else if (Model.PageInfo.CurrentStudio != null)
+                            {
+                                <li class="pagination-number @(Model.PageInfo.CurrentPage==i+1?"active":"")">
+                                    <a class="pagination-number-link" href="/movie/@Model.PageInfo.CurrentStudio?page=@(i+1)">@(i+1)</a></li>
+                            }
+
+                            else
+                            {
+                                <li class="pagination-number @(Model.PageInfo.CurrentPage==i+1?"active":"")">
+                                    <a class="pagination-number-link" href="/movie?page=@(i+1)">@(i+1)</a></li>
+                            }
+
+                        }
+
+                    </ul>
+                </nav>
+            </div>
+
         </div>
+
     </div>
 </section>
