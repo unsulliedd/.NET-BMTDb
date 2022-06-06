@@ -14,9 +14,23 @@
     <div class="movie-list">
         <div class="filter-panel">
 
+            <div class="filter-card mb-3">
+                <div class="filter-title">
+                    <h4>Search</h4>
+                </div>
+                <div class="filter-card-search px-2">
+                    <form class="mb-3" action="/search" style="width:100%">
+                        <div>
+                            <input name="q" type="text" class="form-control" placeholder="Search"/>
+                        </div>
+                        <button type="submit" class="search-btn btn-outline-dark mt-2">Search</button>
+                    </form>
+                </div>
+            </div>
+
             <div class="filter-card card mb-3">
                 <div class="filter-title">
-                    <h2>Sort</h2>
+                    <h4>Sort</h4>
                 </div>
                 <div class="filter-card-select px-2">
                     <select class="form-select form-select-lg mb-3" aria-label="Sort">
@@ -28,7 +42,7 @@
 
             <div class="filter-card card mb-3">
                 <div class="filter-title">
-                    <h2>Genres</h2>
+                    <h4>Genres</h4>
                 </div>
                 <div class="accordion px-2">
                     <button type="button" class="accordion_button">Genres</button>
@@ -42,7 +56,7 @@
 
             <div class="filter-card card mb-3">
                 <div class="filter-title">
-                    <h2>Filters</h2>
+                    <h4>Filters</h4>
                 </div>
                 <hr />
                 <div class="px-2">
@@ -88,7 +102,6 @@
             <div class="pagination-row">
                 <nav aria-label="Page navigation">
                     <ul class="pagination">
-
                         @for (int i = 0; i < Model.PageInfo.TotalPages(); i++)
                         {
                             @if (Model.PageInfo.CurrentGenre != null)
@@ -101,15 +114,12 @@
                                 <li class="pagination-number @(Model.PageInfo.CurrentPage==i+1?"active":"")">
                                     <a class="pagination-number-link" href="/movie/@Model.PageInfo.CurrentStudio?page=@(i+1)">@(i+1)</a></li>
                             }
-
                             else
                             {
                                 <li class="pagination-number @(Model.PageInfo.CurrentPage==i+1?"active":"")">
                                     <a class="pagination-number-link" href="/movie?page=@(i+1)">@(i+1)</a></li>
                             }
-
                         }
-
                     </ul>
                 </nav>
             </div>

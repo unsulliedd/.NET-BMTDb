@@ -41,8 +41,8 @@
                     </ul>
                 </div>
                 <div class="navbar-left">
-                    <form class="navbar-search">
-                        <input type="search" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
+                    <form class="navbar-search" asp-controller="Movie" asp-action="Search">
+                        <input name="q" type="search" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
                     </form>
 
                     <div class="navbar-login">
