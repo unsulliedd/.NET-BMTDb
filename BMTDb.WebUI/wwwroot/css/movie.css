@@ -21,11 +21,6 @@ a {
     color: var(--foreground);
 }
 
-a.studio-list.active {
-    background: linear-gradient(to right, #8e9eab, #eef2f3);    
-    padding:5px;
-}
-
 .content {
     margin-top: 70px;
     padding-bottom: 60px;
@@ -80,6 +75,22 @@ a.studio-list.active {
     flex-direction: column;
 }
 
+.filter-card-search {
+    display: flex;
+    align-items: baseline;
+    flex-direction: column;
+}
+
+.search-btn {
+    min-width: min-content;
+    display: block;
+    width: 100%;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    padding: 5px;
+}
+
 .btn-select {
     display: flex;
     flex-direction: row;
@@ -95,8 +106,15 @@ a.studio-list.active {
     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
     font-size: 1.25rem;
 }
-a.studio-list {color:black}
-a.studio-list:hover{color:red}
+
+a.dropdown-list.active {
+    background: linear-gradient(to right, #8e9eab, #eef2f3);
+    border-radius: 3px;
+    padding: 5px;
+}
+
+a.dropdown-list {color:black}
+a.dropdown-list:hover{color:red}
 .dropdown-menu.show {width:100%}
 
 /****** Accordion *******/
