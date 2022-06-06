@@ -37,6 +37,11 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapControllerRoute(
+    name: "Search",
+    pattern: "search",
+    defaults: new { controller = "Movie", action = "Search" });
+
+app.MapControllerRoute(
     name: "MovieStudio",
     pattern: "Movie/{studio?}",
     defaults: new { controller = "Movie", action = "Index" });
