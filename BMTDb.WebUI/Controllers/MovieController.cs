@@ -15,7 +15,7 @@ namespace BMTDb.WebUI.Controllers
 
         public IActionResult Index(string genre, string studio, int page = 1)
         {
-            const int pageSize = 2;
+            const int pageSize = 20;
             var movieViewModel = new MovieViewModel()
             {
                 PageInfo = new PageInfo()
@@ -51,6 +51,15 @@ namespace BMTDb.WebUI.Controllers
                 Studios = movies.MovieStudios.Select(i => i.Studios).ToList(),
                 Persons = movies.MovieCrews.Select(i => i.Person).ToList()
             });
+        }
+        public IActionResult Search(string q)
+        {
+            var movieViewModel = new MovieViewModel()
+            {
+                Movies = _movieService.GetSearchResult(q)
+            };
+
+            return View(movieViewModel);
         }
     }
 }

@@ -11,6 +11,7 @@ namespace BMTDb.Data.Abstract
     {
         Movie GetMovieDetails(int id);
         List<Movie> GetMoviebyFilter(string name, string Studio_Name, int page, int pageSize);
+        List<Movie> GetSearchResult(string searchString);
         int GetCountbyFilter(string genre, string studio);
     }
 }

@@ -81,5 +81,28 @@ namespace BMTDb.Data.Concrete.EFCore
                             .ThenInclude(i => i.Studios)
                             .FirstOrDefault();
         }
+
+        public List<Movie> GetSearchResult(string searchString)
+        {
+            using (var context = new BMTDbContext())
+            {
+                var movies = context.Movies.AsQueryable();
+
+                if (!string.IsNullOrEmpty(searchString))
+                {
+                    movies = movies
+                                .Include(i => i.MovieGenres)
+                                .ThenInclude(i => i.Genre)
+                                .Include(i => i.MovieStudios)
+                                .ThenInclude(i => i.Studios)
+                                .Where(i => i.Title.ToLower().Contains(searchString.ToLower())
+                                    || i.MovieInfo.ToLower().Contains(searchString.ToLower())
+                                    || i.MovieGenres.Any(a => a.Genre.Name.ToLower().Contains(searchString.ToLower()))
+                                    || i.MovieStudios.Any(a => a.Studios.Studio_Name.ToLower().Contains(searchString.ToLower())));
+                }
+
+                return movies.ToList();
+            }
+        }
     }
 }

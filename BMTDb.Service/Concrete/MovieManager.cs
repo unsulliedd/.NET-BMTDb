@@ -55,5 +55,10 @@ namespace BMTDb.Service.Concrete
         {
             return _movieRepository.GetCountbyFilter(genre, studio);
         }
+
+        public List<Movie> GetSearchResult(string searchString)
+        {
+            return _movieRepository.GetSearchResult(searchString);
+        }
     }
 }

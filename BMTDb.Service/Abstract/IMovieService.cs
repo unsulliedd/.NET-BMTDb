@@ -11,6 +11,7 @@ namespace BMTDb.Service.Abstract
     {
         Movie GetMovieDetails(int id);
         List<Movie> GetMoviebyFilter(string name, string Studio_Name, int page, int pageSize);
+        List<Movie> GetSearchResult(string searchString);
         Movie GetById(int id);
         List<Movie> GetAll();
         void Create(Movie entity);
