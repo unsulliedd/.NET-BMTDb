@@ -237,19 +237,19 @@ footer {
     margin-top: 30px;
     flex-direction: row;
     flex-wrap: nowrap;
-    justify-content: center;
     align-content: center;
+    justify-content: center;
 }
 
 .pagination-number {
-    margin: 6px;
-    border-radius: 6px;
-    width: 38px;
-    height: 38px;
-    background: linear-gradient(to right, #232526, #414345);
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 38px;
+    height: 38px;
+    margin: 6px;
+    border-radius: 6px;
+    background: linear-gradient(to right, #232526, #414345);
 }
 
 .pagination-number-link {
@@ -264,3 +264,5 @@ footer {
 .pagination-number.active {background: linear-gradient(to right, #1a2980, #26d0ce)}
 a.pagination-number-link:hover {background: linear-gradient(to right, #ff512f, #dd2476)}
 a.pagination-number-link {color: white}
+/************ Pagination ************/
+

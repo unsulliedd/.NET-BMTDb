@@ -6,7 +6,7 @@
     <a asp-controller="Movie" 
     asp-action="Index" 
     asp-route-studio="@item.Studio_Name"
-    class="studio-list @(ViewBag.SelectedStudio == item.Studio_Name?"active":"")">
+    class="dropdown-list @(ViewBag.SelectedStudio == item.Studio_Name?"active":"")">
         @item.Studio_Name</a>
     </li>
 }
