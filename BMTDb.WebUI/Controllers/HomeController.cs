@@ -1,4 +1,6 @@
-﻿using BMTDb.WebUI.Models;
+﻿#pragma warning disable IDE0052 // Remove unread private members
+
+using BMTDb.WebUI.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 

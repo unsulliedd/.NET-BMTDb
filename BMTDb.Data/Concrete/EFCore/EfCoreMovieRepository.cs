@@ -1,6 +1,7 @@
 ﻿#pragma warning disable CS8603 // Possible null reference return.
 #pragma warning disable CS8604 // Possible null reference argument.
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
+#pragma warning disable IDE0063 // Use simple 'using' statement
 
 using BMTDb.Data.Abstract;
 using BMTDb.Entity;
