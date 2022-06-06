@@ -21,9 +21,9 @@ a {
     color: var(--foreground);
 }
 
-hr {
-    margin-bottom: 10px;
-    margin-top: 10px;
+a.studio-list.active {
+    background: linear-gradient(to right, #8e9eab, #eef2f3);    
+    padding:5px;
 }
 
 .content {
@@ -95,7 +95,8 @@ hr {
     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
     font-size: 1.25rem;
 }
-
+a.studio-list {color:black}
+a.studio-list:hover{color:red}
 .dropdown-menu.show {width:100%}
 
 /****** Accordion *******/
@@ -167,7 +168,7 @@ a:hover.genre-list {color:black}
     display: grid;
     justify-content: center;
     gap: 10px;
-    grid-template-columns: repeat(auto-fit, 190px);
+    grid-template-columns: repeat(auto-fit, 200px);
 }
 
 .movie-card {
