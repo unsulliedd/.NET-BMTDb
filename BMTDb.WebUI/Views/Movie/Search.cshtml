@@ -1,0 +1,105 @@
+﻿@model MovieViewModel
+
+<link rel="stylesheet" href="~/css/movie.css" asp-append-version="true" />
+
+@{
+    ViewData["Title"] = "Movies";
+}
+
+<section class="container content">
+    <div class="title">
+        <h1>Movies</h1>
+    </div>
+
+    <div class="movie-list">
+        <div class="filter-panel">
+
+            <div class="filter-card mb-3">
+                <div class="filter-title">
+                    <h4>Search</h4>
+                </div>
+                <div class="filter-card-search px-2">
+                    <form class="mb-3" action="/search" style="width:100%">
+                        <div>
+                            <input name="q" type="text" class="form-control" placeholder="Search"/>
+                        </div>
+                        <button type="submit" class="search-btn btn-outline-dark mt-2">Search</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="filter-card card mb-3">
+                <div class="filter-title">
+                    <h2>Sort</h2>
+                </div>
+                <div class="filter-card-select px-2">
+                    <select class="form-select form-select-lg mb-3" aria-label="Sort">
+                        <option selected>Sort</option>
+
+                    </select>
+                </div>
+            </div>
+
+            <div class="filter-card card mb-3">
+                <div class="filter-title">
+                    <h2>Genres</h2>
+                </div>
+                <div class="accordion px-2">
+                    <button type="button" class="accordion_button">Genres</button>
+                        <div class="accordion_content">
+                            <div class="filter">
+                               @await Component.InvokeAsync("Genre")
+                            </div>
+                        </div>
+                </div> 
+            </div>
+
+            <div class="filter-card card mb-3">
+                <div class="filter-title">
+                    <h2>Filters</h2>
+                </div>
+                <hr />
+                <div class="px-2">
+                    <h3>Studios</h3>
+                    <div class="dropdown" style="width:100%">
+                        <button class="btn btn-select dropdown-toggle" type="button" data-bs-toggle="dropdown">Select Studio
+                        </button>
+                        <ul class="dropdown-menu" style="padding: 0.5rem 0.5rem 0.5rem 0.5rem;">
+                            <li class="dropdown active" style="padding:5px"><a style="color:black" href="/Movies">All</a></li>
+                            @await Component.InvokeAsync("Studio")
+                        </ul>
+                    </div>
+                </div>
+
+                <hr />
+
+                <div class="filter-card-select px-2">
+                    <h3>Language</h3>
+                    <select class="btn-select form-select-lg" aria-label="Select Language">
+                        <option selected>All</option>
+
+                    </select>
+                </div>
+                <hr />
+            </div>
+        </div>
+    
+        <div class="container-movie col-sm-10">
+            <div id="movie-page">
+                <div class="movie-card-list">
+                    @if(Model.Movies.Count == 0)
+                    {
+                        @await Html.PartialAsync("_nocontent")
+                    }
+                    else
+                        @foreach (var movie in Model.Movies)
+                        {    
+                            @await Html.PartialAsync("_MovieCard", movie)      
+                        } 
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
