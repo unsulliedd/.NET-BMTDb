@@ -15,6 +15,7 @@ namespace BMTDb.Entity
         public int MovieId { get; set; }
         public string? Title { get; set; }
         public string? Director { get; set; }
+        [DataType(DataType.Date)]
         public DateTime ReleaseDate { get; set; }
         public string? MovieInfo { get; set; }
         public string? Trailer { get; set; }
