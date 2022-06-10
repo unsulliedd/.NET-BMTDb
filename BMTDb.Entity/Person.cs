@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,8 +14,10 @@ namespace BMTDb.Entity
         public string? PhotoUrl { get; set; }
         public string? Biography { get; set; }
         public string? Imdb_Id { get; set; }
-        public string? Birthday { get; set; }
-        public string? Deathday { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime Birthday { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime? Deathday { get; set; }
         public string? PlaceOfBirth { get; set; }
         public string? Job { get; set; }
 
