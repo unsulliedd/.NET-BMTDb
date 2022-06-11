@@ -1,0 +1,70 @@
+﻿@model AdminMovieModel
+
+<link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+
+@*Admin Movie Add*@
+
+<div class="container wrapper">
+    <h2><b>Update Movie</b></h2>
+    <hr />
+    <form asp-controller="Admin" asp-action="EditMovie" method="post">
+        <input type="hidden" name="MovieId" value="@Model.MovieId" />
+
+        <div class="add-form">
+            <div class="add1">
+                    <input class="feedback-input" asp-for="Title"           placeholder="Title"/>
+                    <input class="feedback-input" asp-for="Director"        placeholder="Director"/>
+                    <input class="feedback-input" asp-for="MovieTagline"    placeholder="Tagline"/>
+                    <input class="feedback-input" asp-for="MovieInfo"       placeholder="Info"/>
+            </div>
+            <div class="add-poster">
+                    <input class="feedback-input" asp-for="MoviePoster"     placeholder="Poster Url"/>   
+            </div>
+            <div class="add-backdrop">
+                    <input class="feedback-input" asp-for="MovieBackdrop"   placeholder="Backdrop Url"/>   
+            </div>
+            <div class="add2">
+                    <input class="feedback-input" asp-for="ReleaseDate"     placeholder="Release Date"/>   
+                    <input class="feedback-input" asp-for="RunTime"         placeholder="Runtime"/>
+                    <input class="feedback-input" asp-for="MovieRatings"    placeholder="Ratings"/>
+                    <input class="feedback-input" asp-for="Budget"          placeholder="Budget"/>
+            </div>
+            <div class="add3">
+                    <input class="feedback-input" asp-for="IMDBId"          placeholder="IMDb Id"/>   
+                    <input class="feedback-input" asp-for="TMDbId"          placeholder="TMDb Id"/>
+            </div>
+            <div class="add-logo">
+                    <input class="feedback-input" asp-for="MovieLogo"       placeholder="Logo Url"/>   
+            </div>
+            <div class="add-trailer">
+                    <input class="feedback-input" asp-for="Trailer"         placeholder="Trailer Url"/>   
+            </div>
+            <div class="add-moviegenre">
+                @foreach (var item in (List<Genre>)ViewBag.Genres)
+                {
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" name="genreIds" value="@item.GenreId" id="genre_@item.GenreId" 
+                        @(Model.SelectedGenres.Any(i=>i.GenreId==item.GenreId)? "checked" : "")>
+                      <label class="form-check-label" for="genre_@item.GenreId">
+                        @item.Name
+                      </label>
+                    </div>
+                }
+            </div>
+            <div class="add-moviestudio">
+                @foreach (var item in (List<Studio>)ViewBag.Studios)
+                {
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" name="studioIds" value="@item.StudioId" id="studio_@item.StudioId" 
+                        @(Model.SelectedStudios.Any(i=>i.StudioId==item.StudioId)? "checked" : "")>
+                      <label class="form-check-label" for="studio_@item.StudioId">
+                        @item.Studio_Name
+                      </label>
+                    </div>
+                }
+            </div>
+            <input type="submit" value="Update Movie" class="add-btn"/>
+
+        </div>
+    </form>
+</div>

@@ -30,6 +30,10 @@ namespace BMTDb.Service.Concrete
         {
             _movieRepository.Update(entity);
         }
+        public void Update(Movie entity, int[] genreIds, int[] studioIds, int[] crewIds)
+        {
+            _movieRepository.Update(entity, genreIds, studioIds, crewIds);
+        }
 
         public List<Movie> GetAll()
         {
@@ -60,5 +64,16 @@ namespace BMTDb.Service.Concrete
         {
             return _movieRepository.GetSearchResult(searchString);
         }
+
+        public List<Movie> GetMovies(int page, int pageSize)
+        {
+            return _movieRepository.GetMovies(page, pageSize);
+        }
+
+        public int GetMovieCount()
+        {
+            return _movieRepository.GetMovieCount();
+        }
+
     }
 }

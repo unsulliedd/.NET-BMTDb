@@ -16,7 +16,10 @@ namespace BMTDb.Service.Abstract
         List<Movie> GetAll();
         void Create(Movie entity);
         void Update(Movie entity);
+        void Update(Movie entity, int[] genreIds, int[] studioIds, int[] crewIds);
         void Delete(Movie entity);
         int GetCountbyFilter(string genre, string studio);
+        List<Movie> GetMovies(int page, int pageSize);
+        int GetMovieCount();
     }
 }

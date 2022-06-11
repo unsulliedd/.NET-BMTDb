@@ -1,0 +1,76 @@
+﻿@model AdminItemListModel
+
+<link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+
+@*Admin Movie List*@
+
+<div class="table-wrapper">
+    <h2>Movie List</h2>
+    <hr>
+    <table class="movielist-table">
+        <thead>
+            <tr>
+                <td><b>Id</b></td>
+                <td><b>Poster</b></td>
+                <td><b>Title</b></td>
+                <td><b>Director</b></td>
+                <td><b>Release Date</b></td>
+                <td><b>Info</b></td>
+                <td><b>Tagline</b></td>
+                <td><b>Runtime</b></td>
+                <td><b>Ratings</b></td>
+                <td><b>Backdrop</b></td>
+                <td><b>Logo</b></td>
+                <td><b>Trailer</b></td>
+                <td><b>Status</b></td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Movies)
+            {
+            <tr>
+                <td>@item.MovieId</td>
+                <td><img src="@item.MoviePoster" width="80" /></td>
+                <td>@item.Title</td>
+                <td>@item.Director</td>
+                <td>@item.ReleaseDate.ToShortDateString()</td>
+                <td style="width:360px;">@item.MovieInfo</td>
+                <td>@item.MovieTagline</td>
+                <td>@item.RunTime</td>
+                <td>@item.MovieRatings</td>
+                <td><img src="@item.MovieBackdrop" width="160" /></td>
+                <td><img src="@item.MovieLogo" width="100" /></td>
+                <td><iframe width="235" height="136" src="@item.Trailer" 
+                    frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; 
+                    picture-in-picture" allowfullscreen></iframe></td>
+                <td>@item.Status</td>
+
+                <td>
+                    <a href="/admin/edit-movie/@item.MovieId"><img style="width: 28px" title='Edit' 
+                        src="/img/icon-svg/pencil-square.svg" viewBox="0 0 28 28" /></a>
+                    
+                    <form action="/Admin/DeleteMovie" method="post">
+                        <input type="hidden" name="MovieId" value="@item.MovieId">
+                        <button class="delete-btn" type="submit"><img style="width: 25px" title='Delete' 
+                            src="/img/icon-svg/x-square.svg" viewBox="0 0 25 25"></button>
+                    </form>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>           
+</div>
+
+<div class="pagination-row">
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            @for (int i = 0; i < Model.AdminPageInfo.TotalAdminPages(); i++)
+            {
+                            
+            <li class="pagination-number @(Model.AdminPageInfo.AdminCurrentPage==i+1?"active":"")">
+                <a class="pagination-number-link" href="movielist?page=@(i+1)">@(i+1)</a></li>
+                            
+            }
+        </ul>
+    </nav>
+</div>   
