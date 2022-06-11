@@ -43,9 +43,10 @@
                     
                     <form action="/Admin/DeletePerson" method="post">
                         <input type="hidden" name="PersonId" value="@item.PersonId">
-                        <button style="padding:1px" class="delete-btn" type="submit"><img 
-                            style="width: 25px" title='Delete' 
-                            src="/img/icon-svg/x-square.svg" viewBox="0 0 25 25"></button>
+                        <button onclick="return confirm('Are you sure you want to delete - @item.Name')" 
+                            style="padding:1px" class="delete-btn" type="submit">
+                            <img style="width: 25px" title='Delete' 
+                                src="/img/icon-svg/x-square.svg" viewBox="0 0 25 25"></button>
                     </form>
                 </td>
             </tr>

@@ -51,7 +51,7 @@
                     
                     <form action="/Admin/DeleteMovie" method="post">
                         <input type="hidden" name="MovieId" value="@item.MovieId">
-                        <button class="delete-btn" type="submit"><img style="width: 25px" title='Delete' 
+                        <button onclick="return confirm('Are you sure you want to delete - @item.Title')" class="delete-btn" type="submit"><img style="width: 25px" title='Delete' 
                             src="/img/icon-svg/x-square.svg" viewBox="0 0 25 25"></button>
                     </form>
                 </td>

@@ -10,26 +10,35 @@
     <form asp-controller="Admin" asp-action="EditPerson" method="post">
         <input type="hidden" name="PersonId" value="@Model.PersonId" />
 
-        <div class="add-form">
-            <div class="add1">
+        <div class="add-person-form">
+            <div class="person-form-1">
+                <span class="text-muted">Name</span>
                     <input class="feedback-input" asp-for="Name"            placeholder="Name"/>
-                    <input class="feedback-input" asp-for="Job"             placeholder="Job"/>
+                <span class="text-muted">Place of Birth</span>
                     <input class="feedback-input" asp-for="PlaceOfBirth"    placeholder="PlaceOfBirth"/>
+                <span class="text-muted">Birthday</span>
                     <input class="feedback-input" asp-for="Birthday"        placeholder="Birthday"/>
+                <span class="text-muted">Deathday</span>
+                    <input class="feedback-input" asp-for="Deathday"        placeholder="Deathday"/>
             </div>
-            <div class="add-poster">
-                    <input class="feedback-input" asp-for="PhotoUrl"        placeholder="Photo Url"/>   
-            </div>
-            <div class="add-backdrop">
-                    <input class="feedback-input" asp-for="Biography"       placeholder="Biography"/>   
-            </div>
-            <div class="add2">
-                    <input class="feedback-input" asp-for="Deathday"        placeholder="Deathday"/>   
+            <div class="person-form-2">
+                <span class="text-muted">Job</span>
+                    <input class="feedback-input" asp-for="Job"             placeholder="Job"/>
+                <span class="text-muted">Imdb Id</span>
                     <input class="feedback-input" asp-for="Imdb_Id"         placeholder="Imdb_Id"/>
             </div>
-
-            <input type="submit" value="Update Person" class="add-btn"/>
-
+            <div class="person-form-3">
+                <span class="text-muted">Photo Url</span>
+                    <input class="feedback-input" asp-for="PhotoUrl"        placeholder="Photo Url"/>   
+            </div>
+            <div class="person-form-4">
+                <span class="text-muted">Biography</span>
+                    <input class="feedback-input" asp-for="Biography"       placeholder="Biography">    
+            </div>
+            <div class="person-form-5" style="margin-top: 25px">
+                <input type="submit" value="Add Person" class="add-btn"/>
+            </div>
+            
         </div>
     </form>
 </div>
