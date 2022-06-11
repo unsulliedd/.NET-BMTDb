@@ -51,7 +51,23 @@
     </div>
     <div class="admin-main">
         <div class="admin-main-col-1">
+            <div>
+                <h2 class="main-head mb-4">BMTDb</h2>
+                <div class="pie-chart-list mb-4">
+                    <ul>
+                        <li>Total Movies:   @Model.Movies.Count</li>
+                        <li>Total Tv Shows: 0</li>
+                        <li>Total Persons:  @Model.Persons.Count</li>
+                        <li>Total Genres:   @Model.Genres.Count</li>
+                        <li>Total Studios:  @Model.Studios.Count</li>
+                    </ul>
+                </div>
 
+                <div class="pie-chart">
+                    <partial name="_PieChart" />
+                </div>
+
+            </div>
         </div>
         <div class="admin-main-col-2">
 
