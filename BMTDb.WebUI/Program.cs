@@ -43,6 +43,38 @@ app.MapControllerRoute(
     pattern: "admin/dashboard",
     defaults: new { controller = "Admin", action = "AdminDashboard" });
 
+//localhost/admin/persons
+app.MapControllerRoute(
+    name: "AdminPersonList",
+    pattern: "admin/persons",
+    defaults: new { controller = "Admin", action = "PersonList" });
+
+app.MapControllerRoute(
+    name: "AdminAddPerson",
+    pattern: "admin/add-person",
+    defaults: new { controller = "Admin", action = "AddPerson" });
+
+app.MapControllerRoute(
+    name: "AdminPersonEdit",
+    pattern: "Admin/edit-person/{id?}",
+    defaults: new { controller = "Admin", action = "EditPerson" });
+
+//localhost/admin/movies
+app.MapControllerRoute(
+    name: "AdminMovieList",
+    pattern: "admin/movies",
+    defaults: new { controller = "Admin", action = "MovieList" });
+
+app.MapControllerRoute(
+    name: "AdminAddMovie",
+    pattern: "admin/add-movie",
+    defaults: new { controller = "Admin", action = "AddMovie" });
+
+app.MapControllerRoute(
+    name: "AdminMovieEdit",
+    pattern: "Admin/edit-movie/{id?}",
+    defaults: new { controller = "Admin", action = "EditMovie" });
+
 //localhost/search
 app.MapControllerRoute(
     name: "Search",

@@ -1,0 +1,35 @@
+﻿@model AdminPersonModel
+
+<link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+
+@*Admin Person Add*@
+
+<div class="container wrapper">
+    <h2><b>Update Person</b></h2>
+    <hr />
+    <form asp-controller="Admin" asp-action="EditPerson" method="post">
+        <input type="hidden" name="PersonId" value="@Model.PersonId" />
+
+        <div class="add-form">
+            <div class="add1">
+                    <input class="feedback-input" asp-for="Name"            placeholder="Name"/>
+                    <input class="feedback-input" asp-for="Job"             placeholder="Job"/>
+                    <input class="feedback-input" asp-for="PlaceOfBirth"    placeholder="PlaceOfBirth"/>
+                    <input class="feedback-input" asp-for="Birthday"        placeholder="Birthday"/>
+            </div>
+            <div class="add-poster">
+                    <input class="feedback-input" asp-for="PhotoUrl"        placeholder="Photo Url"/>   
+            </div>
+            <div class="add-backdrop">
+                    <input class="feedback-input" asp-for="Biography"       placeholder="Biography"/>   
+            </div>
+            <div class="add2">
+                    <input class="feedback-input" asp-for="Deathday"        placeholder="Deathday"/>   
+                    <input class="feedback-input" asp-for="Imdb_Id"         placeholder="Imdb_Id"/>
+            </div>
+
+            <input type="submit" value="Update Person" class="add-btn"/>
+
+        </div>
+    </form>
+</div>

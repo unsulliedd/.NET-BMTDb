@@ -161,6 +161,106 @@ namespace BMTDb.WebUI.Controllers
             return RedirectToAction("MovieList");
         }
 
+        //Admin/Person
+        public IActionResult PersonList(int page=1)
+        {
+            const int pageSize = 20;
+            var adminItemListModel = new AdminItemListModel()
+            {
+                AdminPageInfo = new AdminPageInfo()
+                {
+                    TotalAdminItem = _personService.GetPersonCount(),
+                    AdminCurrentPage = page,
+                    AdminItemPerPage = pageSize,
+                },
+                Persons = _personService.GetPersons(page, pageSize)
+            };
+            return View(adminItemListModel);
+        }
+        [HttpGet]
+        public IActionResult AddPerson()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult AddPerson(AdminPersonModel model)
+        {
+            var entity = new Person()
+            {
+                Name = model.Name,
+                Biography = model.Biography,
+                PhotoUrl = model.PhotoUrl,
+                Birthday = model.Birthday,
+                PlaceOfBirth = model.PlaceOfBirth,
+                Job = model.Job,
+                Deathday = model.Deathday,
+                Imdb_Id = model.Imdb_Id,
+            };
+
+            _personService.Create(entity);
+
+            return RedirectToAction("PersonList");
+        }
+        [HttpGet]
+        public IActionResult EditPerson(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var entity = _personService.GetById((int)id);
+
+            var model = new AdminPersonModel()
+            {
+                PersonId = entity.PersonId,
+                Name = entity.Name,
+                Biography = entity.Biography,
+                PhotoUrl = entity.PhotoUrl,
+                Birthday = entity.Birthday,
+                PlaceOfBirth = entity.PlaceOfBirth,
+                Job = entity.Job,
+                Deathday = entity.Deathday,
+                Imdb_Id = entity.Imdb_Id
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult EditPerson(AdminPersonModel model)
+        {
+            var entity = _personService.GetById(model.PersonId);
+
+            if (entity == null)
+            {
+                return NotFound();
+            }
+
+            entity.Name = model.Name;
+            entity.Biography = model.Biography;
+            entity.PhotoUrl = model.PhotoUrl;
+            entity.Birthday = model.Birthday;
+            entity.PlaceOfBirth = model.PlaceOfBirth;
+            entity.Job = model.Job;
+            entity.Deathday = model.Deathday;
+            entity.Imdb_Id = model.Imdb_Id;
+
+            _personService.Update(entity);
+
+            return RedirectToAction("PersonList");
+        }
+
+        public IActionResult DeletePerson(int PersonId)
+        {
+            var entity = _personService.GetById(PersonId);
+
+            if (entity != null)
+            {
+                _personService.Delete(entity);
+            }
+
+            return RedirectToAction("PersonList");
+        }
     }
 
 }

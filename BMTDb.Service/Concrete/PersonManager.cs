@@ -1,4 +1,5 @@
-﻿using BMTDb.Entity;
+﻿using BMTDb.Data.Abstract;
+using BMTDb.Entity;
 using BMTDb.Service.Abstract;
 using System;
 using System.Collections.Generic;
@@ -10,34 +11,43 @@ namespace BMTDb.Service.Concrete
 {
     public class PersonManager : IPersonService
     {
-        private readonly IPersonService _personService;
-        public PersonManager (IPersonService personService)
+        private readonly IPersonRepository _personRepository;
+        public PersonManager (IPersonRepository personRepository)
         {
-            _personService = personService;
+            _personRepository = personRepository;
         }
         public void Create(Person entity)
         {
-            throw new NotImplementedException();
+            _personRepository.Create(entity);
         }
 
         public void Delete(Person entity)
         {
-            throw new NotImplementedException();
+            _personRepository.Delete(entity);
         }
         public void Update(Person entity)
         {
-            throw new NotImplementedException();
+            _personRepository.Update(entity);
         }
 
         public List<Person> GetAll()
         {
-            return _personService.GetAll();
+            return _personRepository.GetAll();
         }
 
         public Person GetById(int id)
         {
-            throw new NotImplementedException();
+            return _personRepository.GetById(id);
         }
 
+        public List<Person> GetPersons(int page, int pageSize)
+        {
+            return _personRepository.GetPersons(page, pageSize);
+        }
+
+        public int GetPersonCount()
+        {
+            return _personRepository.GetPersonCount();
+        }
     }
 }

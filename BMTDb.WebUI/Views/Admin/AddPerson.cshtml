@@ -1,0 +1,31 @@
+﻿@model AdminPersonModel
+
+<link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+
+@*Admin Movie Add*@
+
+<div class="container wrapper">
+    <h2>Add Person</h2>
+    <hr />
+    <form asp-controller="Admin" asp-action="AddPerson" method="post" enctype="multipart/form-data" >
+        <div class="add-form">
+            <div class="add1">
+                    <input class="feedback-input" asp-for="Name"            placeholder="Name"/>
+                    <input class="feedback-input" asp-for="PlaceOfBirth"    placeholder="PlaceOfBirth"/>
+                    <input class="feedback-input" asp-for="Birthday"        placeholder="Birthday"/>
+                    <input class="feedback-input" asp-for="Deathday"        placeholder="Deathday"/>
+            </div>
+            <div class="add-poster">
+                    <input class="feedback-input" asp-for="PhotoUrl"        placeholder="Photo Url"/>   
+            </div>
+            
+            <div class="add2">
+                    <input class="feedback-input" asp-for="Biography"       placeholder="Biography"/>   
+                    <input class="feedback-input" asp-for="Job"             placeholder="Job"/>
+                    <input class="feedback-input" asp-for="Imdb_Id"         placeholder="Imdb_Id"/>
+            </div>
+
+            <input type="submit" value="Add Person" class="add-btn"/>
+        </div>
+    </form>
+</div>

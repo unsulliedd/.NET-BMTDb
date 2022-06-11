@@ -1,0 +1,69 @@
+﻿@model AdminItemListModel
+
+<link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+
+@*Admin Person List*@
+
+<div class="table-wrapper">
+    <h2>Person List</h2>
+    <hr>
+    <table class="personlist-table">
+        <thead>
+            <tr>
+                <td><b>Id</b></td>
+                <td><b>Photo</b></td>
+                <td><b>Name</b></td>
+                <td><b>Biography</b></td>
+                <td><b>Place of Birth</b></td>
+                <td><b>Birthday</b></td>
+                <td><b>Job</b></td>
+                <td><b>Deathday</b></td>
+                <td><b>IMDB Id</b></td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Persons)
+            {
+            <tr>
+                <td>@item.PersonId</td>
+                <td><img src="@item.PhotoUrl" width="80" /></td>
+                <td>@item.Name</td>
+                <td>@item.Biography</td>
+                <td>@item.PlaceOfBirth</td>
+                <td>@item.Birthday</td>
+                <td>@item.Job</td>
+                @if (item.Deathday!=null)
+                {
+                    <td>@item.Deathday</td>
+                }
+                <td>@item.Imdb_Id</td>
+                <td>
+                    <a href="/admin/edit-person/@item.PersonId"><img style="width: 28px" title='Edit' 
+                        src="/img/icon-svg/pencil-square.svg" viewBox="0 0 28 28" /></a>
+                    
+                    <form action="/Admin/DeletePerson" method="post">
+                        <input type="hidden" name="PersonId" value="@item.PersonId">
+                        <button style="padding:1px" class="delete-btn" type="submit"><img 
+                            style="width: 25px" title='Delete' 
+                            src="/img/icon-svg/x-square.svg" viewBox="0 0 25 25"></button>
+                    </form>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>           
+</div>
+
+<div class="pagination-row">
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            @for (int i = 0; i < Model.AdminPageInfo.TotalAdminPages(); i++)
+            {
+                            
+            <li class="pagination-number @(Model.AdminPageInfo.AdminCurrentPage==i+1?"active":"")">
+                <a class="pagination-number-link" href="personlist?page=@(i+1)">@(i+1)</a></li>
+                            
+            }
+        </ul>
+    </nav>
+</div>   

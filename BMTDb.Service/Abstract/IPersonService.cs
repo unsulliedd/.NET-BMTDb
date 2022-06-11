@@ -14,5 +14,7 @@ namespace BMTDb.Service.Abstract
         void Create(Person entity);
         void Update(Person entity);
         void Delete(Person entity);
+        List<Person> GetPersons(int page, int pageSize);
+        int GetPersonCount();
     }
 }
