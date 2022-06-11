@@ -28,21 +28,20 @@
                             <a class="nav-link text-light" asp-controller="TvShow" asp-action="Index">Tv Shows</a>
                         </li>
                         <li class="nav-item dropdown">
-                            <button class="dropdown-toggle dropdown-menu-toggle nav-link" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" 
-                                aria-expanded="false">
-                            More
-                            </button>
-                                <div class="dropdown-menu dropdown-menu-navbar" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="#">Action</a>
-                                    <a class="dropdown-item" href="#">Admin</a>
-                                    <a class="dropdown-item" asp-controller="Home" asp-action="About">About</a>
+                            <button class="dropdown-toggle dropdown-menu-toggle nav-link" id="dropdownMenuButton" 
+                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">More</button>
+                                <div class="dropdown-menu dropdown-menu-navbar" aria-label="dropdownMenuButton">
+                                    <a class="dropdown-item" asp-controller="Admin" asp-action="AddMovie"></a>
+                                    <a class="dropdown-item" asp-controller="Admin" asp-action="AdminDashBoard">Admin Dashboard</a>
+                                    <a class="dropdown-item" asp-controller="Home"  asp-action="About">About</a>
                                 </div>
                         </li>
                     </ul>
                 </div>
                 <div class="navbar-left">
                     <form class="navbar-search" asp-controller="Movie" asp-action="Search">
-                        <input name="q" type="search" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
+                        <input name="q" type="search" class="form-control form-control-dark" placeholder="Search..." 
+                            aria-label="Search">
                     </form>
 
                     <div class="navbar-login">
@@ -54,8 +53,8 @@
         </div>
 
         <div class="navbar-dropdown">
-            <span class="btn navbar-dropdown dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-
+            <span class="btn navbar-dropdown dropdown-toggle" data-bs-toggle="dropdown" 
+                aria-haspopup="true" aria-expanded="false">
             </span>
                 <div class="dropdown-menu dropdown-menu-navbar dropdown-menu-end">
 
