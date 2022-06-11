@@ -12,9 +12,10 @@ namespace BMTDb.Data.Abstract
         void Update(Movie entity, int[] genreIds, int[] studioIds, int[] crewIds);
         Movie GetMovieDetails(int id);
         List<Movie> GetMoviebyFilter(string name, string Studio_Name, int page, int pageSize);
+        List<Movie> GetMovies(int page, int pageSize);
         List<Movie> GetSearchResult(string searchString);
         int GetCountbyFilter(string genre, string studio);
-        List<Movie> GetMovies(int page, int pageSize);
         int GetMovieCount();
+        
     }
 }

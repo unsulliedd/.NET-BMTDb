@@ -9,16 +9,17 @@
 .wrapper {margin-top:80px}
 
 /*********** Admin Dashboard ***********/
-.admin-wrapper {
-    top: 0;
-}
+.admin-wrapper {top: 0}
 
 .admin-dashboard {
     color: white;
     height: 1200px;
     flex-grow: 2;
     display: flex;
-    background: linear-gradient(to right top, hsla(270, 50%, 8%, .5), hsla(270, 50%, 8%, .6) 20%, hsla(270, 50%, 8%, .1)), linear-gradient(to right bottom, hsl(270, 50%, 8%), transparent 66%), linear-gradient(to bottom, transparent, hsl(270, 50%, 8%) 56%), url(https://www.themoviedb.org/t/p/original/cIjmEgK67974md4Z9Xe6350sAS2.jpg) no-repeat;
+    background: linear-gradient(to right top, hsla(270, 50%, 8%, .5), hsla(270, 50%, 8%, .6) 20%, hsla(270, 50%, 8%, .1)), 
+        linear-gradient(to right bottom, hsl(270, 50%, 8%), transparent 66%), 
+        linear-gradient(to bottom, transparent, hsl(270, 50%, 8%) 56%), 
+        url(https://www.themoviedb.org/t/p/original/cIjmEgK67974md4Z9Xe6350sAS2.jpg) no-repeat;
     background-size: 100%;
 }
 
@@ -62,8 +63,10 @@
     justify-content: space-around;
 }
 
-.admin-main-col-1 {
-    width: 25%;
+.admin-main-col-1 {width: 25%}
+.admin-main-col-2 {width: 35%}
+.admin-main-col-3 {width: 35%;
+    height: 82.5%;
 }
 
 .pie-chart-list {
@@ -95,15 +98,6 @@
     -webkit-text-fill-color: transparent;
 }
 
-.admin-main-col-2 {
-    width: 35%;
-}
-
-.admin-main-col-3 {
-    width: 35%;
-    height:82.5%;
-}
-
 .recently-list {
     display: flex;
     flex-direction: column;
@@ -131,21 +125,6 @@
 
 /*********** Admin Dashboard ***********/
 
-/*********** PersonList Table Styles ***********/
-.personlist-table {
-    display: inline-block;
-    border-radius: 10px;
-    font-size: 11px;
-    font-weight: normal;
-    border: none;
-    background-color: #dad5d5b1;
-    color: black;
-}
-
-.personlist-table td {
-    padding: 10px 15px;
-}
-/*********** PersonList Table Styles ***********/
 
 /*********** MovieList Table Styles ***********/
 .table-wrapper {
@@ -190,6 +169,22 @@ button.delete-btn {
 }
 
 /*********** MovieList Table Styles ***********/
+
+/*********** PersonList Table Styles ***********/
+.personlist-table {
+    display: inline-block;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: normal;
+    border: none;
+    background-color: #dad5d5b1;
+    color: black;
+}
+
+    .personlist-table td {
+        padding: 10px 15px;
+    }
+/*********** PersonList Table Styles ***********/
 
 
 /*********** Add Movie GridView ***********/

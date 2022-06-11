@@ -177,6 +177,7 @@ namespace BMTDb.WebUI.Controllers
             };
             return View(adminItemListModel);
         }
+
         [HttpGet]
         public IActionResult AddPerson()
         {
@@ -202,6 +203,7 @@ namespace BMTDb.WebUI.Controllers
 
             return RedirectToAction("PersonList");
         }
+
         [HttpGet]
         public IActionResult EditPerson(int? id)
         {

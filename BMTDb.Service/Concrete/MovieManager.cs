@@ -55,24 +55,23 @@ namespace BMTDb.Service.Concrete
             return _movieRepository.GetMoviebyFilter(name, Studio_Name, page, pageSize);
         }
 
-        public int GetCountbyFilter(string genre, string studio)
-        {
-            return _movieRepository.GetCountbyFilter(genre, studio);
-        }
-
-        public List<Movie> GetSearchResult(string searchString)
-        {
-            return _movieRepository.GetSearchResult(searchString);
-        }
-
         public List<Movie> GetMovies(int page, int pageSize)
         {
             return _movieRepository.GetMovies(page, pageSize);
         }
 
+        public int GetCountbyFilter(string genre, string studio)
+        {
+            return _movieRepository.GetCountbyFilter(genre, studio);
+        }
         public int GetMovieCount()
         {
             return _movieRepository.GetMovieCount();
+        }
+
+        public List<Movie> GetSearchResult(string searchString)
+        {
+            return _movieRepository.GetSearchResult(searchString);
         }
 
     }
