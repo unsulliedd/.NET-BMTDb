@@ -1,7 +1,10 @@
-﻿using BMTDb.Entity;
+﻿#pragma warning disable IDE0090 // Use 'new(...)'
+
+using BMTDb.Entity;
 using BMTDb.Service.Abstract;
 using BMTDb.WebUI.Models;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace BMTDb.WebUI.Controllers
 {
@@ -78,6 +81,16 @@ namespace BMTDb.WebUI.Controllers
 
             _movieService.Create(entity);
 
+            NotificationModel msg = new NotificationModel()                 
+            {
+                Message = $"{entity.Title} is added",
+                MessageType = "add",
+                MessageIcon = "fa - solid fa - plus"
+            };
+
+            TempData["message"] = JsonConvert.SerializeObject(msg);
+
+
             return RedirectToAction("MovieList");
         }
 
@@ -146,6 +159,15 @@ namespace BMTDb.WebUI.Controllers
 
             _movieService.Update(entity, genreIds, studioIds, crewIds);
 
+            NotificationModel msg = new NotificationModel()                 //Notification
+            {
+                Message = $"{entity.Title} is updated",
+                MessageType = "update",
+                MessageIcon = "fa-solid fa-pen"
+            };
+
+            TempData["message"] = JsonConvert.SerializeObject(msg);
+
             return RedirectToAction("MovieList");
         }
 
@@ -157,6 +179,15 @@ namespace BMTDb.WebUI.Controllers
             {
                 _movieService.Delete(entity);
             }
+
+            NotificationModel msg = new NotificationModel()                 //Notification
+            {
+                Message = $"{entity?.Title} is deleted",
+                MessageType = "delete",
+                MessageIcon = "fa - solid fa - trash - can"
+            };
+
+            TempData["message"] = JsonConvert.SerializeObject(msg);
 
             return RedirectToAction("MovieList");
         }
@@ -198,6 +229,15 @@ namespace BMTDb.WebUI.Controllers
                 Deathday = model.Deathday,
                 Imdb_Id = model.Imdb_Id,
             };
+
+            NotificationModel msg = new NotificationModel()                 //Notification
+            {
+                Message = $"{entity.Name} is added",
+                MessageType = "add",
+                MessageIcon = "fa - solid fa - plus"
+            };
+
+            TempData["message"] = JsonConvert.SerializeObject(msg);
 
             _personService.Create(entity);
 
@@ -249,6 +289,15 @@ namespace BMTDb.WebUI.Controllers
 
             _personService.Update(entity);
 
+            NotificationModel msg = new NotificationModel()                 //Notification
+            {
+                Message = $"{entity.Name} is updated",
+                MessageType = "update",
+                MessageIcon = "fa-solid fa-pen"
+            };
+
+            TempData["message"] = JsonConvert.SerializeObject(msg);
+
             return RedirectToAction("PersonList");
         }
 
@@ -260,6 +309,15 @@ namespace BMTDb.WebUI.Controllers
             {
                 _personService.Delete(entity);
             }
+
+            NotificationModel msg = new NotificationModel()                 //Notification
+            {
+                Message = $"{entity?.Name} is deleted",
+                MessageType = "delete",
+                MessageIcon = "fa - solid fa - trash - can"
+            };
+
+            TempData["message"] = JsonConvert.SerializeObject(msg);
 
             return RedirectToAction("PersonList");
         }

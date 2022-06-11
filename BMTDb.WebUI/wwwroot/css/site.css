@@ -84,16 +84,16 @@ a.dark-mode-toggle:hover {
 
 /************** Navbar **************/
 .navbar {
-    background: #000000a9;
     position: fixed;
     top: 0px;
     width: 100%;
     transition: top 0.3s;
-    z-index: 999;
-    opacity: 1;
+    z-index: 1;
     flex-direction: row;
     align-items: center;
     white-space: nowrap;
+    background: rgba( 0, 0, 0, 0.6 );
+    backdrop-filter: blur( 3px );
 }
 
 .nav-link {
@@ -281,3 +281,55 @@ a.pagination-number-link:hover {background: linear-gradient(to right, #ff512f, #
 a.pagination-number-link {color: white}
 /************ Pagination ************/
 
+/*********** Message Box ***********/
+
+.msgbox {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 60px;
+    color: white;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 2px solid;
+    padding: 8px 14px 8px 14px;
+    box-sizing: content-box;
+    outline: 0;
+    margin-left: 75%;
+    transform-origin: right;
+    animation: notify 3s ease-in-out infinite;
+    float: right;
+    width: 360px;
+}
+
+.msgbox-msg {
+    display: inline-flex;
+    width: 100%;
+}
+
+.msgbox:target {
+    visibility: hidden;
+    opacity: 0;
+    display: none;
+    overflow: hidden;
+}
+
+.msgbox-close {
+    position: relative;
+    transition: all 200ms;
+    font-size: 30px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.msgbox-icon {
+    position: relative;
+    margin-right: 10px;
+}
+
+.msgbox-close:hover {color: red}
+.msgbox-add     {border-color: green}
+.msgbox-update  {border-color: #0c5bd7}
+.msgbox-delete  {border-color: red}
+
+/*********** Message Box ***********/

@@ -15,6 +15,18 @@
         <partial name="_Header" />
    
             <main role="main" class="pb-3">
+                 @if (TempData["message"] != null)
+            
+                {
+                    var message = JsonConvert.DeserializeObject<NotificationModel>(TempData["message"].ToString());
+                        <div id="popup" class="msgbox msgbox-@message.MessageType">
+                            <i class="msgbox-icon @message.MessageIcon"></i>
+                            <div class="msgbox-msg">
+                                @message.Message
+                            </div>
+                            <a class="msgbox-close" href="#popup">&times;</a> 
+                        </div>
+                }
                 @RenderBody()
             </main>
 
