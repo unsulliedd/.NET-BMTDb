@@ -44,6 +44,20 @@ a:hover{
     color: dodgerblue
 }
 
+/*Scrollbar*/
+::-webkit-scrollbar {width: 12px}
+::-webkit-scrollbar-track {
+    background: linear-gradient(to bottom, #304352, #d7d2cc);
+    box-shadow: inset 0 0 5px grey;
+}
+
+::-webkit-scrollbar-thumb {background: linear-gradient(to bottom, #232526, #414345)}
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(to right, #bdc3c7, #2c3e50);
+    border-radius: 5px;
+}
+/*Scrollbar*/
+
 /************** Dark Mode CSS **************/
 
 .darkmode {
@@ -114,7 +128,6 @@ a.dark-mode-toggle:hover {
 
 .dropdown-menu-navbar {
     background: linear-gradient(to right, #8e9eab, #eef2f3);
-    padding: 10px;
     border: 5px;
     border-radius: 5px;
 }
@@ -128,6 +141,7 @@ a.dark-mode-toggle:hover {
 .dropdown-item:hover {
     background: linear-gradient(to right, #000000, #434343); 
     color:white;
+    width:fit-content;
 }
 
 .dropdown-text {
@@ -140,6 +154,7 @@ a.dark-mode-toggle:hover {
 .social-panel {
     display: flex;
     justify-content: space-between;
+    padding: 0 10px 0 10px;
 }
 
 .social-icon {
