@@ -18,6 +18,7 @@ builder.Services.AddScoped<IStudioRepository,EFCoreStudioRepository>();
 builder.Services.AddScoped<IStudioService, StudioManager>();
 
 builder.Services.AddScoped<IPersonRepository,EFCorePersonRepository>();
+builder.Services.AddScoped<IPersonService, PersonManager>();
 
 var app = builder.Build();
 
@@ -36,6 +37,13 @@ app.UseRouting();
 
 app.UseAuthorization();
 
+//localhost/admin/dashboard
+app.MapControllerRoute(
+    name: "AdminDashboard",
+    pattern: "admin/dashboard",
+    defaults: new { controller = "Admin", action = "AdminDashboard" });
+
+//localhost/search
 app.MapControllerRoute(
     name: "Search",
     pattern: "search",

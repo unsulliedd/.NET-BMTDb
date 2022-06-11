@@ -1,0 +1,64 @@
+﻿@model AdminItemListModel
+
+<link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<div class="admin-dashboard">
+    <div class="admin-sidebar">
+        <div class="sidebar-icons">
+            <a asp-controller="Admin" asp-action="AdminDashboard">
+                <img class="sidebar-icn" src="/img/icon-svg/home.svg" alt="AdminDashboard" />
+            </a>
+        </div>
+        <div class="sidebar-icons">
+            <a asp-controller="Admin" asp-action="MovieList">
+                <img class="sidebar-icn" src="/img/icon-svg/film.svg" title="Movie List" />
+            </a>
+        </div>
+        <div class="sidebar-icons">
+            <a asp-controller="Admin" asp-action="AddMovie">
+                <img class="sidebar-icn" src="/img/icon-svg/add-movie.svg" title="Add Movie" />
+            </a>
+        </div>
+        <div class="sidebar-icons">
+            <a asp-controller="Admin" asp-action="TvShowList">
+                <img class="sidebar-icn" src="/img/icon-svg/tv.svg" title="TvShow List" />
+            </a>
+        </div>
+        <div class="sidebar-icons">
+            <a asp-controller="Admin" asp-action="AddTvShow">
+                <img class="sidebar-icn" src="/img/icon-svg/tv-add.svg" title="Add TvShow" />
+            </a>
+        </div>
+        <div class="sidebar-icons">
+            <a asp-controller="Admin" asp-action="PersonList">
+                <img class="sidebar-icn" src="/img/icon-svg/person.svg" title="Person List" />
+            </a>
+        </div>
+        <div class="sidebar-icons">
+            <a asp-controller="Admin" asp-action="AddPerson">
+                <img class="sidebar-icn" src="/img/icon-svg/person-add.svg" title="Add Person" />
+            </a>
+        </div>
+        <div class="sidebar-icons">
+            <a asp-controller="" asp-action="">
+                <img class="sidebar-icn" src="/img/icon-svg/user.svg" title="Users" />
+            </a>
+        </div>
+    </div>
+    <div class="admin-main">
+        <div class="admin-main-col-1">
+
+        </div>
+        <div class="admin-main-col-2">
+
+        </div>
+        <div class="admin-main-col-3">
+            
+        </div>
+    </div>
+</div>
+

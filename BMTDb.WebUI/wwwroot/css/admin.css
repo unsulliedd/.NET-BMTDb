@@ -1,0 +1,86 @@
+﻿h2 {
+    text-align: center;
+    font-size: 18px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--foreground);
+}
+
+.wrapper {margin-top:80px}
+
+/*********** Admin Dashboard ***********/
+.admin-wrapper {
+    top: 0;
+}
+
+.admin-dashboard {
+    color: white;
+    height: 1200px;
+    flex-grow: 2;
+    display: flex;
+    background: linear-gradient(to right top, hsla(270, 50%, 8%, .5), hsla(270, 50%, 8%, .6) 20%, hsla(270, 50%, 8%, .1)), linear-gradient(to right bottom, hsl(270, 50%, 8%), transparent 66%), linear-gradient(to bottom, transparent, hsl(270, 50%, 8%) 56%), url(https://www.themoviedb.org/t/p/original/cIjmEgK67974md4Z9Xe6350sAS2.jpg) no-repeat;
+    background-size: 100%;
+}
+
+.admin-sidebar {
+    margin-top: 60px;
+    width: 4rem;
+    background: rgba(100, 80, 120, 0.4);
+    border-radius: 8px;
+    box-shadow: 0 4px 30px rgb(0 0 0 / 10%);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    border: 1px solid rgba(100, 80, 120, 0.10);
+    position: fixed;
+    height: 84%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.sidebar-icons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+}
+
+.sidebar-icn {
+    width: 24px;
+    filter: invert(1) drop-shadow(2px 4px 6px black);
+}
+
+.admin-main {
+    flex-grow: 2;
+    margin-top: 60px;
+    padding: 4rem 0 0 8rem;
+    display: flex;
+    border-bottom-right-radius: 8px;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.admin-main-col-1 {
+    width: 25%;
+}
+
+.main-head {
+    font-size: 36px;
+    background: linear-gradient(to right, #616161, #9bc5c3);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.admin-main-col-2 {
+    width: 35%;
+}
+
+.admin-main-col-3 {
+    width: 35%;
+    height:82.5%;
+}
+
+
+/*********** Admin Dashboard ***********/
