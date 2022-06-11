@@ -104,5 +104,29 @@
     height:82.5%;
 }
 
+.recently-list {
+    display: flex;
+    flex-direction: column;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(3px);
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    overflow-y: auto;
+    height: 100%;
+}
+
+.recently-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.list-poster {
+    width: 100%;
+    height: 150px;
+    object-fit: scale-down;
+    border-radius:5px;
+}
 
 /*********** Admin Dashboard ***********/

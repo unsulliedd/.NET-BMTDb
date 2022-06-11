@@ -73,7 +73,16 @@
 
         </div>
         <div class="admin-main-col-3">
-            
+            <h2 class="main-head mb-4">Recently Added Movies</h2>
+            <ul class="recently-list">
+                @foreach (var item in (Model.Movies.Count > 10 ? Model.Movies.Skip(Model.Movies.Count - 10) : Model.Movies).Reverse())
+                {
+                    <li class="recently-item my-3">
+                        <span><img class="list-poster" src="@item.MoviePoster"></span>
+                        <span class="list-title mx-5">@item.Title</span>
+                    </li>
+                }
+            </ul>
         </div>
     </div>
 </div>
