@@ -267,9 +267,20 @@ footer {
     background: linear-gradient(to right, #232526, #414345);
 }
 
-.pagination-number-link {
-    width: 38px;
+.pagination-direction {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 78px;
     height: 38px;
+    margin: 6px;
+    border-radius: 6px;
+    background: linear-gradient(to right, #232526, #414345);
+}
+
+.pagination-number-link {
+    width: 100%;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;

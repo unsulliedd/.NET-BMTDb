@@ -1,0 +1,37 @@
+﻿<div class="pagination-row">
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            <li class="pagination-direction">
+            @if (Model.PageInfo.CurrentPage == 1)
+            {
+                <a class="pagination-number-link" href="/movie?page=@(Model.PageInfo.CurrentPage)">&lt Previous</a>
+            }
+            else
+            {
+                <a class="pagination-number-link" href="/movie?page=@(Model.PageInfo.CurrentPage-1)">&lt Previous</a>
+            }
+            </li>            
+            @for (int i = 0; i < Model.PageInfo.TotalPages(); i++)
+            {
+                @if (Model.PageInfo.CurrentGenre != null)
+                {
+                    <li class="pagination-number @(Model.PageInfo.CurrentPage==i-1?"active":"")">
+                        <a class="pagination-number-link" href="/movies/@Model.PageInfo.CurrentGenre?page=@(i+1)">@(i+1)</a></li>
+                }
+                else if (Model.PageInfo.CurrentStudio != null)
+                {
+                    <li class="pagination-number @(Model.PageInfo.CurrentPage==i+1?"active":"")">
+                        <a class="pagination-number-link" href="/movie/@Model.PageInfo.CurrentStudio?page=@(i+1)">@(i+1)</a></li>
+                }
+                else
+                {
+                    <li class="pagination-number @(Model.PageInfo.CurrentPage==i+1?"active":"")">
+                        <a class="pagination-number-link" href="/movie?page=@(i+1)">@(i+1)</a></li>
+                }
+            }
+                                          
+            <li class="pagination-direction">
+                <a class="pagination-number-link" href="/movie?page=@(Model.PageInfo.CurrentPage+1)">Next ></a></li>                   
+        </ul>
+    </nav>
+</div>
