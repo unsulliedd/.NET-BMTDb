@@ -8,12 +8,15 @@
     <h2>Add Movie</h2>
     <hr />
     <form asp-controller="Admin" asp-action="AddMovie" method="post" enctype="multipart/form-data" >
-        <div class="add-movie-form movie-form">
+        <div class="add-movie-form">
             <div class="add-name">
                     <input class="feedback-input" asp-for="Title"           placeholder="Title"/>
+                    <span asp-validation-for="Title" class="mt-1 span-validation text-danger"></span>
                     <input class="feedback-input" asp-for="Director"        placeholder="Director"/>
+                    <span asp-validation-for="Director" class="mt-1 span-validation text-danger"></span>
                     <input class="feedback-input" asp-for="MovieTagline"    placeholder="Tagline"/>
                     <input class="feedback-input" asp-for="MovieInfo"       placeholder="Info"/>
+                    <span asp-validation-for="MovieInfo" class="mt-1 span-validation text-danger"></span>
             </div>
             <div class="add-poster">
                     <input class="feedback-input" asp-for="MoviePoster"     placeholder="Poster Url"/>   
@@ -24,18 +27,22 @@
             <div class="add-time">
                     <input class="feedback-input" asp-for="ReleaseDate"     placeholder="Release Date"/>   
                     <input class="feedback-input" asp-for="RunTime"         placeholder="Runtime"/>
+                    <span asp-validation-for="RunTime" class="mt-1 span-validation text-danger"></span>
                     <input class="feedback-input" asp-for="MovieRatings"    placeholder="Ratings"/>
                     <input class="feedback-input" asp-for="Budget"          placeholder="Budget"/>
             </div>
-            <div class="add-id">
-                    <input class="feedback-input" asp-for="IMDBId"          placeholder="IMDb Id"/>   
-                    <input class="feedback-input" asp-for="TMDbId"          placeholder="TMDb Id"/>
+            <div class="add-id ">
+                <input class="feedback-input" asp-for="IMDBId"          placeholder="IMDb Id"/>
+                    <span asp-validation-for="IMDBId" class="mt-1 span-validation text-danger"></span>
+                <input class="feedback-input" asp-for="TMDbId"          placeholder="TMDb Id"/>
+                    <span asp-validation-for="TMDbId" class="mt-1 span-validation text-danger"></span>
             </div>
             <div class="add-logo">
                     <input class="feedback-input" asp-for="MovieLogo"       placeholder="Logo Url"/>   
             </div>
             <div class="add-trailer">
-                    <input class="feedback-input" asp-for="Trailer"         placeholder="Trailer Url"/>   
+                    <input class="feedback-input" asp-for="Trailer"         placeholder="Trailer Url"/>
+                    <span asp-validation-for="Trailer" class="mt-1 span-validation text-danger"></span>
             </div>
             <div class="add-btn-grid">
                 <input type="submit" value="Add Movie" class="add-btn"/>
@@ -44,3 +51,9 @@
         </div>
     </form>
 </div>
+
+@section Scripts
+{
+    <script src="/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}

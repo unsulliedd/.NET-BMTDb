@@ -61,37 +61,35 @@ namespace BMTDb.WebUI.Controllers
         [HttpPost]
         public IActionResult AddMovie(AdminMovieModel model)
         {
-            var entity = new Movie()
+            if (ModelState.IsValid)
             {
-                Title = model.Title,
-                Director = model.Director,
-                MovieTagline = model.MovieTagline,
-                MovieInfo = model.MovieInfo,
-                MoviePoster = model.MoviePoster,
-                MovieBackdrop = model.MovieBackdrop,
-                ReleaseDate = model.ReleaseDate,
-                RunTime = model.RunTime,
-                Budget = model.Budget,
-                MovieRatings = model.MovieRatings,
-                IMDBId = model.IMDBId,
-                TMDbId = model.TMDbId,
-                MovieLogo = model.MovieLogo,
-                Trailer = model.Trailer
-            };
+                var entity = new Movie()
+                {
+                    Title = model.Title,
+                    Director = model.Director,
+                    MovieTagline = model.MovieTagline,
+                    MovieInfo = model.MovieInfo,
+                    MoviePoster = model.MoviePoster,
+                    MovieBackdrop = model.MovieBackdrop,
+                    ReleaseDate = model.ReleaseDate,
+                    RunTime = model.RunTime,
+                    Budget = model.Budget,
+                    MovieRatings = model.MovieRatings,
+                    IMDBId = model.IMDBId,
+                    TMDbId = model.TMDbId,
+                    MovieLogo = model.MovieLogo,
+                    Trailer = model.Trailer
+                };
 
-            _movieService.Create(entity);
+                if (_movieService.Create(entity))
+                {
+                    CreateMessage($"\"{entity.Title}\" is added", "add", "fa - solid fa - plus");
+                    return RedirectToAction("MovieList");
+                }
+                CreateMessage(_movieService.ErrorMessage, "error", "fa - solid fa - exclamation");
 
-            NotificationModel msg = new NotificationModel()                 
-            {
-                Message = $"{entity.Title} is added",
-                MessageType = "add",
-                MessageIcon = "fa - solid fa - plus"
-            };
-
-            TempData["message"] = JsonConvert.SerializeObject(msg);
-
-
-            return RedirectToAction("MovieList");
+            }
+            return View(model);
         }
 
         [HttpGet]
@@ -122,12 +120,10 @@ namespace BMTDb.WebUI.Controllers
                 Trailer = entity.Trailer,
                 SelectedGenres = entity.MovieGenres.Select(i => i.Genre).ToList(),
                 SelectedStudios = entity.MovieStudios.Select(i => i.Studios).ToList(),
-                SelectedCrews = entity.MovieCrews.Select(i => i.Person).ToList()
             };
 
             ViewBag.Genres = _genreService.GetAll();
             ViewBag.Studios = _studioService.GetAll();
-            ViewBag.Persons = _personService.GetAll();
 
             return View(model);
         }
@@ -135,40 +131,40 @@ namespace BMTDb.WebUI.Controllers
         [HttpPost]
         public IActionResult EditMovie(AdminMovieModel model, int[] genreIds , int[] studioIds, int[] crewIds)
         {
-            var entity = _movieService.GetMovieDetails(model.MovieId);
-
-            if (entity == null)
+            if (ModelState.IsValid)
             {
-                return NotFound();
+                var entity = _movieService.GetMovieDetails(model.MovieId);
+
+                if (entity == null)
+                {
+                    return NotFound();
+                }
+
+                entity.Title = model.Title;
+                entity.Director = model.Director;
+                entity.MovieTagline = model.MovieTagline;
+                entity.MovieInfo = model.MovieInfo;
+                entity.MoviePoster = model.MoviePoster;
+                entity.MovieBackdrop = model.MovieBackdrop;
+                entity.ReleaseDate = model.ReleaseDate;
+                entity.RunTime = model.RunTime;
+                entity.MovieRatings = model.MovieRatings;
+                entity.Budget = model.Budget;
+                entity.IMDBId = model.IMDBId;
+                entity.TMDbId = model.TMDbId;
+                entity.MovieLogo = model.MovieLogo;
+                entity.Trailer = model.Trailer;
+
+                if(_movieService.Update(entity, genreIds, studioIds, crewIds))
+                {
+                    CreateMessage($"\"{entity.Title}\" is updated", "update", "fa-solid fa-pen");
+                    return RedirectToAction("MovieList");
+                }
+                CreateMessage(_movieService.ErrorMessage, "error", "fa - solid fa - exclamation");  
             }
-
-            entity.Title = model.Title;
-            entity.Director = model.Director;
-            entity.MovieTagline = model.MovieTagline;
-            entity.MovieInfo = model.MovieInfo;
-            entity.MoviePoster = model.MoviePoster;
-            entity.MovieBackdrop = model.MovieBackdrop;
-            entity.ReleaseDate = model.ReleaseDate;
-            entity.RunTime = model.RunTime;
-            entity.MovieRatings = model.MovieRatings;
-            entity.Budget = model.Budget;
-            entity.IMDBId = model.IMDBId;
-            entity.TMDbId = model.TMDbId;
-            entity.MovieLogo = model.MovieLogo;
-            entity.Trailer = model.Trailer;
-
-            _movieService.Update(entity, genreIds, studioIds, crewIds);
-
-            NotificationModel msg = new NotificationModel()                 //Notification
-            {
-                Message = $"{entity.Title} is updated",
-                MessageType = "update",
-                MessageIcon = "fa-solid fa-pen"
-            };
-
-            TempData["message"] = JsonConvert.SerializeObject(msg);
-
-            return RedirectToAction("MovieList");
+            ViewBag.Genres = _genreService.GetAll();
+            ViewBag.Studios = _studioService.GetAll();
+            return View(model);
         }
 
         public IActionResult DeleteMovie(int MovieId)
@@ -180,15 +176,7 @@ namespace BMTDb.WebUI.Controllers
                 _movieService.Delete(entity);
             }
 
-            NotificationModel msg = new NotificationModel()                 //Notification
-            {
-                Message = $"{entity?.Title} is deleted",
-                MessageType = "delete",
-                MessageIcon = "fa - solid fa - trash - can"
-            };
-
-            TempData["message"] = JsonConvert.SerializeObject(msg);
-
+            CreateMessage($"\"{entity?.Title}\" is deleted", "delete", "fa-solid fa-trash-can");
             return RedirectToAction("MovieList");
         }
 
@@ -218,30 +206,28 @@ namespace BMTDb.WebUI.Controllers
         [HttpPost]
         public IActionResult AddPerson(AdminPersonModel model)
         {
-            var entity = new Person()
+            if (ModelState.IsValid)
             {
-                Name = model.Name,
-                Biography = model.Biography,
-                PhotoUrl = model.PhotoUrl,
-                Birthday = model.Birthday,
-                PlaceOfBirth = model.PlaceOfBirth,
-                Job = model.Job,
-                Deathday = model.Deathday,
-                Imdb_Id = model.Imdb_Id,
-            };
+                var entity = new Person()
+                {
+                    Name = model.Name,
+                    Biography = model.Biography,
+                    PhotoUrl = model.PhotoUrl,
+                    Birthday = model.Birthday,
+                    PlaceOfBirth = model.PlaceOfBirth,
+                    Job = model.Job,
+                    Deathday = model.Deathday,
+                    Imdb_Id = model.Imdb_Id,
+                };
 
-            NotificationModel msg = new NotificationModel()                 //Notification
-            {
-                Message = $"{entity.Name} is added",
-                MessageType = "add",
-                MessageIcon = "fa - solid fa - plus"
-            };
-
-            TempData["message"] = JsonConvert.SerializeObject(msg);
-
-            _personService.Create(entity);
-
-            return RedirectToAction("PersonList");
+                if (_personService.Create(entity))
+                {
+                    CreateMessage($"\"{entity.Name}\" is added", "add", "fa - solid fa - plus");
+                    return RedirectToAction("PersonList");
+                }
+                CreateMessage(_personService.ErrorMessage, "error", "fa - solid fa - exclamation");
+            }
+            return View(model);
         }
 
         [HttpGet]
@@ -271,34 +257,38 @@ namespace BMTDb.WebUI.Controllers
         [HttpPost]
         public IActionResult EditPerson(AdminPersonModel model)
         {
-            var entity = _personService.GetById(model.PersonId);
-
-            if (entity == null)
+            if (ModelState.IsValid)
             {
-                return NotFound();
+                var entity = _personService.GetById(model.PersonId);
+
+                if (entity == null)
+                {
+                    return NotFound();
+                }
+
+                entity.Name = model.Name;
+                entity.Biography = model.Biography;
+                entity.PhotoUrl = model.PhotoUrl;
+                entity.Birthday = model.Birthday;
+                entity.PlaceOfBirth = model.PlaceOfBirth;
+                entity.Job = model.Job;
+                entity.Deathday = model.Deathday;
+                entity.Imdb_Id = model.Imdb_Id;
+
+                _personService.Update(entity);
+
+                NotificationModel msg = new NotificationModel()                 //Notification
+                {
+                    Message = $"{entity.Name} is updated",
+                    MessageType = "update",
+                    MessageIcon = "fa-solid fa-pen"
+                };
+
+                TempData["message"] = JsonConvert.SerializeObject(msg);
+
+                return RedirectToAction("PersonList");
             }
-
-            entity.Name = model.Name;
-            entity.Biography = model.Biography;
-            entity.PhotoUrl = model.PhotoUrl;
-            entity.Birthday = model.Birthday;
-            entity.PlaceOfBirth = model.PlaceOfBirth;
-            entity.Job = model.Job;
-            entity.Deathday = model.Deathday;
-            entity.Imdb_Id = model.Imdb_Id;
-
-            _personService.Update(entity);
-
-            NotificationModel msg = new NotificationModel()                 //Notification
-            {
-                Message = $"{entity.Name} is updated",
-                MessageType = "update",
-                MessageIcon = "fa-solid fa-pen"
-            };
-
-            TempData["message"] = JsonConvert.SerializeObject(msg);
-
-            return RedirectToAction("PersonList");
+            return View(model);
         }
 
         public IActionResult DeletePerson(int PersonId)
@@ -320,6 +310,17 @@ namespace BMTDb.WebUI.Controllers
             TempData["message"] = JsonConvert.SerializeObject(msg);
 
             return RedirectToAction("PersonList");
+        }
+
+        private void CreateMessage (string Message,string MessageType,string MessageIcon)
+        {
+            NotificationModel msg = new NotificationModel()
+            {
+                MessageType = MessageType,
+                Message = Message,
+                MessageIcon = MessageIcon
+            };
+            TempData["message"] = JsonConvert.SerializeObject(msg);
         }
     }
 

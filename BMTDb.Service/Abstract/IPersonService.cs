@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace BMTDb.Service.Abstract
 {
-    public interface IPersonService
+    public interface IPersonService : IValidator<Person>
     {
         Person GetById(int id);
         List<Person> GetAll();
-        void Create(Person entity);
+        bool Create(Person entity);
         void Update(Person entity);
         void Delete(Person entity);
         List<Person> GetPersons(int page, int pageSize);

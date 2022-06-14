@@ -1,4 +1,9 @@
-﻿using BMTDb.Data.Abstract;
+﻿#pragma warning disable CS8604 // Possible null reference argument.
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor.
+#pragma warning disable IDE0063 // Use simple 'using' statement
+
+using BMTDb.Data.Abstract;
+using BMTDb.Data.Concrete.EFCore;
 using BMTDb.Entity;
 using BMTDb.Service.Abstract;
 using System;
@@ -12,13 +17,36 @@ namespace BMTDb.Service.Concrete
     public class PersonManager : IPersonService
     {
         private readonly IPersonRepository _personRepository;
+
+        public string ErrorMessage { get; set; }
+        public bool Validation(Person entity)
+        {
+            var isValid = true;
+
+            return isValid;
+        }
+
         public PersonManager (IPersonRepository personRepository)
         {
             _personRepository = personRepository;
         }
-        public void Create(Person entity)
+        public bool Create(Person entity)
         {
-            _personRepository.Create(entity);
+            if (Validation(entity))
+            {
+                using (var context = new BMTDbContext())
+                {
+                    var persons = context.Persons;
+                    if ((persons.Any(i => i.Name == entity.Name)) && (persons.Any(i => i.Birthday == entity.Birthday)))
+                    {
+                        ErrorMessage = "Person is Already Exist";
+                        return false;
+                    }
+                    _personRepository.Create(entity);
+                    return true;
+                }
+            }
+            return false;
         }
 
         public void Delete(Person entity)

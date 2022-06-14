@@ -8,6 +8,7 @@ namespace BMTDb.WebUI.Models
         public string? Name { get; set; }
         public string? PhotoUrl { get; set; }
         public string? Biography { get; set; }
+        [RegularExpression(@"^nm[0-9]*$", ErrorMessage = "IMDb Id must start with \"nm\" and follows with number")]
         public string? Imdb_Id { get; set; }
         [DataType(DataType.Date)]
         public DateTime Birthday { get; set; }

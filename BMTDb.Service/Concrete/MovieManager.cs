@@ -1,4 +1,9 @@
-﻿using BMTDb.Data.Abstract;
+﻿#pragma warning disable CS8604 // Possible null reference argument.
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor.
+#pragma warning disable IDE0063 // Use simple 'using' statement
+
+using BMTDb.Data.Abstract;
+using BMTDb.Data.Concrete.EFCore;
 using BMTDb.Entity;
 using BMTDb.Service.Abstract;
 using System;
@@ -12,13 +17,37 @@ namespace BMTDb.Service.Concrete
     public class MovieManager : IMovieService
     {
         private readonly IMovieRepository _movieRepository;
+
+        public string ErrorMessage {get; set;}
+        public bool Validation(Movie entity)
+        {
+            var isValid = true;
+
+            return isValid;
+        }
+
         public MovieManager(IMovieRepository movieRepository)
         {
             _movieRepository = movieRepository;
         }
-        public void Create(Movie entity)
+
+        public bool Create(Movie entity)
         {
-            _movieRepository.Create(entity);
+            if (Validation(entity))
+            {
+                using (var context = new BMTDbContext())
+                {
+                    var movies = context.Movies;
+                    if ((movies.Any(i => i.Title == entity.Title)) && (movies.Any(i => i.ReleaseDate == entity.ReleaseDate)))
+                    {
+                        ErrorMessage = "Movie is Already Exist";
+                        return false;
+                    }
+                    _movieRepository.Create(entity);
+                    return true;
+                }
+            }
+            return false;
         }
 
         public void Delete(Movie entity)
@@ -30,9 +59,20 @@ namespace BMTDb.Service.Concrete
         {
             _movieRepository.Update(entity);
         }
-        public void Update(Movie entity, int[] genreIds, int[] studioIds, int[] crewIds)
+
+        public bool Update(Movie entity, int[] genreIds, int[] studioIds, int[] crewIds)
         {
-            _movieRepository.Update(entity, genreIds, studioIds, crewIds);
+            if (Validation(entity))
+            {
+                if (studioIds.Length >= 0 && studioIds.Length <= 1)
+                {
+                    _movieRepository.Update(entity, genreIds, studioIds, crewIds);
+                    return true;
+                }
+                ErrorMessage = "Select Only One Studio";
+                return false;
+            }
+            return false;
         }
 
         public List<Movie> GetAll()
