@@ -321,35 +321,27 @@ a.pagination-number-link {color: white}
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin-top: 65px;
     font-size: 16px;
     border-radius: 10px;
     padding: 8px 14px 8px 14px;
     box-sizing: content-box;
     color:white;
     outline: 0;
-    margin-left: 75%;
+    margin-left: 76%;
     transform-origin: right;
-    animation: notify 3s ease-in-out infinite;
+    animation: 3s ease-in;
     float: right;
     width: 360px;
     z-index: 1;
     background: rgba( 0, 0, 0, 0.7 );
     box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
     backdrop-filter: blur( 5px );
-    border: 2px solid;
+    border: 3px solid;
 }
 
 .msgbox-msg {
     display: inline-flex;
     width: 100%;
-}
-
-.msgbox:target {
-    visibility: hidden;
-    opacity: 0;
-    display: none;
-    overflow: hidden;
 }
 
 .msgbox-close {
@@ -366,6 +358,8 @@ a.pagination-number-link {color: white}
 }
 
 .msgbox-close:hover {color: red}
+.msgbox-error   {border-color: red}
+.msgbox-success {border-color: green}
 .msgbox-add     {border-color: green}
 .msgbox-update  {border-color: #0c5bd7}
 .msgbox-delete  {border-color: red}

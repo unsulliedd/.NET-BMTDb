@@ -19,10 +19,10 @@
             
                 {
                     var message = JsonConvert.DeserializeObject<NotificationModel>(TempData["message"].ToString());
-                        <div id="popup" class="msgbox msgbox-@message.MessageType">
-                            <i class="msgbox-icon @message.MessageIcon"></i>
+                        <div id="popup" class="msgbox msgbox-@message?.MessageType">
+                            <i class="msgbox-icon @message?.MessageIcon"></i>
                             <div class="msgbox-msg">
-                                @message.Message
+                                @message?.Message
                             </div>
                             <a class="msgbox-close" href="#popup">&times;</a> 
                         </div>
