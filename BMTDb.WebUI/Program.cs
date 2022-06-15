@@ -11,11 +11,39 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();     //MVC
 
-builder.Services.AddDbContext<ApplicationContext>
+builder.Services.AddDbContext<ApplicationContext>                           //UserDb Connection String
     (options => options.UseSqlServer(@"Server=(LocalDB)\MSSQLLocalDB; 
         AttachDbFilename=C:\Users\berkk\Documents\Visual Studio 2022\Databases\BMTDb.UserDb.mdf; 
         Database=BMTDb.UserDb; Integrated Security=TRUE"));
+
 builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<ApplicationContext>().AddDefaultTokenProviders();
+
+builder.Services.Configure<IdentityOptions>(options => {
+
+    // password
+    options.Password.RequireDigit = true;
+    options.Password.RequireLowercase = true;
+    options.Password.RequireUppercase = true;
+    options.Password.RequiredLength = 8;
+
+    // SignIn
+    options.User.RequireUniqueEmail = true;
+    options.SignIn.RequireConfirmedEmail = false;
+});
+
+builder.Services.ConfigureApplicationCookie(options => {
+    options.LoginPath =  "/account/login";
+    options.LogoutPath = "/account/logout";
+    options.AccessDeniedPath = "/account/accessdenied";
+    options.SlidingExpiration = true;
+    options.ExpireTimeSpan = TimeSpan.FromDays(61);
+    options.Cookie = new CookieBuilder
+    {
+        HttpOnly = true,
+        Name = ".BMTDb.Account.Cookie"
+    };
+});
+
 
 builder.Services.AddScoped<IMovieRepository, EfCoreMovieRepository>();      //Calls concrete version
 builder.Services.AddScoped<IMovieService, MovieManager>();
