@@ -2,11 +2,19 @@ using BMTDb.Data.Abstract;
 using BMTDb.Data.Concrete.EFCore;
 using BMTDb.Service.Abstract;
 using BMTDb.Service.Concrete;
+using BMTDb.WebUI.Identity;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();     //MVC
+
+builder.Services.AddDbContext<ApplicationContext>
+    (options => options.UseSqlServer(@"Server=(LocalDB)\MSSQLLocalDB; 
+        AttachDbFilename=C:\Users\berkk\Documents\Visual Studio 2022\Databases\BMTDb.UserDb.mdf; 
+        Database=BMTDb.UserDb; Integrated Security=TRUE"));
 
 builder.Services.AddScoped<IMovieRepository, EfCoreMovieRepository>();      //Calls concrete version
 builder.Services.AddScoped<IMovieService, MovieManager>();
