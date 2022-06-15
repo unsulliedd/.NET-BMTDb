@@ -15,6 +15,7 @@ builder.Services.AddDbContext<ApplicationContext>
     (options => options.UseSqlServer(@"Server=(LocalDB)\MSSQLLocalDB; 
         AttachDbFilename=C:\Users\berkk\Documents\Visual Studio 2022\Databases\BMTDb.UserDb.mdf; 
         Database=BMTDb.UserDb; Integrated Security=TRUE"));
+builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<ApplicationContext>().AddDefaultTokenProviders();
 
 builder.Services.AddScoped<IMovieRepository, EfCoreMovieRepository>();      //Calls concrete version
 builder.Services.AddScoped<IMovieService, MovieManager>();
@@ -40,6 +41,7 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+app.UseAuthentication();
 
 app.UseRouting();
 
