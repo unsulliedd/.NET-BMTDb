@@ -1,10 +1,10 @@
 ﻿@model MovieDetailModel
 
-<link rel="stylesheet" href="~/css/details.css" asp-append-version="true" />
-
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = Model.Movie.Title;
 }
+
+<link rel="stylesheet" href="~/css/details.css" asp-append-version="true" />
 
 <div class="details-background">
     <img class="details-backdrop" src="@Model.Movie.MovieBackdrop" />
