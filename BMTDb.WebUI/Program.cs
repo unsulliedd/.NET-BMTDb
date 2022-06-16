@@ -27,13 +27,14 @@ builder.Services.Configure<IdentityOptions>(options => {
     options.Password.RequiredLength = 8;
 
     // SignIn
+    options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     options.User.RequireUniqueEmail = true;
     options.SignIn.RequireConfirmedEmail = false;
 });
 
 builder.Services.ConfigureApplicationCookie(options => {
-    options.LoginPath =  "/account/login";
-    options.LogoutPath = "/account/logout";
+    options.LoginPath =  "/account/signin";
+    options.LogoutPath = "/account/signout";
     options.AccessDeniedPath = "/account/accessdenied";
     options.SlidingExpiration = true;
     options.ExpireTimeSpan = TimeSpan.FromDays(61);
