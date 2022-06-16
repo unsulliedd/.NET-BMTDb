@@ -67,7 +67,7 @@ darkModeToggle.addEventListener('click', () => {        // When someone clicks t
 /************** Dark Mode Script **************/
 
 
-/* ************ Accordion Script ************ */
+/************** Accordion Script **************/
 
 document.querySelectorAll('.accordion_button').forEach(button => {
     button.addEventListener('click', () => {
@@ -84,4 +84,45 @@ document.querySelectorAll('.accordion_button').forEach(button => {
     });
 });
 
-/* ************ Accordion Script ************ */
+/************** Accordion Script **************/
+
+
+/************* Random Background *************/
+
+function randomBackground() {
+    var images = [
+        '../img/background/background01.jpg',
+        '../img/background/background02.jpg',
+        '../img/background/background03.jpg',
+        '../img/background/background04.jpg',
+        '../img/background/background05.jpg',
+        '../img/background/background06.jpg',
+        '../img/background/background07.jpg',
+        '../img/background/background08.jpg',
+        '../img/background/background09.jpg',
+        '../img/background/background10.jpg',
+        '../img/background/background11.jpg',
+        '../img/background/background12.jpg',
+        '../img/background/background13.jpg',
+        '../img/background/background14.jpg',
+        '../img/background/background15.jpg',
+        '../img/background/background16.jpg',
+        '../img/background/background17.jpg',
+        '../img/background/background18.jpg',
+        '../img/background/background19.jpg',
+        '../img/background/background20.jpg',
+        '../img/background/background21.jpg',
+        '../img/background/background22.jpg',
+        '../img/background/background23.jpg',
+        '../img/background/background24.jpg',
+        '../img/background/background25.jpg',
+        ];
+    var random = Math.floor(images.length * Math.random());
+    //var element = document.getElementsByClassName('background');                  //Background-Image
+    //element[0].style["background-image"] = "url(" + images[random] + ")";
+    document.getElementById('background').innerHTML = "<img class=\"user-background\" src=" + images[random] + ">";
+}
+
+document.addEventListener("DOMContentLoaded", randomBackground);
+
+/************* Random Background *************/
