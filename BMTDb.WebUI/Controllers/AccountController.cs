@@ -24,6 +24,7 @@ namespace BMTDb.WebUI.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> SignIn(SignInModel model)
         {
             if (!ModelState.IsValid) 
@@ -54,6 +55,7 @@ namespace BMTDb.WebUI.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> SignUp(SignUpModel model)
         {
             if (!ModelState.IsValid)
