@@ -1,0 +1,140 @@
+﻿
+.wrapper {
+    color:white;
+}
+
+.user-background {
+    top: 0;
+    left: 0;
+    min-width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: right top;
+    position: fixed;
+    filter: brightness(80%);
+    z-index: -1;
+}
+
+.span-validation {
+
+}
+
+.user-label {
+    margin-top: 20px;
+    color:darkgray
+}
+.user-input {
+    color: var(--foreground);
+    font-weight: 500;
+    font-size: 18px;
+    background: transparent;
+    border-width: 3px;
+    border-style: solid;
+    border-image: linear-gradient(to right, #f808da, #2bbffe);
+    border-image-slice: 1;
+    transition: all 0.3s ease-in;
+    padding: 12px;
+    width: 100%;
+    box-sizing: border-box;
+    outline: 0;
+}
+
+.user-input:focus {
+    border-width: 3px;
+    border-style: solid;
+    border-image: linear-gradient(to right, #c21500, #ffc500);
+    border-image-slice: 1;
+}
+
+.usr-btn {
+    width: 100%;
+    background: linear-gradient(to right, #fc00ff, #00dbde);
+    border-radius: 5px;
+    border: 0;
+    color: white;
+    font-size: 24px;
+    margin: 10px 0 10px 0;
+    padding: 10px 0 10px;
+    transition: all 0.3s;
+    font-weight: 700;
+}
+
+.usr-btn:hover {background: linear-gradient(to right, #00d2ff, #3a7bd5)}
+
+
+/************SignIn************/
+
+.signin-main {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: space-around;
+    justify-content: center;
+    align-items: center;
+    height: 900px;
+}
+.signin-panel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.75);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgb(0 0 0 / 10%);
+    backdrop-filter: blur(2px);
+    width: 540px;
+    align-content: center;
+    margin: 120px 0 120px 0;
+}
+
+.signin-form {
+    display: flex;
+    height: 440px;
+    width: 400px;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+}
+
+.signin-footer {
+
+}
+
+/************SignIn************/
+
+/************SignUp************/
+
+.signup-main {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.signup-panel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.75);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgb(0 0 0 / 10%);
+    backdrop-filter: blur(2px);
+    width: 540px;
+    align-content: center;
+    margin: 120px 0 120px 0;
+}
+
+.signup-form {
+    display: flex;
+    height: 640px;
+    width: 400px;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+}
+
+.signup-footer {
+
+}
+
+/************SignUp************/
