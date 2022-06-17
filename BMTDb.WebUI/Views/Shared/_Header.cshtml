@@ -45,11 +45,34 @@
                             aria-label="Search">
                     </form>
 
-                    <div class="navbar-login">
-                        <a class="btn btn-outline-light" asp-controller="Account" asp-action="SignIn">Login</a>
-                        <a class="btn btn-primary mx-2"  asp-controller="Account" asp-action="SignUp">Sign-up</a>
-                    </div>
+                    @if (User.Identity.IsAuthenticated)
+                    {           
+                        <div class="navbar-user dropdown">
+                            <a class="dropdown-toggle dropdown-menu-toggle" id="dropdownMenuButton" 
+                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                style="display: flex;flex-direction: row;align-items: center;">
+                                <div style="display: flex; align-items: center">
+                                    <span class="">@User.Identity.Name</span>
+                                    <img class="navbar-avatar" src="https://www.themoviedb.org/t/p/w300_and_h300_face/4xJbtwuTcxq5Be5VVv0eLpavIW1.jpg">
+                                </div>
+                                
+                            </a>
+                                <div class="dropdown-menu" aria-label="dropdownMenuButton">
+                                    <a class="dropdown-item" asp-controller="" asp-action="">Profile</a>
+                                    <a class="dropdown-item" asp-controller="" asp-action="">Watchlist</a>
+                                    <a class="dropdown-item" asp-controller="Account"  asp-action="Signout">Sign-out</a>
+                                </div>
+                        </div>
+                    }
 
+                    else
+                    {
+                        <div class="navbar-login">
+                            <a class="btn btn-outline-light" asp-controller="Account" asp-action="SignIn">Login</a>
+                            <a class="btn btn-primary mx-2"  asp-controller="Account" asp-action="SignUp">Sign-up</a>
+                        </div>
+                    }
+                    
                     <div class="navbar-dropdown">
                         <span class="btn navbar-dropdown dropdown-toggle" data-bs-toggle="dropdown" 
                             aria-haspopup="true" aria-expanded="false">

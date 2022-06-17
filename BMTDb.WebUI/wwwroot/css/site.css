@@ -129,11 +129,35 @@ a.dark-mode-toggle:hover {
     display: inline-flex
 }
 
+.navbar-user {
+    display: flex;
+    font-weight: 400;
+    border: 1px solid;
+    border-radius: 5px;
+    padding: 0.375rem 0.75rem;
+    color: white;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+.navbar-profile {
+
+}
+
+.navbar-avatar {
+    margin-left: 8px;
+    overflow: hidden;
+    height: 32px;
+    width: 32px;
+    border-radius: 50%;
+}
+
 .navbar-dropdown {
     position: fixed;
     border: none;
     padding: 0;
-    margin-right:4px;
+    margin-right: 4px;
 }
 
 .navbar-dropdown.dropdown-toggle::after {
@@ -144,7 +168,7 @@ a.dark-mode-toggle:hover {
     color:white;
     border:none!important;
     width:100%;
-    margin-top: 6px;
+    margin-top: 10px;
 }
 
 .dropdown-menu-navbar {
