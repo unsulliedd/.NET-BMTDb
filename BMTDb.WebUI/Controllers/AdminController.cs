@@ -3,11 +3,13 @@
 using BMTDb.Entity;
 using BMTDb.Service.Abstract;
 using BMTDb.WebUI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
 namespace BMTDb.WebUI.Controllers
 {
+    [Authorize]
     public class AdminController : Controller
     {
         private readonly IMovieService _movieService;
