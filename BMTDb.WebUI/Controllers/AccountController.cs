@@ -75,5 +75,32 @@ namespace BMTDb.WebUI.Controllers
                 "Password cannot be less than 8 characters");
             return View(model);
         }
+
+        public async Task<IActionResult> Signout()
+        {
+            await _signInManager.SignOutAsync();
+            return Redirect("~/");
+        }
+
+        public async Task<IActionResult> ConfirmEmail(string userId,string token)
+        {
+            if(userId == null || token==null)
+            {
+                TempData["message"] ="Invalid Token";
+                return View();
+            }
+            var user = await _userManager.FindByIdAsync(userId);
+            if(user != null)
+            {
+                var result = await _userManager.ConfirmEmailAsync(user, token);
+                if (result.Succeeded)
+                {
+                    TempData["message"] = "Account is confirmed";
+                    return View();
+                }
+            }
+            TempData["message"] = "Account is not confirmed";
+            return View();
+        }
     }
 }
