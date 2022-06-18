@@ -14,6 +14,7 @@
                 <div class="signup-panel">
                     <div class="signup-form">
                         <h2 class="my-3">Sign-Up</h2>
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <label class="user-label mt-2">Username</label>
                             <input class="user-input" asp-for="UserName"    placeholder="Username"/>
                             <span asp-validation-for="UserName" class="span-validation text-danger"></span>
