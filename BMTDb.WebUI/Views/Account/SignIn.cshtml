@@ -7,35 +7,30 @@
 
 <div id="background"></div>
 
-<div class="signin-page">
-    <div class="container-fluid wrapper">
-        <div class="signin-main">
-            <form asp-controller="account" asp-action="SignIn" method="post" >
-                <input type="hidden" name="ReturnUrl" value="@Model.ReturnUrl"/>
-                <div class="signin-panel">
-                    <div class="signin-form">
-                        <h2 class="my-3">Login</h2>
-                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <label class="user-label mt-2">Username</label>
-                            <input class="user-input" asp-for="UserName"    placeholder="Username"/>
-                            <span asp-validation-for="UserName" class="span-validation text-danger"></span>
-                        <label class="user-label">Password</label>
-                            <input class="user-input" asp-for="Password"    placeholder="Password"/>
-                            <span asp-validation-for="Password" class="span-validation text-danger"></span>
-                            <span style="display:flex;flex-wrap: nowrap; align-items: center;">
-                                <input type="checkbox" value="false" onchange="this.value=this.checked" asp-for="RememberMe"> 
-                                <label class="mx-2">Remember me</label>
-                            </span> 
+
+<div class="container-fluid">
+    <div class="signin-main">
+        <form asp-controller="account" asp-action="SignIn" method="post" >
+            <input type="hidden" name="ReturnUrl" value="@Model.ReturnUrl"/>
+            <div class="signin-panel">
+                <div class="signin-form">
+                    <h2 class="my-3 text-white">Login</h2>
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <label class="user-label mt-2">Username</label>
+                        <input class="user-input text-white" asp-for="UserName"    placeholder="Username"/>
+                        <span asp-validation-for="UserName" class="span-validation text-danger"></span>
+                    <label class="user-label">Password</label>
+                        <input class="user-input text-white" asp-for="Password"    placeholder="Password"/>
+                        <span asp-validation-for="Password" class="span-validation text-danger"></span>
+                        <span style="display:flex;flex-wrap: nowrap; align-items: center;">
+                            <input type="checkbox" value="false" onchange="this.value=this.checked" asp-for="RememberMe"> 
+                            <label class="mx-2 text-white">Remember me</label>
+                        </span> 
                             
-                            <input type="submit" value="Sign-in" class="usr-btn my-3"/> 
-                    </div>
-
-                    <div class="signin-footer">
-
-                    </div>
+                        <input type="submit" value="Sign-in" class="usr-btn my-3"/> 
                 </div>
-            </form>
-        </div>
+            </div>
+        </form>
     </div>
 </div>
 

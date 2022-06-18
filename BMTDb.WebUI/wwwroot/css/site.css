@@ -161,14 +161,17 @@ a.dark-mode-toggle:hover {
 }
 
 .navbar-dropdown.dropdown-toggle::after {
-    display: inline-block;
-    font: 22px/1 FontAwesome!important;
-    font-size:large;
-    content: "\f142"!important;
-    color:white;
-    border:none!important;
-    width:100%;
-    margin-top: 10px;
+    display: flex;
+    font: 28px FontAwesome !important;
+    font-size: large;
+    content: "\f142" !important;
+    color: white;
+    border: none !important;
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    height: 33px;
+    justify-content: flex-end;
 }
 
 .dropdown-menu-navbar {
@@ -349,14 +352,14 @@ a.pagination-number-link {color: white}
     border-radius: 10px;
     padding: 8px 14px 8px 14px;
     box-sizing: content-box;
-    color:white;
+    color: white;
     outline: 0;
     margin-left: 76%;
     transform-origin: right;
     animation: 3s ease-in;
     float: right;
     width: 360px;
-    z-index: 1;
+    z-index: 999;
     background: rgba( 0, 0, 0, 0.7 );
     box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
     backdrop-filter: blur( 5px );
