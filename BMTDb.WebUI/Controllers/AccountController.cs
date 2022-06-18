@@ -3,6 +3,7 @@ using BMTDb.WebUI.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using BMTDb.WebUI.EmailServices;
+using Newtonsoft.Json;
 
 namespace BMTDb.WebUI.Controllers
 {
@@ -51,6 +52,7 @@ namespace BMTDb.WebUI.Controllers
             var result = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, lockoutOnFailure: false);
             if (result.Succeeded)
             {
+                CreateMessage("Succesfully singin", "success", "fa-solid fa-plus");
                 return Redirect(model.ReturnUrl ?? "~/");
             }
             ModelState.AddModelError("Password", "Password is wrong");
@@ -92,6 +94,7 @@ namespace BMTDb.WebUI.Controllers
                 await _emailSender.SendEmailAsync
                     (model.Email, "BMTDb - Confirm Your Mail", 
                     $"<h3>BMTDb</h3>" +
+                    $"<div>Username: {user.UserName} </div>" +
                     $"<div>Please confirm your email.</div> " +
                     $"<div><a href='https://localhost:44384{url}'>CONFIRM</a></div>");
                 return RedirectToAction("SignIn", "Account");
@@ -120,13 +123,107 @@ namespace BMTDb.WebUI.Controllers
                 var result = await _userManager.ConfirmEmailAsync(user, token);
                 if (result.Succeeded)
                 {
-                    TempData["message"] = "Account is confirmed";
+                    CreateMessage("Account is confirmed", "success", "fa - solid fa-plus");
                     return View();
                 }
             }
-            TempData["message"] = "Account is not confirmed";
+            CreateMessage("Account is not confirmed", "error", "fa - solid fa-exclamation");
             return View();
         }
-        
+
+        public IActionResult ForgetPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ForgetPassword(string Email)
+        {
+            if (string.IsNullOrEmpty(Email))
+            {
+                CreateMessage("Email is not valid", "error", "fa - solid fa-exclamation");
+                return View();
+            }
+
+            var user = await _userManager.FindByEmailAsync((Email));
+
+            if (user == null)
+            {
+                CreateMessage("Email is not valid", "error", "fa - solid fa-exclamation");
+                return View();
+            }
+
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+            //token url
+            var url = Url.Action("ResetPassword", "Account", new
+            {
+                userId = user.Id,
+                token = token
+            });
+
+            //password reset email
+            await _emailSender.SendEmailAsync
+                (Email, "BMTDb - Password Reset",
+                $"<h3>BMTDb</h3>" +
+                $"<div>Reset password request for {user.UserName}</div>" +
+                $"<div><a href='https://localhost:44384{url}'>RESET</a></div>");
+            return RedirectToAction("SignIn", "Account");
+        }
+
+        public IActionResult ResetPassword(string userId,string token)
+        {
+            if (userId == null || token == null)
+            {
+                CreateMessage("Unable to reset password","error", "fa-solid fa-exclamation");
+                return RedirectToAction("Index", "Home");
+            }
+
+            var model = new ResetPasswordModel 
+            { 
+                Token = token,
+            };
+
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ResetPassword(ResetPasswordModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            if (user == null)
+            {
+                CreateMessage("Unable to reset password", "error", "fa-solid fa-exclamation");
+                return RedirectToAction("Index", "Home");
+            }
+
+            var result = await _userManager.ResetPasswordAsync(user, model.Token, model.Password);
+
+            if (result.Succeeded)
+            {
+                CreateMessage("Password is changed. Please Login Again", "success", "fa-solid fa-plus");
+                return RedirectToAction("SignIn", "Account");
+            }
+
+            return View(model);
+        }
+
+        private void CreateMessage(string Message, string MessageType, string MessageIcon)
+        {
+            NotificationModel msg = new NotificationModel()
+            {
+                MessageType = MessageType,
+                Message = Message,
+                MessageIcon = MessageIcon
+            };
+            TempData["message"] = JsonConvert.SerializeObject(msg);
+        }
     }
 }

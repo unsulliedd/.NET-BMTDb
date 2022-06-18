@@ -24,8 +24,10 @@
                         <span asp-validation-for="Password" class="span-validation text-danger"></span>
                         <span style="display:flex;flex-wrap: nowrap; align-items: center;">
                             <input type="checkbox" value="false" onchange="this.value=this.checked" asp-for="RememberMe"> 
-                            <label class="mx-2 text-white">Remember me</label>
-                        </span> 
+                            <label class="mx-2 text-white">Remember Me</label>
+                            <a class="password-btn" style="margin-left:41.6%;" asp-controller="Account" asp-action="ForgetPassword">
+                            <label style="cursor:pointer; color: grey!important;" class="mx-2 text-white">Forget Password</label></a>
+                        </span>
                             
                         <input type="submit" value="Sign-in" class="usr-btn my-3"/> 
                 </div>
