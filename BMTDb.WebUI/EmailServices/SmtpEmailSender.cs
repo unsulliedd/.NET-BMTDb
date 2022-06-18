@@ -1,4 +1,3 @@
-using BMTDb.WebUI.EmailServices;
 using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
@@ -7,11 +6,11 @@ namespace BMTDb.WebUI.EmailServices
 {
     public class SmtpEmailSender : IEmailSender
     {
-        private string _host;
-        private int _port;
-        private bool _enableSSL;
-        private string _username;
-        private string _password;
+        private readonly string _host;
+        private readonly int _port;
+        private readonly bool _enableSSL;
+        private readonly string _username;
+        private readonly string _password;
         public SmtpEmailSender(string host,int port,bool enableSSL, string username,string password)
         {
             this._host = host;

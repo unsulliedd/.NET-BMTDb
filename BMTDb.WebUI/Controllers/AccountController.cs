@@ -145,7 +145,7 @@ namespace BMTDb.WebUI.Controllers
                     TempData.Put("message", new NotificationModel
                     {
                         Message = "Account is confirmed",
-                        MessageType = "error",
+                        MessageType = "success",
                         MessageIcon = "fa-solid fa-check"
                     });
                     return View();

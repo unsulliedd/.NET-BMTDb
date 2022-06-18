@@ -1,3 +1,6 @@
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
+
+
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Newtonsoft.Json;
 
@@ -10,14 +13,12 @@ namespace BMTDb.WebUI.Extensions
             tempData[key] = JsonConvert.SerializeObject(value);
         }
 
-        public static T Get<T>(this ITempDataDictionary tempData,string key) where T: class
+        public static T? Get<T>(this ITempDataDictionary tempData,string key) where T: class
         {
-            object o;
 
-            tempData.TryGetValue(key,out o);
+            tempData.TryGetValue(key, out object o);
             return o==null?null:JsonConvert.DeserializeObject<T>((string)o);
         }
-
 
     }
 }
