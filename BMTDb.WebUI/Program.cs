@@ -3,13 +3,15 @@ using BMTDb.Data.Concrete.EFCore;
 using BMTDb.Service.Abstract;
 using BMTDb.Service.Concrete;
 using BMTDb.WebUI.Identity;
+using BMTDb.WebUI.EmailServices;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddControllersWithViews();     //MVC
+    // Add services to the container.
+
+    builder.Services.AddControllersWithViews();     //MVC
 
 builder.Services.AddDbContext<ApplicationContext>                           //UserDb Connection String
     (options => options.UseSqlServer(@"Server=(LocalDB)\MSSQLLocalDB; 
@@ -31,7 +33,7 @@ builder.Services.Configure<IdentityOptions>(options => {
     // SignIn
     options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     options.User.RequireUniqueEmail = true;
-    options.SignIn.RequireConfirmedEmail = false;
+    options.SignIn.RequireConfirmedEmail = true;
 });
 
 builder.Services.ConfigureApplicationCookie(options => {
@@ -59,6 +61,15 @@ builder.Services.AddScoped<IStudioService, StudioManager>();
 
 builder.Services.AddScoped<IPersonRepository,EFCorePersonRepository>();
 builder.Services.AddScoped<IPersonService, PersonManager>();
+
+builder.Services.AddScoped<IEmailSender, SmtpEmailSender>(i =>
+    new SmtpEmailSender(
+        builder.Configuration["EmailSender:Host"],
+        builder.Configuration.GetValue<int>("EmailSender:Port"),
+        builder.Configuration.GetValue<bool>("EmailSender:EnableSSL"),
+        builder.Configuration["EmailSender:UserName"],
+        builder.Configuration["EmailSender:Password"])
+    );
 
 var app = builder.Build();
 
