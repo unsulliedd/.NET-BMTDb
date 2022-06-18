@@ -2,6 +2,7 @@
 using BMTDb.WebUI.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using BMTDb.WebUI.EmailServices;
 
 namespace BMTDb.WebUI.Controllers
 {
@@ -9,10 +10,12 @@ namespace BMTDb.WebUI.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
+        private IEmailSender _emailSender;
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, IEmailSender emailSender)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _emailSender = emailSender;
         }
 
         public IActionResult SignIn(string? ReturnUrl = null)
@@ -39,6 +42,12 @@ namespace BMTDb.WebUI.Controllers
                 return View(model);
             }
 
+            if(!await _userManager.IsEmailConfirmedAsync(user))
+            {
+                ModelState.AddModelError("", "Please Confirm Your Email");
+                return View(model);
+            }
+
             var result = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, lockoutOnFailure: false);
             if (result.Succeeded)
             {
@@ -62,6 +71,7 @@ namespace BMTDb.WebUI.Controllers
             {
                 return View(model);
             }
+
             var user = new User()
             {
                 UserName = model.UserName,
@@ -71,6 +81,19 @@ namespace BMTDb.WebUI.Controllers
             var result = await _userManager.CreateAsync(user,model.Password);
             if (result.Succeeded)
             {
+                //token url
+                var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                var url = Url.Action("ConfirmEmail", "Account", new
+                {
+                    userId = user.Id,
+                    token = token
+                });
+                //confirm email
+                await _emailSender.SendEmailAsync
+                    (model.Email, "BMTDb - Confirm Your Mail", 
+                    $"<h3>BMTDb</h3>" +
+                    $"<div>Please confirm your email.</div> " +
+                    $"<div><a href='https://localhost:44384{url}'>CONFIRM</a></div>");
                 return RedirectToAction("SignIn", "Account");
             }
             ModelState.AddModelError("Password", "Password must contain upper/lower characters and numbers " +
@@ -104,5 +127,6 @@ namespace BMTDb.WebUI.Controllers
             TempData["message"] = "Account is not confirmed";
             return View();
         }
+        
     }
 }
