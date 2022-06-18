@@ -1,0 +1,9 @@
+﻿@model NotificationModel
+
+<div id="popup" class="msgbox msgbox-@Model?.MessageType">
+    <i class="msgbox-icon @Model?.MessageIcon"></i>
+    <div class="msgbox-msg">
+        @Model?.Message
+    </div>
+    <a class="msgbox-close" href="#popup">&times;</a> 
+</div>
