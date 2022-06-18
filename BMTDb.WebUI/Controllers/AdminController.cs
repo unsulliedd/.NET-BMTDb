@@ -1,11 +1,9 @@
-﻿#pragma warning disable IDE0090 // Use 'new(...)'
-
-using BMTDb.Entity;
+﻿using BMTDb.Entity;
 using BMTDb.Service.Abstract;
+using BMTDb.WebUI.Extensions;
 using BMTDb.WebUI.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 
 namespace BMTDb.WebUI.Controllers
 {
@@ -85,10 +83,20 @@ namespace BMTDb.WebUI.Controllers
 
                 if (_movieService.Create(entity))
                 {
-                    CreateMessage($"\"{entity.Title}\" is added", "add", "fa - solid fa - plus");
+                    TempData.Put("message", new NotificationModel
+                    {
+                        Message = $"\"{entity.Title}\" is added",
+                        MessageType = "add",
+                        MessageIcon = "fa - solid fa - plus"
+                    });
                     return RedirectToAction("MovieList");
                 }
-                CreateMessage(_movieService.ErrorMessage, "error", "fa - solid fa - exclamation");
+                TempData.Put("message", new NotificationModel
+                {
+                    Message = _movieService.ErrorMessage,
+                    MessageType = "error",
+                    MessageIcon = "fa - solid fa - exclamation"
+                });
 
             }
             return View(model);
@@ -159,10 +167,20 @@ namespace BMTDb.WebUI.Controllers
 
                 if(_movieService.Update(entity, genreIds, studioIds, crewIds))
                 {
-                    CreateMessage($"\"{entity.Title}\" is updated", "update", "fa-solid fa-pen");
+                    TempData.Put("message", new NotificationModel
+                    {
+                        Message = $"\"{entity.Title}\" is updated",
+                        MessageType = "update",
+                        MessageIcon = "fa-solid fa-pen"
+                    });
                     return RedirectToAction("MovieList");
                 }
-                CreateMessage(_movieService.ErrorMessage, "error", "fa - solid fa - exclamation");  
+                TempData.Put("message", new NotificationModel
+                {
+                    Message = _movieService.ErrorMessage,
+                    MessageType = "error",
+                    MessageIcon = "fa - solid fa - exclamation"
+                });
             }
             ViewBag.Genres = _genreService.GetAll();
             ViewBag.Studios = _studioService.GetAll();
@@ -177,8 +195,12 @@ namespace BMTDb.WebUI.Controllers
             {
                 _movieService.Delete(entity);
             }
-
-            CreateMessage($"\"{entity?.Title}\" is deleted", "delete", "fa-solid fa-trash-can");
+            TempData.Put("message", new NotificationModel
+            {
+                Message = $"\"{entity?.Title}\" is deleted",
+                MessageType = "delete",
+                MessageIcon = "fa-solid fa-trash-can"
+            });
             return RedirectToAction("MovieList");
         }
 
@@ -224,10 +246,20 @@ namespace BMTDb.WebUI.Controllers
 
                 if (_personService.Create(entity))
                 {
-                    CreateMessage($"\"{entity.Name}\" is added", "add", "fa - solid fa - plus");
+                    TempData.Put("message", new NotificationModel
+                    {
+                        Message = $"\"{entity.Name}\" is added",
+                        MessageType = "add",
+                        MessageIcon = "fa - solid fa - plus"
+                    });
                     return RedirectToAction("PersonList");
                 }
-                CreateMessage(_personService.ErrorMessage, "error", "fa - solid fa - exclamation");
+                TempData.Put("message", new NotificationModel
+                {
+                    Message = _personService.ErrorMessage,
+                    MessageType = "error",
+                    MessageIcon = "fa - solid fa - exclamation"
+                });
             }
             return View(model);
         }
@@ -279,15 +311,12 @@ namespace BMTDb.WebUI.Controllers
 
                 _personService.Update(entity);
 
-                NotificationModel msg = new NotificationModel()                 //Notification
+                TempData.Put("message", new NotificationModel
                 {
                     Message = $"{entity.Name} is updated",
                     MessageType = "update",
                     MessageIcon = "fa-solid fa-pen"
-                };
-
-                TempData["message"] = JsonConvert.SerializeObject(msg);
-
+                });
                 return RedirectToAction("PersonList");
             }
             return View(model);
@@ -302,28 +331,15 @@ namespace BMTDb.WebUI.Controllers
                 _personService.Delete(entity);
             }
 
-            NotificationModel msg = new NotificationModel()                 //Notification
+            TempData.Put("message", new NotificationModel
             {
                 Message = $"{entity?.Name} is deleted",
                 MessageType = "delete",
                 MessageIcon = "fa - solid fa - trash - can"
-            };
-
-            TempData["message"] = JsonConvert.SerializeObject(msg);
-
+            });
             return RedirectToAction("PersonList");
         }
 
-        private void CreateMessage (string Message,string MessageType,string MessageIcon)
-        {
-            NotificationModel msg = new NotificationModel()
-            {
-                MessageType = MessageType,
-                Message = Message,
-                MessageIcon = MessageIcon
-            };
-            TempData["message"] = JsonConvert.SerializeObject(msg);
-        }
     }
 
 }

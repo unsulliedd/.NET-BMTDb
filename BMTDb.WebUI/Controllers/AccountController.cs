@@ -1,9 +1,12 @@
-﻿using BMTDb.WebUI.Identity;
+﻿#pragma warning disable IDE0037 // Use inferred member name
+#pragma warning disable IDE0059 // Unnecessary assignment of a value
+
+using BMTDb.WebUI.Identity;
 using BMTDb.WebUI.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using BMTDb.WebUI.EmailServices;
-using Newtonsoft.Json;
+using BMTDb.WebUI.Extensions;
 
 namespace BMTDb.WebUI.Controllers
 {
@@ -11,7 +14,7 @@ namespace BMTDb.WebUI.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
-        private IEmailSender _emailSender;
+        private readonly IEmailSender _emailSender;
         public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, IEmailSender emailSender)
         {
             _userManager = userManager;
@@ -52,7 +55,12 @@ namespace BMTDb.WebUI.Controllers
             var result = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, lockoutOnFailure: false);
             if (result.Succeeded)
             {
-                CreateMessage("Succesfully singin", "success", "fa-solid fa-plus");
+                TempData.Put("message", new NotificationModel
+                {
+                    Message = "Successfully logged in",
+                    MessageType = "success",
+                    MessageIcon = "fa-solid fa-check"
+                });
                 return Redirect(model.ReturnUrl ?? "~/");
             }
             ModelState.AddModelError("Password", "Password is wrong");
@@ -107,6 +115,12 @@ namespace BMTDb.WebUI.Controllers
         public async Task<IActionResult> Signout()
         {
             await _signInManager.SignOutAsync();
+            TempData.Put("message", new NotificationModel
+            {
+                Message = "Signed out with success",
+                MessageType = "success",
+                MessageIcon = "fa-solid fa-check"
+            });
             return Redirect("~/");
         }
 
@@ -114,7 +128,12 @@ namespace BMTDb.WebUI.Controllers
         {
             if(userId == null || token==null)
             {
-                TempData["message"] ="Invalid Token";
+                TempData.Put("message", new NotificationModel
+                {
+                    Message = "Invalid Token",
+                    MessageType = "error",
+                    MessageIcon = "fa-exclamation"
+                });
                 return View();
             }
             var user = await _userManager.FindByIdAsync(userId);
@@ -123,11 +142,21 @@ namespace BMTDb.WebUI.Controllers
                 var result = await _userManager.ConfirmEmailAsync(user, token);
                 if (result.Succeeded)
                 {
-                    CreateMessage("Account is confirmed", "success", "fa - solid fa-plus");
+                    TempData.Put("message", new NotificationModel
+                    {
+                        Message = "Account is confirmed",
+                        MessageType = "error",
+                        MessageIcon = "fa-solid fa-check"
+                    });
                     return View();
                 }
             }
-            CreateMessage("Account is not confirmed", "error", "fa - solid fa-exclamation");
+            TempData.Put("message", new NotificationModel
+            {
+                Message = "Account is not confirmed",
+                MessageType = "error",
+                MessageIcon = "fa-exclamation"
+            });
             return View();
         }
 
@@ -142,7 +171,12 @@ namespace BMTDb.WebUI.Controllers
         {
             if (string.IsNullOrEmpty(Email))
             {
-                CreateMessage("Email is not valid", "error", "fa - solid fa-exclamation");
+                TempData.Put("message", new NotificationModel
+                {
+                    Message = "Email is not valid",
+                    MessageType = "error",
+                    MessageIcon = "fa-exclamation"
+                }); 
                 return View();
             }
 
@@ -150,7 +184,12 @@ namespace BMTDb.WebUI.Controllers
 
             if (user == null)
             {
-                CreateMessage("Email is not valid", "error", "fa - solid fa-exclamation");
+                TempData.Put("message", new NotificationModel
+                {
+                    Message = "Email is not valid",
+                    MessageType = "error",
+                    MessageIcon = "fa-exclamation"
+                });
                 return View();
             }
 
@@ -176,7 +215,12 @@ namespace BMTDb.WebUI.Controllers
         {
             if (userId == null || token == null)
             {
-                CreateMessage("Unable to reset password","error", "fa-solid fa-exclamation");
+                TempData.Put("message", new NotificationModel
+                {
+                    Message = "Unable to reset password",
+                    MessageType = "error",
+                    MessageIcon = "fa-exclamation"
+                });
                 return RedirectToAction("Index", "Home");
             }
 
@@ -200,7 +244,12 @@ namespace BMTDb.WebUI.Controllers
             var user = await _userManager.FindByEmailAsync(model.Email);
             if (user == null)
             {
-                CreateMessage("Unable to reset password", "error", "fa-solid fa-exclamation");
+                TempData.Put("message", new NotificationModel
+                {
+                    Message = "Unable to reset password",
+                    MessageType = "error",
+                    MessageIcon = "fa-exclamation"
+                });
                 return RedirectToAction("Index", "Home");
             }
 
@@ -208,22 +257,16 @@ namespace BMTDb.WebUI.Controllers
 
             if (result.Succeeded)
             {
-                CreateMessage("Password is changed. Please Login Again", "success", "fa-solid fa-plus");
+                TempData.Put("message", new NotificationModel
+                {
+                    Message= "Password is changed. Please Login Again",
+                    MessageType="success",
+                    MessageIcon= "fa-solid fa-check"
+                });
                 return RedirectToAction("SignIn", "Account");
             }
 
             return View(model);
-        }
-
-        private void CreateMessage(string Message, string MessageType, string MessageIcon)
-        {
-            NotificationModel msg = new NotificationModel()
-            {
-                MessageType = MessageType,
-                Message = Message,
-                MessageIcon = MessageIcon
-            };
-            TempData["message"] = JsonConvert.SerializeObject(msg);
         }
     }
 }
