@@ -77,9 +77,11 @@
             <ul class="recently-list">
                 @foreach (var item in (Model.Movies.Count > 10 ? Model.Movies.Skip(Model.Movies.Count - 10) : Model.Movies).Reverse())
                 {
-                    <li class="recently-item my-3">
-                        <span><img class="list-poster" src="@item.MoviePoster"></span>
-                        <span class="list-title mx-5">@item.Title</span>
+                    <li class="recently-item my-3"><a asp-controller="Movie" asp-action="Details" asp-route-id="@item.MovieId">
+                        <span><img class="list-poster" src="@item.MoviePoster"></span></a>
+                        <span class="list-title" style="margin-left:2rem">@item.Title</span>
+                        <a style="margin-left:0.75rem" href="/admin/edit-movie/@item.MovieId"><img style="width: 18px" title='Edit' 
+                        src="/img/icon-svg/pencil-solid.svg" viewBox="0 0 28 28" /></a>
                     </li>
                 }
             </ul>
