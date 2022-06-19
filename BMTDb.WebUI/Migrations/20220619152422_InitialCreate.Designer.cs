@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BMTDb.WebUI.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20220617155911_Added user profile")]
-    partial class Addeduserprofile
+    [Migration("20220619152422_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

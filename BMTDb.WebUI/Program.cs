@@ -13,10 +13,10 @@ var builder = WebApplication.CreateBuilder(args);
 
     builder.Services.AddControllersWithViews();     //MVC
 
-builder.Services.AddDbContext<ApplicationContext>                           //UserDb Connection String
+builder.Services.AddDbContext<ApplicationContext>                           //Connection String
     (options => options.UseSqlServer(@"Server=(LocalDB)\MSSQLLocalDB; 
-        AttachDbFilename=C:\Users\berkk\Documents\Visual Studio 2022\Databases\BMTDb.UserDb.mdf; 
-        Database=BMTDb.UserDb; Integrated Security=TRUE"));
+        AttachDbFilename=C:\Users\berkk\Documents\Visual Studio 2022\Databases\BMTDb.MovieDb.mdf; 
+        Database=BMTDb.MovieDb; Integrated Security=TRUE"));
 
 builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<ApplicationContext>().AddDefaultTokenProviders();
 
