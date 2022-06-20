@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BMTDb.WebUI.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
         private readonly IMovieService _movieService;
