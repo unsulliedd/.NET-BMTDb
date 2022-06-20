@@ -67,6 +67,7 @@ namespace BMTDb.WebUI.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult AddMovie(AdminMovieModel model)
         {
             if (ModelState.IsValid)
@@ -147,6 +148,7 @@ namespace BMTDb.WebUI.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult EditMovie(AdminMovieModel model, int[] genreIds , int[] studioIds, int[] crewIds)
         {
             if (ModelState.IsValid)
@@ -236,6 +238,7 @@ namespace BMTDb.WebUI.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult AddPerson(AdminPersonModel model)
         {
             if (ModelState.IsValid)
@@ -297,6 +300,7 @@ namespace BMTDb.WebUI.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult EditPerson(AdminPersonModel model)
         {
             if (ModelState.IsValid)
