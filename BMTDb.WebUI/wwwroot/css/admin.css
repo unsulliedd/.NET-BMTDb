@@ -9,7 +9,9 @@
 .wrapper {margin-top:80px}
 
 /*********** Admin Dashboard ***********/
-.admin-wrapper {top: 0}
+.admin-wrapper {
+    top: 0
+}
 
 .admin-dashboard {
     color: white;
@@ -282,3 +284,18 @@ button.delete-btn {
 .person-form-4 {grid-area: 2 / 1 / 3 / 3}
 .person-form-5 {grid-area: 2 / 3 / 3 / 4}
 /*********** Add Person GridView ***********/
+
+/*************** Role Tables ***************/
+
+a.back-link:hover{color:crimson}
+a.back-link{color: var(--foreground)}
+.table-hover tbody tr:hover {background-color:slategrey}
+
+.admin-lists-header {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    align-items: center;
+}
+
+/*************** Role Tables ***************/

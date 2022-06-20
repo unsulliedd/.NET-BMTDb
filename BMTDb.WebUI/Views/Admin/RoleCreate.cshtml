@@ -1,0 +1,34 @@
+﻿@model RoleModel
+
+<link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+
+<div class="container wrapper">
+    <div class="admin-lists-header">
+    <a class="back-link" href="/admin/role/list">
+        <i class="fa-solid fa-circle-left" style="font-size: 25px;margin-right:10px;"></i></a>
+        <h3>Create Role</h3>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-md-8">
+            <form asp-controller="Admin" asp-action="RoleCreate" method="POST">
+            <div class="feedback-input">
+                <label asp-for="Name" class="col-sm-2 mb-2"></label>
+                    <input class="form-control mb-2" asp-for="Name">
+                    <span asp-validation-for="Name" class="my-3 span-validation text-danger"style="font-size:15px; font-weight: 400;"></span>
+            </div>            
+            <div class="form-group">
+                
+                    <button type="submit" class="btn btn-primary mt-2">Save Role</button>
+          
+            </div>
+        </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="/modules/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="/modules/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+}

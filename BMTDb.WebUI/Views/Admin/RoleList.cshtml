@@ -1,0 +1,47 @@
+﻿@model IEnumerable<IdentityRole>
+
+<link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+
+<div class="container wrapper">
+
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Role List</h3>
+            <hr>
+            <a class="btn btn-primary btn-md" href="/admin/dashboard">Dashboard</a>
+            <a class="btn btn-primary btn-md" href="/admin/user/list">User List</a>
+            <a class="btn btn-primary btn-md" href="/admin/role/create">Create Role</a>
+            <table class="table table-bordered table-hover table-responsive-sm mt-3" style="color: var(--foreground)">
+                <thead>
+                    <tr>
+                        <td style="width: 280px;">Id</td>
+                        <td>Role Name</td>
+                        <td style="width: 130px;">Edit</td>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Id</td>
+                            <td>@item.Name</td>                              
+                            <td>
+                                <a href="/admin/role/@item.Id" class="btn btn-primary btn-sm m-2">Edit</a>
+                                    
+                                <form action="/admin/role/delete" method="POST" style="display: inline;">
+                                    <input type="hidden" name="RoleId" value="@item.Id">
+                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<style>
+
+</style>

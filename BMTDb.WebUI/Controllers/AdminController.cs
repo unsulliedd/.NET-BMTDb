@@ -1,27 +1,34 @@
 ﻿using BMTDb.Entity;
 using BMTDb.Service.Abstract;
 using BMTDb.WebUI.Extensions;
+using BMTDb.WebUI.Identity;
 using BMTDb.WebUI.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BMTDb.WebUI.Controllers
 {
-    [Authorize]
     public class AdminController : Controller
     {
         private readonly IMovieService _movieService;
         private readonly IGenreService _genreService;
         private readonly IStudioService _studioService;
         private readonly IPersonService _personService;
-        
+        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly UserManager<User> _userManager;
+
         public AdminController(IMovieService movieService, IPersonService personService, 
-            IGenreService genreService, IStudioService studioService)
+            IGenreService genreService, IStudioService studioService,
+            RoleManager<IdentityRole> roleManager, UserManager<User> userManager)
         {
             _movieService = movieService;
             _personService = personService;
             _genreService = genreService;
             _studioService = studioService;
+            _roleManager = roleManager;
+            _userManager = userManager;
         }
 
         public IActionResult AdminDashboard()
@@ -340,6 +347,116 @@ namespace BMTDb.WebUI.Controllers
             return RedirectToAction("PersonList");
         }
 
-    }
+        //Roles
+        public IActionResult RoleList()
+        {
+            return View(_roleManager.Roles);
+        }
 
+        [HttpGet]
+        public IActionResult RoleCreate()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RoleCreate(RoleModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _roleManager.CreateAsync(new IdentityRole(model.Name));
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("RoleList");
+                }
+
+                else
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError("", error.Description);
+                    }
+                }
+            }
+            return View(model);
+        }
+
+        public async Task<IActionResult> RoleEdit(string id)
+        {
+            var role = await _roleManager.FindByIdAsync(id);
+
+            var members = new List<User>();
+            var nonmembers = new List<User>();
+
+            var userList = await _userManager.Users.ToListAsync();
+
+            foreach (var user in userList)
+            {
+                if (await _userManager.IsInRoleAsync(user, role.Name))
+                {
+                    members.Add(user);
+                }
+            
+                else
+                {
+                    nonmembers.Add(user);
+                }
+            }
+
+            var model = new RoleDetails()
+            {
+                Role = role,
+                Members = members,
+                NonMembers = nonmembers
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RoleEdit(RoleEditModel model)
+        {
+            if (ModelState.IsValid) { 
+                foreach (var userId in model.IdsToAdd ?? Array.Empty<string>())
+                {
+                    var user = await _userManager.FindByIdAsync(userId);
+                    if (user != null)
+                    {
+                        var result = await _userManager.AddToRoleAsync(user, model.RoleName);
+                        if (result.Succeeded)
+                        {
+                            TempData.Put("message", new NotificationModel
+                            {
+                                Message = "Role Successfully Added",
+                                MessageType = "success",
+                                MessageIcon = "fa-solid fa-check"
+                            });
+                        }
+                    }
+                }
+
+                foreach (var userId in model.IdsToDelete ?? Array.Empty<string>())
+                {
+                    var user = await _userManager.FindByIdAsync(userId);
+                    if (user != null)
+                    {
+                        var result = await _userManager.RemoveFromRoleAsync(user, model.RoleName);
+                        if (result.Succeeded)
+                        {
+                            TempData.Put("message", new NotificationModel
+                            {
+                                Message = "Role Successfully Removed",
+                                MessageType = "success",
+                                MessageIcon = "fa-solid fa-check"
+                            });
+                        }
+                    }
+                }
+            }
+            return Redirect("/admin/role/" + model.RoleId);
+        }
+
+    }
 }
