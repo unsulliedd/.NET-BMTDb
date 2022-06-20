@@ -142,6 +142,8 @@ namespace BMTDb.WebUI.Controllers
                 var result = await _userManager.ConfirmEmailAsync(user, token);
                 if (result.Succeeded)
                 {
+                    await _userManager.AddToRoleAsync(user, "User");        //Adds User to User Role on Account Verification
+
                     TempData.Put("message", new NotificationModel
                     {
                         Message = "Account is confirmed",
