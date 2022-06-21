@@ -1,0 +1,66 @@
+@model IEnumerable<User>
+
+<link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
+
+<div class="container wrapper">
+
+    <div class="row">
+        <div class="col-md-12">
+            <h3>User List</h3>
+            <hr>
+            <a class="btn btn-primary btn-md" href="/admin/dashboard">Dashboard</a>
+            <a class="btn btn-primary btn-md" asp-controller="Admin" asp-action="RoleList">Add Roles</a>
+            <hr />
+            <table data-page-length='25' id="myTable" class="table table-bordered table-hover mt-3" style="color: var(--foreground)">
+                <thead>
+                    <tr>
+                        <td>FirstName</td>
+                        <td>LastName</td>
+                        <td>UserName</td>
+                        <td>Age</td>
+                        <td>Gender</td>
+                        <td>Email</td>
+                        <td style="width: 120px;">EmailConfirmed</td>
+                        <td style="width: 120px;">Edit</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr class="@(item.EmailConfirmed?"":"bg-warning")">
+                            <td>@item.FirstName</td>
+                            <td>@item.LastName</td>                              
+                            <td>@item.UserName</td>     
+                            <td>@item.Birthday</td>
+                            <td>@item.Gender</td>
+                            <td>@item.Email</td>                              
+                            <td>@item.EmailConfirmed</td>                              
+                            <td>
+                                <a href="/admin/user/@item.Id" class="btn btn-primary btn-sm mx-2">Edit</a>
+                                    
+                                <form action="/admin/user/delete" method="POST" style="display: inline;">
+                                    <input type="hidden" name="UserId" value="@item.Id">
+                                    <button onclick="return confirm('Are you sure you want to delete - @item.UserName')" 
+                                        type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+
+    <script>
+        $(document).ready( function () {
+            $('#myTable').DataTable();
+        });
+    </script>
+}

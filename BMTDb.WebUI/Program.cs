@@ -95,6 +95,20 @@ app.MapControllerRoute(
     pattern: "admin/dashboard",
     defaults: new { controller = "Admin", action = "AdminDashboard" });
 
+//localhost/admin/user/list
+app.MapControllerRoute(
+   name: "AdminUsers",
+   pattern: "admin/user/list",
+   defaults: new { controller = "Admin", action = "UserList" }
+);
+
+//localhost/admin/user/id
+app.MapControllerRoute(
+   name: "AdminUserEdit",
+   pattern: "admin/user/{id?}",
+   defaults: new { controller = "Admin", action = "UserEdit" }
+);
+
 //localhost/admin/roles
 app.MapControllerRoute(
     name: "AdminRoles",
