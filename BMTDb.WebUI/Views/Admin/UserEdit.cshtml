@@ -51,12 +51,8 @@
                 @foreach (var rolename in ViewBag.Roles)
                 {
                     <div class="custom-control custom-checkbox">
-                        <input type="checkbox" 
-                        class="custom-control-input" 
-                        name="selectedRoles"
-                        value="@rolename"
-                        id="@rolename" 
-                        @(Model.SelectedRoles.Any(i=>i==rolename)?"checked":"")>
+                        <input type="checkbox" class="custom-control-input" name="selectedRoles" value="@rolename" 
+                            id="@rolename" @(Model.SelectedRoles.Any(i=>i==rolename)?"checked":"")>
                         <label class="custom-control-label" for="@rolename">@rolename</label>
                     </div>
                 }
