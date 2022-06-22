@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using BMTDb.WebUI.EmailServices;
 using BMTDb.WebUI.Extensions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BMTDb.WebUI.Controllers
 {
@@ -142,7 +143,7 @@ namespace BMTDb.WebUI.Controllers
                 var result = await _userManager.ConfirmEmailAsync(user, token);
                 if (result.Succeeded)
                 {
-                    await _userManager.AddToRoleAsync(user, "User");        //Adds User to User Role on Account Verification
+                    await _userManager.AddToRoleAsync(user, "User");                    //Adds User to User Role on Account Verification
 
                     TempData.Put("message", new NotificationModel
                     {
@@ -269,6 +270,11 @@ namespace BMTDb.WebUI.Controllers
             }
 
             return View(model);
+        }
+
+        public IActionResult AccessDenied()
+        { 
+            return View(); 
         }
     }
 }
