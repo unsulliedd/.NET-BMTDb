@@ -9,7 +9,9 @@ namespace BMTDb.WebUI.Identity
         public string? LastName { get; set; }
         public string? Gender { get; set; }
         [DataType(DataType.Date)]
-        public DateTime?  Birthday { get; set; }
+        public DateTime Birthday { get; set; }
         public string? ProfilePic { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime CreationDate { get; set; }
     }
 }
