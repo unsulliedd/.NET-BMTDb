@@ -22,10 +22,12 @@
                         <input class="user-input text-white" asp-for="Password"    placeholder="Password"/>
                         <span asp-validation-for="Password" class="span-validation text-danger"></span>
                         <span style="display:flex;flex-wrap: nowrap; align-items: center;">
-                            <input type="checkbox" value="false" onchange="this.value=this.checked" asp-for="RememberMe"> 
-                            <label class="mx-2 text-white">Remember Me</label>
+                            <input type="checkbox" value="false" style="cursor:pointer" 
+                                onchange="this.value=this.checked" asp-for="RememberMe"> 
+                                <label for="RememberMe" style="cursor:pointer" class="mx-2 text-white">Remember Me</label>
                             <a class="password-btn" style="margin-left:41.5%;" asp-controller="Account" asp-action="ForgetPassword">
-                            <label style="cursor:pointer; color: grey!important;" class="mx-2 text-white">Forget Password</label></a>
+                                <label style="cursor:pointer; color: grey!important;" class="mx-2 text-white">Forget Password</label>
+                            </a>
                         </span>
                             
                         <input type="submit" value="Sign-in" class="usr-btn my-3"/> 
