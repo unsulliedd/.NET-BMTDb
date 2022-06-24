@@ -86,7 +86,8 @@ namespace BMTDb.WebUI.Controllers
             var user = new User()
             {
                 UserName = model.UserName,
-                Email = model.Email
+                Email = model.Email,
+                CreationDate = DateTime.UtcNow,
 
             };
             var result = await _userManager.CreateAsync(user,model.Password);
@@ -275,6 +276,20 @@ namespace BMTDb.WebUI.Controllers
         public IActionResult AccessDenied()
         { 
             return View(); 
+        }
+
+        [Authorize]
+        public async Task<IActionResult> UserProfile(string userName)
+        {
+            var user = await _userManager.FindByNameAsync(userName);
+            if (user != null)
+            {
+                return View(new UserProfileModel()
+                {
+                    User = user,
+                });
+            }
+            return RedirectToAction("Index","Home");
         }
     }
 }

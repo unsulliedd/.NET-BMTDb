@@ -1,0 +1,38 @@
+﻿@model UserProfileModel
+
+<link rel="stylesheet" href="~/css/account.css" asp-append-version="true" />
+
+<div id="background"></div>
+
+<div class="container wrapper">
+    <div>
+        <div class="profile-header-wrapper">
+            <div class="profile-header">
+                <div class="profile-grid1"><img class="profile-img" src="@Model.User.ProfilePic" /></div>
+                <div class="profile-grid2">
+                    <h2>Hello, @Model.User.UserName</h2>
+                </div>
+                <div class="profile-grid3">
+                    <span>@Model.User.FirstName
+                    @Model.User.LastName</span>
+                    <span>Member since - @Model.User.CreationDate.ToString("MMMM") @Model.User.CreationDate.Year</span>
+                </div>
+                <span class="profile-grid5">
+                    <a href="">
+                        <i class="profile-icons fa-solid fa-heart"></i></a>
+                    <a href="">
+                        <i class="profile-icons fa-solid fa-list-check"></i></a>
+                    <a href="">
+                        <i class="profile-icons fa-solid fa-list"></i></a>
+                    <a href="">
+                        <i class="profile-icons fa-solid fa-gear"></i></a>
+                </span>
+            </div>
+        </div>
+        <div class="profile-main">
+
+        </div>
+    </div>
+
+
+</div>
