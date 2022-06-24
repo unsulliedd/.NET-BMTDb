@@ -55,10 +55,13 @@
                                     <span class="">@User.Identity.Name</span>
                                     <img class="navbar-avatar" src="https://www.themoviedb.org/t/p/w300_and_h300_face/4xJbtwuTcxq5Be5VVv0eLpavIW1.jpg">
                                 </div>
-                                
                             </a>
                                 <div class="dropdown-menu" aria-label="dropdownMenuButton">
-                                    <a class="dropdown-item" asp-controller="" asp-action="">Profile</a>
+                                    <form>
+                                        <input type="hidden" name="userName" value="@User.Identity.Name">
+                                    <button type="submit" class="dropdown-item" asp-controller="Account" asp-action="UserProfile">Profile</button>
+                                        
+                                    </form>
                                     <a class="dropdown-item" asp-controller="" asp-action="">Watchlist</a>
                                     <a class="dropdown-item" asp-controller="Account"  asp-action="Signout">Sign-out</a>
                                 </div>
