@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using BMTDb.WebUI.EmailServices;
 using BMTDb.WebUI.Extensions;
-using Microsoft.AspNetCore.Authorization;
 
 namespace BMTDb.WebUI.Controllers
 {
@@ -16,6 +15,7 @@ namespace BMTDb.WebUI.Controllers
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly IEmailSender _emailSender;
+
         public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, IEmailSender emailSender)
         {
             _userManager = userManager;
@@ -276,20 +276,6 @@ namespace BMTDb.WebUI.Controllers
         public IActionResult AccessDenied()
         { 
             return View(); 
-        }
-
-        [Authorize]
-        public async Task<IActionResult> UserProfile(string userName)
-        {
-            var user = await _userManager.FindByNameAsync(userName);
-            if (user != null)
-            {
-                return View(new UserProfileModel()
-                {
-                    User = user,
-                });
-            }
-            return RedirectToAction("Index","Home");
         }
     }
 }
