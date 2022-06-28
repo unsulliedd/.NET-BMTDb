@@ -98,5 +98,67 @@ namespace BMTDb.WebUI.Controllers
 
             return View(model);
         }
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult UserAddMovie()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UserAddMovie(UserMovieModel model,IFormFile file)
+        {
+            if (ModelState.IsValid)
+            {
+                var entity = new Movie()
+                {
+                    Title = model.Title,
+                    Director = model.Director,
+                    MovieTagline = model.MovieTagline,
+                    MovieInfo = model.MovieInfo,
+                    MoviePoster = model.MoviePoster,
+                    MovieBackdrop = model.MovieBackdrop,
+                    ReleaseDate = model.ReleaseDate,
+                    RunTime = model.RunTime,
+                    Budget = model.Budget,
+                    MovieRatings = model.MovieRatings,
+                    IMDBId = model.IMDBId,
+                    TMDbId = model.TMDbId,
+                    MovieLogo = model.MovieLogo,
+                    Trailer = model.Trailer,
+                };
+
+                if (file != null)
+                {
+                    var extention = Path.GetExtension(file.FileName);
+                    var randomName = string.Format($"{Guid.NewGuid()}{extention}");
+                    entity.MoviePoster = randomName;
+                    var path = Path.Combine(Directory.GetCurrentDirectory(),"wwwroot\\img\\Content",randomName);
+
+                    using var stream = new FileStream(path, FileMode.Create);
+                    await file.CopyToAsync(stream);
+                }
+
+                if (_movieService.Create(entity))
+                {
+                    TempData.Put("message", new NotificationModel
+                    {
+                        Message = $"\"{entity.Title}\" is added",
+                        MessageType = "add",
+                        MessageIcon = "fa - solid fa - plus"
+                    });
+                    return RedirectToAction("Index", "Movie");
+                }
+                TempData.Put("message", new NotificationModel
+                {
+                    Message = _movieService.ErrorMessage,
+                    MessageType = "error",
+                    MessageIcon = "fa - solid fa - exclamation"
+                });
+            }
+            return View(model);
+        }
     }
 }

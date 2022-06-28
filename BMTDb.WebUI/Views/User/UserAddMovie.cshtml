@@ -1,0 +1,60 @@
+﻿@model UserMovieModel
+
+@{
+    ViewData["Title"] = "Add Movie";
+}
+
+<link rel="stylesheet" href="~/css/user.css" asp-append-version="true" />
+
+<div class="container wrapper">
+    <h2>Add Movie</h2>
+    <hr />
+    <form asp-controller="User" asp-action="UserAddMovie" method="post" enctype="multipart/form-data" >
+        <div class="user-add-movie-form">
+            <div class="user-add-name">
+                    <input class="feedback-input" asp-for="Title"           placeholder="Title"/>
+                    <span asp-validation-for="Title" class="mt-1 span-validation text-danger"></span>
+                    <input class="feedback-input" asp-for="Director"        placeholder="Director"/>
+                    <span asp-validation-for="Director" class="mt-1 span-validation text-danger"></span>
+                    <input class="feedback-input" asp-for="MovieTagline"    placeholder="Tagline"/>  
+            </div>
+            <div class="user-add-poster">
+                    <input class="feedback-input" asp-for="MoviePoster"     placeholder="Poster Url"/>
+                    <span>Or</span>
+                    <input type="file" name="file" id="" class="mt-2"/>
+            </div>
+            <div class="user-add-backdrop">
+                    <textarea class="feedback-input text" asp-for="MovieInfo" placeholder="Info"></textarea>
+                    <span asp-validation-for="MovieInfo" class="mt-1 span-validation text-danger"></span>
+            </div>
+            <div class="user-add-time">
+                    <input class="feedback-input" asp-for="ReleaseDate"     placeholder="Release Date"/>   
+                    <input class="feedback-input" asp-for="RunTime"         placeholder="Runtime"/>
+                    <span asp-validation-for="RunTime" class="mt-1 span-validation text-danger"></span>
+                    <input class="feedback-input" asp-for="MovieRatings"    placeholder="Ratings"/>
+                    <input class="feedback-input" asp-for="Budget"          placeholder="Budget"/>
+            </div>
+            <div class="user-add-id">
+                <input class="feedback-input" asp-for="IMDBId"          placeholder="IMDb Id"/>
+                    <span asp-validation-for="IMDBId" class="mt-1 span-validation text-danger"></span>
+                <input class="feedback-input" asp-for="TMDbId"          placeholder="TMDb Id"/>
+                    <span asp-validation-for="TMDbId" class="mt-1 span-validation text-danger"></span>
+            </div>
+            <div class="user-add-logo">
+                    <input class="feedback-input" asp-for="MovieBackdrop"   placeholder="Backdrop Url"/>
+                    <input class="feedback-input" asp-for="MovieLogo"       placeholder="Logo Url"/>
+                    <input class="feedback-input" asp-for="Trailer"         placeholder="Trailer Url"/>
+                        <span asp-validation-for="Trailer" class="mt-1 span-validation text-danger"></span>
+            </div>
+            <div class="add-btn-grid">
+                <input type="submit" value="Add Movie" class="add-btn"/>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts
+{
+    <script src="/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}
