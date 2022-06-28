@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using BMTDb.WebUI.EmailServices;
 using BMTDb.WebUI.Extensions;
+using BMTDb.Service.Abstract;
 
 namespace BMTDb.WebUI.Controllers
 {
@@ -15,12 +16,15 @@ namespace BMTDb.WebUI.Controllers
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly IEmailSender _emailSender;
+        private readonly IWatchlistService _watchlistService;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, IEmailSender emailSender)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, IEmailSender emailSender,
+            IWatchlistService watchlistService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
+            _watchlistService = watchlistService;
         }
 
         public IActionResult SignIn(string? ReturnUrl = null)
@@ -144,7 +148,8 @@ namespace BMTDb.WebUI.Controllers
                 var result = await _userManager.ConfirmEmailAsync(user, token);
                 if (result.Succeeded)
                 {
-                    await _userManager.AddToRoleAsync(user, "User");                    //Adds User to User Role on Account Verification
+                    await _userManager.AddToRoleAsync(user, "User");    //Adds User to User Role on Account Verification
+                    _watchlistService.InitializeWatchlist(user.Id);     //User watchlist definition
 
                     TempData.Put("message", new NotificationModel
                     {
