@@ -10,7 +10,7 @@ using BMTDb.WebUI.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
-    // Add services to the container.
+// Add services to the container.
 
 builder.Services.AddControllersWithViews(                                    //MVC
     options => {options.Filters.Add(typeof(UserActivityFilter));}
@@ -23,6 +23,7 @@ builder.Services.AddDbContext<ApplicationContext>                           //Co
 
 builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<ApplicationContext>().AddDefaultTokenProviders();
 
+//IdentityOptions Service
 builder.Services.Configure<IdentityOptions>(options => {
 
     // password
@@ -39,6 +40,7 @@ builder.Services.Configure<IdentityOptions>(options => {
     options.SignIn.RequireConfirmedEmail = true;
 });
 
+//Cookie
 builder.Services.ConfigureApplicationCookie(options => {
     options.LoginPath =  "/account/signin";
     options.LogoutPath = "/account/signout";
@@ -52,7 +54,8 @@ builder.Services.ConfigureApplicationCookie(options => {
     };
 });
 
-builder.Services.AddScoped<IMovieRepository, EfCoreMovieRepository>();      //Calls concrete version
+//Inject Services
+builder.Services.AddScoped<IMovieRepository, EfCoreMovieRepository>();
 builder.Services.AddScoped<IMovieService, MovieManager>();
 
 builder.Services.AddScoped<IGenreRepository, EfCoreGenreRepository>();
@@ -63,6 +66,9 @@ builder.Services.AddScoped<IStudioService, StudioManager>();
 
 builder.Services.AddScoped<IPersonRepository,EFCorePersonRepository>();
 builder.Services.AddScoped<IPersonService, PersonManager>();
+
+builder.Services.AddScoped<IWatchlistRepository, EFCoreWatchlistRepository>();
+builder.Services.AddScoped<IWatchlistService, WatchlistManager>();
 
 //Reads Appsettings.json
 builder.Services.AddScoped<IEmailSender, SmtpEmailSender>(i =>
