@@ -1,0 +1,40 @@
+﻿@model UserProfileModel
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<link rel="stylesheet" href="~/css/user.css" asp-append-version="true" />
+
+<div id="background"></div>
+
+<div class="container wrapper">
+    <div>
+        <div class="profile-header-wrapper">
+            <div class="profile-header">
+                <div class="profile-grid1"><img class="profile-img" src="@Model.ProfilePic" /></div>
+                <div class="profile-grid2">
+                    <h2>Hello, @Model.UserName</h2>
+                </div>
+                <div class="profile-grid3">
+                    <span>@Model.FirstName
+                    @Model.LastName</span>
+                    <span>Member since - @Model.CreationDate.ToString("MMMM") @Model.CreationDate.Year</span>
+                </div>
+                <span class="profile-grid5">
+                    <a href="">
+                        <i class="profile-icons fa-solid fa-heart"></i></a>
+                    <a href="">
+                        <i class="profile-icons fa-solid fa-list-check"></i></a>
+                    <a href="">
+                        <i class="profile-icons fa-solid fa-list"></i></a>
+                    <a asp-controller="User" asp-action="ProfileEdit">
+                        <i class="profile-icons fa-solid fa-gear"></i></a>
+                </span>
+            </div>
+        </div>
+        <div class="profile-main">
+        </div>
+    </div>
+
+
+</div>

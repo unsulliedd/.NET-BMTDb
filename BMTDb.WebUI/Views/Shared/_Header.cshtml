@@ -31,8 +31,7 @@
                             <button class="dropdown-toggle dropdown-menu-toggle nav-link" id="dropdownMenuButton" 
                                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">More</button>
                                 <div class="dropdown-menu dropdown-menu-navbar" aria-label="dropdownMenuButton">
-                                    <a class="dropdown-item" asp-controller="Admin" asp-action="AddMovie">Add Movie</a>
-                                    <a class="dropdown-item" asp-controller="Admin" asp-action="AdminDashBoard">Admin Dashboard</a>
+                                    <a class="dropdown-item" asp-controller="User"  asp-action="UserAddMovie">Add Movie</a>
                                     <a class="dropdown-item" asp-controller="Home"  asp-action="About">About</a>
                                 </div>
                         </li>
@@ -57,12 +56,14 @@
                                 </div>
                             </a>
                                 <div class="dropdown-menu" aria-label="dropdownMenuButton">
-                                    <form>
-                                        <input type="hidden" name="userName" value="@User.Identity.Name">
-                                    <button type="submit" class="dropdown-item" asp-controller="Account" asp-action="UserProfile">Profile</button>
-                                        
-                                    </form>
+
+                                    <a class="dropdown-item" asp-controller="User" asp-action="UserProfile">Profile</a>
+
                                     <a class="dropdown-item" asp-controller="" asp-action="">Watchlist</a>
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <a class="dropdown-item" asp-controller="Admin" asp-action="AdminDashBoard">Admin Dashboard</a>
+                                }
                                     <a class="dropdown-item" asp-controller="Account"  asp-action="Signout">Sign-out</a>
                                 </div>
                         </div>

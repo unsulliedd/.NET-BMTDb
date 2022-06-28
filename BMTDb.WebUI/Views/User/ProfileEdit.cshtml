@@ -1,0 +1,57 @@
+﻿@model UserDetailsModel
+@{
+    ViewData["Title"] = "User Edit";
+}
+
+<link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+
+<div class="container wrapper">
+    <div class="admin-lists-header">
+    <a class="back-link" href="/u/profile">
+        <i class="fa-solid fa-circle-left" style="font-size: 25px;margin-right:10px;"></i></a>
+        <h3>Edit User</h3>
+    </div>
+    <hr>
+    <form class="d-flex flex-row" asp-controller="User" asp-action="ProfileEdit" method="POST">
+        <div class="useredit-left">
+            <input type="hidden" name="UserId" value="@Model.UserId">
+
+                <span class="text-muted">First Name</span>
+                    <input class="feedback-input" asp-for="FirstName"           placeholder="First Name"/>
+                    <span asp-validation-for="FirstName" class="mt-1 span-validation text-danger"></span>
+
+                <span class="text-muted mt-1">Last Name</span>
+                    <input class="feedback-input" asp-for="LastName"            placeholder="Last Name"/>
+                    <span asp-validation-for="LastName" class="mt-1 span-validation text-danger"></span>
+
+                <span class="text-muted mt-1">Username</span>
+                    <input class="feedback-input" asp-for="UserName"            placeholder="Username"/>
+                    <span asp-validation-for="UserName" class="mt-1 span-validation text-danger"></span>
+
+                <span class="text-muted mt-1">Email</span>
+                    <input class="feedback-input" asp-for="Email"               placeholder="Email"/>
+                    <span asp-validation-for="Email"    class="mt-1 span-validation text-danger"></span>
+        </div>
+
+        <div class="useredit-right">
+            <span class="text-muted">Birthday</span>
+                <input class="feedback-input" asp-for="Birthday"            placeholder="Birthday"/>
+                <span asp-validation-for="Birthday" class="mt-1 span-validation text-danger"></span>
+
+            <span class="text-muted">Select Gender</span>
+                <select class="custom-select mt-2" style="width:33%; font-size:18px" asp-for="Gender">
+                    <option selected>Not Specified</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+
+                <button class="btn btn-primary mt-4" type="submit">Save Changes</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts
+{
+    <script src="/modules/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="/modules/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+}

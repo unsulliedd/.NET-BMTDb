@@ -6,12 +6,15 @@ using BMTDb.WebUI.Identity;
 using BMTDb.WebUI.EmailServices;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using BMTDb.WebUI.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
     // Add services to the container.
 
-    builder.Services.AddControllersWithViews();     //MVC
+builder.Services.AddControllersWithViews(                                    //MVC
+    options => {options.Filters.Add(typeof(UserActivityFilter));}
+    );    
 
 builder.Services.AddDbContext<ApplicationContext>                           //Connection String
     (options => options.UseSqlServer(@"Server=(LocalDB)\MSSQLLocalDB; 
@@ -49,7 +52,6 @@ builder.Services.ConfigureApplicationCookie(options => {
     };
 });
 
-
 builder.Services.AddScoped<IMovieRepository, EfCoreMovieRepository>();      //Calls concrete version
 builder.Services.AddScoped<IMovieService, MovieManager>();
 
@@ -62,6 +64,7 @@ builder.Services.AddScoped<IStudioService, StudioManager>();
 builder.Services.AddScoped<IPersonRepository,EFCorePersonRepository>();
 builder.Services.AddScoped<IPersonService, PersonManager>();
 
+//Reads Appsettings.json
 builder.Services.AddScoped<IEmailSender, SmtpEmailSender>(i =>
     new SmtpEmailSender(
         builder.Configuration["EmailSender:Host"],
@@ -88,6 +91,24 @@ app.UseAuthentication();
 app.UseRouting();
 
 app.UseAuthorization();
+
+//localhost/u/profile
+app.MapControllerRoute(
+    name: "UserProfile",
+    pattern: "u/profile/",
+    defaults: new { controller = "User", action = "UserProfile" });
+
+//localhost/u/profile/edit
+app.MapControllerRoute(
+    name: "UserProfileEdit",
+    pattern: "u/profile/edit",
+    defaults: new { controller = "User", action = "ProfileEdit" });
+
+//localhost/u/movie/new
+app.MapControllerRoute(
+    name: "UserAddMovie",
+    pattern: "u/movie/new",
+    defaults: new { controller = "User", action = "UserAddMovie" });
 
 //localhost/admin/dashboard
 app.MapControllerRoute(

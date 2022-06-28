@@ -1,0 +1,147 @@
+﻿.wrapper {
+    color: white;
+    margin-top: 80px
+}
+
+.user-background {
+    top: 0;
+    left: 0;
+    min-width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: right top;
+    position: fixed;
+    filter: brightness(80%);
+    z-index: -1;
+}
+
+/***********Profile Page***********/
+.profile-header-wrapper {
+    width: 100%;
+    background: rgba( 0, 0, 0, 0.6 );
+    backdrop-filter: blur( 4px );
+    border-radius: 10px;
+}
+
+.profile-header {
+    display: grid;
+    grid-template-columns: 300px 280px repeat(2, 300px);
+    grid-template-rows: repeat(2, 140px);
+    grid-column-gap: 20px;
+    grid-row-gap: 0px;
+}
+
+.profile-grid1 {
+    grid-area: 1 / 1 / 3 / 2;
+    padding: 30px;
+}
+
+.profile-grid2 {
+    grid-area: 1 / 2 / 2 / 3;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    margin-bottom: 20px;
+}
+
+.profile-grid3 {
+    grid-area: 2 / 2 / 3 / 3;
+    font-size: 18px;
+    color: darkgray;
+    margin-bottom: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.div4 {grid-area: 1 / 3 / 3 / 4}
+
+.profile-grid5 {
+    grid-area: 1 / 4 / 3 / 5;
+    margin-top: 10px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.profile-img {
+    width: 220px;
+    border-radius: 50%;
+}
+
+.profile-icons {
+    width: 30px;
+    font-size: 28px;
+    margin-right: 10px;
+}
+
+/***********Profile Page***********/
+
+/***********User Add Movie***********/
+
+.feedback-input {
+    color: var(--foreground);
+    font-weight: 500;
+    font-size: 18px;
+    background: transparent;
+    border-width: 3px;
+    border-style: solid;
+    border-image: linear-gradient(to right, #1a2980, #26d0ce);
+    border-image-slice: 1;
+    transition: all 0.3s ease-in;
+    padding: 12px;
+    margin-top: 12px;
+    width: 100%;
+    box-sizing: border-box;
+    outline: 0;
+}
+
+.feedback-input:focus {
+    border-width: 3px;
+    border-style: solid;
+    border-image: linear-gradient(to right, #ff512f, #dd2476);
+    border-image-slice: 1;
+}
+
+.text {
+    height:194px
+}
+
+.user-add-movie-form {
+    display: grid;
+    grid-template-columns: 300px 640px 300px;
+    grid-template-rows: repeat(2, 280px) 80px;
+    grid-column-gap: 20px;
+    grid-row-gap: 20px;
+}
+
+.user-add-name {grid-area: 1 / 1 / 2 / 2}
+.user-add-info {
+    grid-area: 1 / 2 / 2 / 3;
+    margin-top: 10px;
+}
+.user-add-poster {grid-area: 1 / 3 / 2 / 4}
+.user-add-time   {grid-area: 2 / 1 / 3 / 2}
+.user-add-logo   {grid-area: 2 / 2 / 3 / 3}
+.user-add-id     {grid-area: 2 / 3 / 3 / 4}
+.add-btn-grid    {grid-area: 3 / 1 / 4 / 4}
+
+.add-btn {
+    width: 100%;
+    background: linear-gradient(to right, #1a2980, #26d0ce);
+    border-radius: 5px;
+    border: 0;
+    cursor: pointer;
+    color: white;
+    font-size: 24px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    transition: all 0.3s;
+    margin-top: -4px;
+    font-weight: 700;
+}
+
+.add-btn:hover {
+    background: linear-gradient(to right, #ff512f, #dd2476)
+}
+
+/***********User Add Movie***********/
