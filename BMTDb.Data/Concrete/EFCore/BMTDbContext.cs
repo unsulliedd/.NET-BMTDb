@@ -1,4 +1,5 @@
 ﻿using BMTDb.Entity;
+using BMTDb.Entity.Lists;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -10,21 +11,26 @@ namespace BMTDb.Data.Concrete.EFCore
 {
     public class BMTDbContext:DbContext
     {
-        //For Movies
+        //Movies
         public DbSet<Movie>? Movies { get; set; }
         public DbSet<Genre>? Genres { get; set; }
         public DbSet<Studio>? Studios { get; set; }
 
 
-        //For Tv
+        //Tv
         public DbSet<TvShow>? TvShows { get; set; }
         public DbSet<Season>? Seasons { get; set; }
         public DbSet<Episode>? Episodes { get; set; }
         public DbSet<Network>? Networks { get; set; }
 
-        //For People
+        //People
         public DbSet<Person>? Persons { get; set; }
 
+        //Lists
+        public DbSet<Watchlist>? Watchlists { get; set; }
+        public DbSet<WatchlistItem>? WatchlistItems { get; set; }
+        public DbSet<Favourite>? Favourites { get; set; }
+        public DbSet<FavouriteItem>? FavouriteItems { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)       
         {
