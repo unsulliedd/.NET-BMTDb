@@ -10,8 +10,8 @@ namespace BMTDb.Entity.Lists
     {
         public int Id { get; set; }
         public int MovieId { get; set; }
-        public Movie Movie { get; set; }
+        public Movie? Movie { get; set; }
         public int FavouriteId { get; set; }
-        public Favourite Favourite { get; set; }
+        public Favourite? Favourite { get; set; }
     }
 }

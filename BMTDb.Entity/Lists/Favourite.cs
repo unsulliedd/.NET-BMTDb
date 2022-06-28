@@ -9,7 +9,7 @@ namespace BMTDb.Entity.Lists
     public class Favourite
     {
         public int Id { get; set; }
-        public string UserId { get; set; }
-        public List<FavouriteItem> FavouriteItems { get; set; }
+        public string? UserId { get; set; }
+        public List<FavouriteItem>? FavouriteItems { get; set; }
     }
 }

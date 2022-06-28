@@ -10,9 +10,9 @@ namespace BMTDb.Entity.Lists
     {
         public int Id { get; set; }
         public int MovieId { get; set; }
-        public Movie Movie { get; set; }
+        public Movie? Movie { get; set; }
         public int WatchlistId { get; set; }
-        public Watchlist Watchlist { get; set; }
+        public Watchlist? Watchlist { get; set; }
         public DateTime AddedDate { get; set; } = DateTime.Now;
     }
 }
