@@ -367,7 +367,7 @@ namespace BMTDb.WebUI.Controllers
                 var roles = _roleManager.Roles.Select(i => i.Name);
 
                 ViewBag.Roles = roles;
-                return View(new UserDetailsModel()
+                return View(new AdminUserEditModel()
                 {
                     UserId = user.Id,
                     UserName = user.UserName,
@@ -384,7 +384,7 @@ namespace BMTDb.WebUI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UserEdit(UserDetailsModel model, string[] selectedRoles)
+        public async Task<IActionResult> UserEdit(AdminUserEditModel model, string[] selectedRoles)
         {
             if (ModelState.IsValid)
             {
