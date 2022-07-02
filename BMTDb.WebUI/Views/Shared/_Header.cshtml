@@ -58,8 +58,8 @@
                                 <div class="dropdown-menu" aria-label="dropdownMenuButton">
 
                                     <a class="dropdown-item" asp-controller="User" asp-action="UserProfile">Profile</a>
-
-                                    <a class="dropdown-item" asp-controller="" asp-action="">Watchlist</a>
+                                    <a class="dropdown-item" asp-controller="User" asp-action="Favourite">Favourites</a>
+                                    <a class="dropdown-item" asp-controller="User" asp-action="Watchlist">Watchlist</a>
                                 @if (User.IsInRole("Admin"))
                                 {
                                     <a class="dropdown-item" asp-controller="Admin" asp-action="AdminDashBoard">Admin Dashboard</a>

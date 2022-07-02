@@ -72,6 +72,11 @@
     width: 30px;
     font-size: 28px;
     margin-right: 10px;
+    filter:invert();
+}
+
+img.profile-icons:hover {
+    filter: invert(13%) sepia(87%) saturate(7497%) hue-rotate(7deg) brightness(103%) contrast(96%);
 }
 
 /***********Profile Page***********/
