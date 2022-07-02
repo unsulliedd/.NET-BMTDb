@@ -26,5 +26,24 @@ namespace BMTDb.Service.Concrete
         {
             return _watchlistRepository.GetByUserId(userId);
         }
+
+        public void AddtoWatchlist(string userId, int MovieId, DateTime AddedDate)
+        {
+            var watchlist = GetWatchlistbyUserId(userId);
+            if(watchlist != null)
+            {
+                var index = watchlist.WatchlistItems.FindIndex(i => i.MovieId == MovieId);
+                if(index < 0)
+                {
+                    watchlist.WatchlistItems.Add(new WatchlistItem()
+                    {
+                        MovieId = MovieId,
+                        AddedDate = AddedDate,
+                        WatchlistId = watchlist.Id
+                    });
+                    _watchlistRepository.Update(watchlist);
+                }                
+            }
+        }
     }
 }

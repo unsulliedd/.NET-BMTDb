@@ -125,9 +125,11 @@ namespace BMTDb.WebUI.Controllers
 
         [Authorize]
         [HttpPost]
-        public IActionResult AddtoWatchlist()
+        public IActionResult AddtoWatchlist(int MovieId, DateTime AddedDate)
         {
-            return View();
+            var userId = _userManager.GetUserId(User);
+            _watchlistService.AddtoWatchlist(userId, MovieId, AddedDate);
+            return RedirectToAction("Index","Movie");
         }
 
         [Authorize]
