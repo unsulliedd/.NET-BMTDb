@@ -100,6 +100,12 @@ app.UseAuthorization();
 
 //localhost/u/profile
 app.MapControllerRoute(
+    name: "Watchlist",
+    pattern: "u/watchlist/",
+    defaults: new { controller = "User", action = "Watchlist" });
+
+//localhost/u/profile
+app.MapControllerRoute(
     name: "UserProfile",
     pattern: "u/profile/",
     defaults: new { controller = "User", action = "UserProfile" });
