@@ -9,5 +9,6 @@ namespace BMTDb.Data.Abstract
 {
     public interface IWatchlistRepository : IRepository<Watchlist>
     {
+        Watchlist GetByUserId(string userId);
     }
 }

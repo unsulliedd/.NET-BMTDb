@@ -16,9 +16,15 @@ namespace BMTDb.Service.Concrete
         {
             _watchlistRepository = watchlistRepository;
         }
+
         public void InitializeWatchlist(string userId)
         {
             _watchlistRepository.Create(new Watchlist() { UserId = userId });
+        }
+
+        public Watchlist GetWatchlistbyUserId(string userId)
+        {
+            return _watchlistRepository.GetByUserId(userId);
         }
     }
 }

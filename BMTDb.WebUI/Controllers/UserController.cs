@@ -13,10 +13,12 @@ namespace BMTDb.WebUI.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly IMovieService _movieService;
+        private readonly IWatchlistService _watchlistService;
 
-        public UserController(IMovieService movieService, UserManager<User> userManager)
+        public UserController(IMovieService movieService, UserManager<User> userManager, IWatchlistService watchlistService)
         {
             _movieService = movieService;
+            _watchlistService = watchlistService;
             _userManager = userManager;
         }
 
@@ -97,6 +99,35 @@ namespace BMTDb.WebUI.Controllers
             }
 
             return View(model);
+        }
+
+        [Authorize]
+        public IActionResult Watchlist()
+        {
+            var watchlist = _watchlistService.GetWatchlistbyUserId(_userManager.GetUserId(User));
+            return View(new WatchlistModel
+            {
+                WatchlistId = watchlist.Id,
+                WatchlistItems = watchlist.WatchlistItems.Select(i => new WatchlistItemModel()
+                {
+                    WatchlistItemId = i.Id,
+                    Title = i.Movie.Title,
+                    MoviePoster = i.Movie.MoviePoster,
+                    Director = i.Movie.Director,
+                    MovieRatings = i.Movie.MovieRatings,
+                    RunTime = i.Movie.RunTime,
+                    Status = i.Movie.Status,
+                    ReleaseDate = i.Movie.ReleaseDate,
+                    AddedDate = i.AddedDate
+                }).ToList()
+            });
+        }
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult AddtoWatchlist()
+        {
+            return View();
         }
 
         [Authorize]

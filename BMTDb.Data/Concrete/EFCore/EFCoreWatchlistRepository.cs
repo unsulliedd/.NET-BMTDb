@@ -1,5 +1,10 @@
-﻿using BMTDb.Data.Abstract;
+﻿#pragma warning disable CS8604 // Possible null reference argument.
+#pragma warning disable CS8603 // Possible null reference return.
+#pragma warning disable IDE0063 // Use simple 'using' statement
+
+using BMTDb.Data.Abstract;
 using BMTDb.Entity.Lists;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +15,15 @@ namespace BMTDb.Data.Concrete.EFCore
 {
     public class EFCoreWatchlistRepository : EFCoreGenericRepository<Watchlist, BMTDbContext>, IWatchlistRepository
     {
+        public Watchlist GetByUserId(string userId)
+        {
+            using (var context = new BMTDbContext())
+            {
+                return context.Watchlists
+                                .Include(i => i.WatchlistItems)
+                                .ThenInclude(i => i.Movie)
+                                .FirstOrDefault(i => i.UserId == userId);
+            }
+        }
     }
 }
