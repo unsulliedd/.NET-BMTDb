@@ -27,6 +27,15 @@ namespace BMTDb.Data.Concrete.EFCore
             }
         }
 
+        public void RemoveFromWatchlist(int watchlistId, int movieId)
+        {
+            using (var context = new BMTDbContext())
+            {
+                var cmd = @"DELETE from WatchlistItems WHERE WatchlistId=@p0 and MovieId=@p1";
+                context.Database.ExecuteSqlRaw(cmd, watchlistId, movieId);
+            }
+        }
+
         public override void Update(Watchlist entity)
         {
             using (var context = new BMTDbContext())

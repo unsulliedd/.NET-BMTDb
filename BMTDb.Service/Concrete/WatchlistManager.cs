@@ -1,4 +1,5 @@
 ﻿using BMTDb.Data.Abstract;
+using BMTDb.Entity;
 using BMTDb.Entity.Lists;
 using BMTDb.Service.Abstract;
 using System;
@@ -43,6 +44,15 @@ namespace BMTDb.Service.Concrete
                     });
                     _watchlistRepository.Update(watchlist);
                 }                
+            }
+        }
+
+        public void RemoveFromWatchlist(string userId, int movieId)
+        {
+            var watchlist = GetWatchlistbyUserId(userId);
+            if (watchlist != null)
+            {
+                _watchlistRepository.RemoveFromWatchlist(watchlist.Id, movieId);
             }
         }
     }

@@ -111,6 +111,7 @@ namespace BMTDb.WebUI.Controllers
                 WatchlistItems = watchlist.WatchlistItems.Select(i => new WatchlistItemModel()
                 {
                     WatchlistItemId = i.Id,
+                    MovieId = i.MovieId,
                     Title = i.Movie.Title,
                     MoviePoster = i.Movie.MoviePoster,
                     Director = i.Movie.Director,
@@ -130,6 +131,15 @@ namespace BMTDb.WebUI.Controllers
             var userId = _userManager.GetUserId(User);
             _watchlistService.AddtoWatchlist(userId, MovieId, AddedDate);
             return RedirectToAction("Index","Movie");
+        }
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult RemoveFromWatchlist(int movieId)
+        {
+            var userId = _userManager.GetUserId(User);
+            _watchlistService.RemoveFromWatchlist(userId, movieId);
+            return RedirectToAction("Watchlist", "User");
         }
 
         [Authorize]
