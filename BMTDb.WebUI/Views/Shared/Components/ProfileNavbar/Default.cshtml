@@ -1,0 +1,11 @@
+﻿@model UserProfileModel
+
+<span class="">@Model.UserName</span>
+    @if (Model.ProfilePic != null)
+    {
+        <img class="navbar-avatar" src="@Model.ProfilePic">
+    }
+    else
+    {
+        <img class="navbar-avatar" style="filter:invert()" src="/img/Other/avatar-defult.png">
+    }
