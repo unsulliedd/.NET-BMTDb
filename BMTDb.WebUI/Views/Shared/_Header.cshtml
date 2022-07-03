@@ -3,7 +3,7 @@
         <div class="container-fluid" style="margin-left:34px; margin-right:44px">
                 
             <a class="navbar-brand" asp-controller="Home" asp-action="Index">
-                <img class="navbar-logo" src="/img/logo/logo.png" width="30" height="30" alt="BMTDb_Logo">BMTDb
+                <img class="navbar-logo" src="/img/Other/logo.png" width="30" height="30" alt="BMTDb_Logo">BMTDb
             </a>
                 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
@@ -51,8 +51,7 @@
                                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                                 style="display: flex;flex-direction: row;align-items: center;">
                                 <div style="display: flex; align-items: center">
-                                    <span class="">@User.Identity.Name</span>
-                                    <img class="navbar-avatar" src="https://www.themoviedb.org/t/p/w300_and_h300_face/4xJbtwuTcxq5Be5VVv0eLpavIW1.jpg">
+                                       @await Component.InvokeAsync("ProfileNavbar")
                                 </div>
                             </a>
                                 <div class="dropdown-menu" aria-label="dropdownMenuButton">
