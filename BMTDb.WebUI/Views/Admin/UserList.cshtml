@@ -4,7 +4,6 @@
 }
 
 <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
 
 <div class="container wrapper">
 
@@ -42,7 +41,7 @@
                             <td>
                                 <a href="/admin/user/@item.Id" class="btn btn-primary btn-sm mx-2">Edit</a>
                                     
-                                <form action="/admin/user/delete" method="POST" style="display: inline;">
+                                <form asp-action="UserDelete" method="POST" style="display: inline;">
                                     <input type="hidden" name="UserId" value="@item.Id">
                                     <button onclick="return confirm('Are you sure you want to delete - @item.UserName')" 
                                         type="submit" class="btn btn-danger btn-sm">Delete</button>
@@ -56,14 +55,3 @@
     </div>
 </div>
 
-@section Scripts
-{
-    <script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
-
-    <script>
-        $(document).ready( function () {
-            $('#myTable').DataTable();
-        });
-    </script>
-}

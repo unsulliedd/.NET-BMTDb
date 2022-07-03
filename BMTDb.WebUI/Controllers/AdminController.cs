@@ -96,7 +96,7 @@ namespace BMTDb.WebUI.Controllers
                     {
                         Message = $"\"{entity.Title}\" is added",
                         MessageType = "add",
-                        MessageIcon = "fa - solid fa - plus"
+                        MessageIcon = "fa-solid fa-plus"
                     });
                     return RedirectToAction("MovieList");
                 }
@@ -104,7 +104,7 @@ namespace BMTDb.WebUI.Controllers
                 {
                     Message = _movieService.ErrorMessage,
                     MessageType = "error",
-                    MessageIcon = "fa - solid fa - exclamation"
+                    MessageIcon = "fa-solid fa-exclamation"
                 });
 
             }
@@ -261,7 +261,7 @@ namespace BMTDb.WebUI.Controllers
                     {
                         Message = $"\"{entity.Name}\" is added",
                         MessageType = "add",
-                        MessageIcon = "fa - solid fa - plus"
+                        MessageIcon = "fa-solid fa-plus"
                     });
                     return RedirectToAction("PersonList");
                 }
@@ -269,7 +269,7 @@ namespace BMTDb.WebUI.Controllers
                 {
                     Message = _personService.ErrorMessage,
                     MessageType = "error",
-                    MessageIcon = "fa - solid fa - exclamation"
+                    MessageIcon = "fa-solid fa-exclamation"
                 });
             }
             return View(model);
@@ -347,7 +347,7 @@ namespace BMTDb.WebUI.Controllers
             {
                 Message = $"{entity?.Name} is deleted",
                 MessageType = "delete",
-                MessageIcon = "fa - solid fa - trash - can"
+                MessageIcon = "fa-solid fa-trash-can"
             });
             return RedirectToAction("PersonList");
         }
@@ -407,7 +407,12 @@ namespace BMTDb.WebUI.Controllers
                         selectedRoles ??= Array.Empty<string>();
                         await _userManager.AddToRolesAsync(user, selectedRoles.Except(userRoles).ToArray<string>());
                         await _userManager.RemoveFromRolesAsync(user, userRoles.Except(selectedRoles).ToArray<string>());
-
+                        TempData.Put("message", new NotificationModel
+                        {
+                            Message = $"{user.UserName} is updated",
+                            MessageType = "update",
+                            MessageIcon = "fa-solid fa-pen"
+                        });
                         return Redirect("/admin/user/list");
                     }
                 }
@@ -417,6 +422,30 @@ namespace BMTDb.WebUI.Controllers
             return View(model);
 
         }
+
+        public async Task<IActionResult> UserDelete(string UserId)
+        {
+            var user = await _userManager.FindByIdAsync(UserId);
+            if(user != null) 
+            { 
+                await _userManager.DeleteAsync(user);
+                TempData.Put("message", new NotificationModel
+                {
+                    Message = $"{user.UserName} is deleted",
+                    MessageType = "delete",
+                    MessageIcon = "fa-solid fa-trash-can"
+                });
+                return RedirectToAction("UserList");
+            }
+            TempData.Put("message", new NotificationModel
+            {
+                Message = "Unknown Error",
+                MessageType = "error",
+                MessageIcon = "fa - solid fa - exclamation"
+            });
+            return RedirectToAction("UserList");
+        }
+
 
         //Roles
         public IActionResult RoleList()
@@ -439,6 +468,12 @@ namespace BMTDb.WebUI.Controllers
                 var result = await _roleManager.CreateAsync(new IdentityRole(model.Name));
                 if (result.Succeeded)
                 {
+                    TempData.Put("message", new NotificationModel
+                    {
+                        Message = "\"Role\" is added",
+                        MessageType = "add",
+                        MessageIcon = "fa-solid fa-plus"
+                    });
                     return RedirectToAction("RoleList");
                 }
 
@@ -527,6 +562,30 @@ namespace BMTDb.WebUI.Controllers
                 }
             }
             return Redirect("/admin/role/" + model.RoleId);
+        }
+
+        public async Task<IActionResult> RoleDelete(string RoleId)
+        {
+            var role = await _roleManager.FindByIdAsync(RoleId);
+            if (role != null)
+            {
+                await _roleManager.DeleteAsync(role);
+                TempData.Put("message", new NotificationModel
+                {
+                    Message = "Role Successfully Deleted",
+                    MessageType = "delete",
+                    MessageIcon = "fa-solid fa-trash-can"
+                });
+                return RedirectToAction("RoleList");
+
+            }
+            TempData.Put("message", new NotificationModel
+            {
+                Message = "Unknown Error",
+                MessageType = "error",
+                MessageIcon = "fa - solid fa - exclamation"
+            });
+            return RedirectToAction("RoleList");
         }
 
     }

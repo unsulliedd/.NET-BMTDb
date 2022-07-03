@@ -32,7 +32,7 @@
                             <td>
                                 <a href="/admin/role/@item.Id" class="btn btn-primary btn-sm m-2">Edit</a>
                                     
-                                <form action="/admin/role/delete" method="POST" style="display: inline;">
+                                <form asp-action="RoleDelete" method="POST" style="display: inline;">
                                     <input type="hidden" name="RoleId" value="@item.Id">
                                     <button onclick="return confirm('Are you sure you want to delete - @item.Name Role')"
                                         type="submit" class="btn btn-danger btn-sm">Delete</button>

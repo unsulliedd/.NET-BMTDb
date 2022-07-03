@@ -92,7 +92,7 @@ namespace BMTDb.WebUI.Controllers
                     {
                         Message = "Unknown Error, Try Again Later",
                         MessageType = "error",
-                        MessageIcon = "fa - solid fa - exclamation"
+                        MessageIcon = "fa-solid fa-exclamation"
                     });
                 }
                 return Redirect("~/User/UserProfile");
@@ -190,7 +190,7 @@ namespace BMTDb.WebUI.Controllers
                     {
                         Message = $"\"{entity.Title}\" is added",
                         MessageType = "add",
-                        MessageIcon = "fa - solid fa - plus"
+                        MessageIcon = "fa-solid fa-plus"
                     });
                     return RedirectToAction("Index", "Movie");
                 }
@@ -198,7 +198,7 @@ namespace BMTDb.WebUI.Controllers
                 {
                     Message = _movieService.ErrorMessage,
                     MessageType = "error",
-                    MessageIcon = "fa - solid fa - exclamation"
+                    MessageIcon = "fa-solid fa-exclamation"
                 });
             }
             return View(model);
