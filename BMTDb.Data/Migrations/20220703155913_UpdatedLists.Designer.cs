@@ -4,6 +4,7 @@ using BMTDb.Data.Concrete.EFCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BMTDb.Data.Migrations
 {
     [DbContext(typeof(BMTDbContext))]
-    partial class BMTDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220703155913_UpdatedLists")]
+    partial class UpdatedLists
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
