@@ -7,11 +7,20 @@
 
 <div id="background"></div>
 
-<div class="container wrapper">
-    <div>
-        <div class="profile-header-wrapper">
+<div class="container-fluid wrapper">
+    <div class="profile-header-wrapper mb-5">
+        <div class="container">
             <div class="profile-header">
-                <div class="profile-grid1"><img class="profile-img" src="@Model.ProfilePic" /></div>
+                <div class="profile-grid1">
+                    @if (Model.ProfilePic != null)
+                    {
+                        <img class="profile-img" src="@Model.ProfilePic">
+                    }
+                    else
+                    {
+                        <img class="profile-img" style="filter:invert()" src="/img/Other/avatar-defult.png">
+                    }
+                </div>
                 <div class="profile-grid2">
                     <h2>Hello, @Model.UserName</h2>
                 </div>
@@ -32,9 +41,9 @@
                 </span>
             </div>
         </div>
-        <div class="profile-main">
-        </div>
     </div>
 
+    <div class="profile-main">
 
+    </div>
 </div>
