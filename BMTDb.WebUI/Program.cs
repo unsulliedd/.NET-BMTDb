@@ -70,6 +70,9 @@ builder.Services.AddScoped<IPersonService, PersonManager>();
 builder.Services.AddScoped<IWatchlistRepository, EFCoreWatchlistRepository>();
 builder.Services.AddScoped<IWatchlistService, WatchlistManager>();
 
+builder.Services.AddScoped<IFavouriteRepository, EFCoreFavouriteRepository>();
+builder.Services.AddScoped<IFavouriteService, FavouriteManager>();
+
 //Reads Appsettings.json
 builder.Services.AddScoped<IEmailSender, SmtpEmailSender>(i =>
     new SmtpEmailSender(
@@ -98,7 +101,13 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-//localhost/u/profile
+//localhost/u/favourite
+app.MapControllerRoute(
+    name: "Favourite",
+    pattern: "u/favourite/",
+    defaults: new { controller = "User", action = "Favourite" });
+
+//localhost/u/watchlist
 app.MapControllerRoute(
     name: "Watchlist",
     pattern: "u/watchlist/",

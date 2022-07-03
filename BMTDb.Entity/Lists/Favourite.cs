@@ -1,4 +1,6 @@
-﻿using System;
+﻿#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +11,7 @@ namespace BMTDb.Entity.Lists
     public class Favourite
     {
         public int Id { get; set; }
-        public string? UserId { get; set; }
-        public List<FavouriteItem>? FavouriteItems { get; set; }
+        public string UserId { get; set; }
+        public List<FavouriteItem> FavouriteItems { get; set; }
     }
 }

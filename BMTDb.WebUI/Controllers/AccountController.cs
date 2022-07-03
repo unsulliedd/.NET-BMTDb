@@ -17,14 +17,16 @@ namespace BMTDb.WebUI.Controllers
         private readonly SignInManager<User> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly IWatchlistService _watchlistService;
+        private readonly IFavouriteService _favouriteService;
 
         public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, IEmailSender emailSender,
-            IWatchlistService watchlistService)
+            IWatchlistService watchlistService, IFavouriteService favouriteService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _watchlistService = watchlistService;
+            _favouriteService = favouriteService;
         }
 
         public IActionResult SignIn(string? ReturnUrl = null)
@@ -150,6 +152,7 @@ namespace BMTDb.WebUI.Controllers
                 {
                     await _userManager.AddToRoleAsync(user, "User");    //Adds User to User Role on Account Verification
                     _watchlistService.InitializeWatchlist(user.Id);     //User watchlist definition
+                    _favouriteService.InitializeFavourite(user.Id);     //User favourite definition
 
                     TempData.Put("message", new NotificationModel
                     {

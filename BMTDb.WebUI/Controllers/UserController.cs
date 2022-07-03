@@ -14,12 +14,15 @@ namespace BMTDb.WebUI.Controllers
         private readonly UserManager<User> _userManager;
         private readonly IMovieService _movieService;
         private readonly IWatchlistService _watchlistService;
+        private readonly IFavouriteService _favouriteService;
 
-        public UserController(IMovieService movieService, UserManager<User> userManager, IWatchlistService watchlistService)
+        public UserController(IMovieService movieService, UserManager<User> userManager, IWatchlistService watchlistService, 
+            IFavouriteService favouriteService)
         {
             _movieService = movieService;
             _watchlistService = watchlistService;
             _userManager = userManager;
+            _favouriteService = favouriteService;
         }
 
         public async Task<IActionResult> UserProfile()
@@ -101,6 +104,49 @@ namespace BMTDb.WebUI.Controllers
             return View(model);
         }
 
+        //Favourite
+        [Authorize]
+        public IActionResult Favourite()
+        {
+            var favourite = _favouriteService.GetFavouritebyUserId(_userManager.GetUserId(User));
+            return View(new FavouriteModel
+            {
+                FavouriteId = favourite.Id,
+                FavouriteItems = favourite.FavouriteItems.Select(i => new FavouriteItemModel()
+                {
+                    FavouriteItemId = i.Id,
+                    MovieId = i.MovieId,
+                    Title = i.Movie.Title,
+                    MoviePoster = i.Movie.MoviePoster,
+                    Director = i.Movie.Director,
+                    MovieRatings = i.Movie.MovieRatings,
+                    RunTime = i.Movie.RunTime,
+                    Status = i.Movie.Status,
+                    ReleaseDate = i.Movie.ReleaseDate,
+                    AddedDate = i.AddedDate
+                }).ToList()
+            });
+        }
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult AddtoFavourite(int MovieId, DateTime AddedDate)
+        {
+            var userId = _userManager.GetUserId(User);
+            _favouriteService.AddtoFavourite(userId, MovieId, AddedDate);
+            return RedirectToAction("Index","Movie");
+        }
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult RemoveFromFavourite(int movieId)
+        {
+            var userId = _userManager.GetUserId(User);
+            _favouriteService.RemoveFromFavourite(userId, movieId);
+            return RedirectToAction("Favourite", "User");
+        }
+
+        //Watchlist
         [Authorize]
         public IActionResult Watchlist()
         {
@@ -130,7 +176,7 @@ namespace BMTDb.WebUI.Controllers
         {
             var userId = _userManager.GetUserId(User);
             _watchlistService.AddtoWatchlist(userId, MovieId, AddedDate);
-            return RedirectToAction("Index","Movie");
+            return RedirectToAction("Index", "Movie");
         }
 
         [Authorize]
@@ -142,6 +188,7 @@ namespace BMTDb.WebUI.Controllers
             return RedirectToAction("Watchlist", "User");
         }
 
+        //UserAddMovie
         [Authorize]
         [HttpGet]
         public IActionResult UserAddMovie()
