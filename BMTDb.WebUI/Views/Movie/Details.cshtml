@@ -17,15 +17,38 @@
         </div>
         
         <div class="details-poster">
-            <img class="poster-img" src="@Model.Movie.MoviePoster"/>
+            <a href="@Model.Movie.MoviePoster">
+                <img class="poster-img" src="@Model.Movie.MoviePoster" title="@Model.Movie.Title" /></a>
         </div>
 
         <div class="details-info info-inside">
             <div class="info-inside-main">
 
                 <div class="details-row">
-                    <div style="display:inline-flex">
-                        <h2>@Model.Movie.Title</h2> <h2 class="text-muted px-1">(@Model.Movie.ReleaseDate.Year)</h2>
+                    <div style="display:flex; justify-content: space-between;">
+                        <div style="display:inline-flex;">
+                            <h2>@Model.Movie.Title</h2> <h2 class="text-muted px-1">(@Model.Movie.ReleaseDate.Year)</h2>
+                        </div>
+                        <div class="d-flex">
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <form asp-controller="User" asp-action="AddtoFavourite" method="POST">
+                                    <input type="hidden" name="MovieId" value="@Model.Movie.MovieId"/>
+                                    <input type="hidden" name="AddedDate" value="@DateTime.UtcNow" />
+                                    <button class="p-0" type="submit" style="background: none;border: none;">
+                                        <img title="Add to Favourites" class="addlist-icons" 
+                                        src="~/img/Icon-svg/heart-circle-plus-solid.svg"/></button>
+                                </form>
+                                <form asp-controller="User" asp-action="AddtoWatchlist" method="POST">
+                                    <input type="hidden" name="MovieId" value="@Model.Movie.MovieId"/>
+                                    <input type="hidden" name="AddedDate" value="@DateTime.UtcNow" />
+                                    <button class="p-0" type="submit" style="background: none;border: none;">
+                                        <img title="Add to Watchlist" class="addlist-icons" style="height: 28px;width: 28px;"
+                                        src="~/img/Icon-svg/watchlist-solid.svg"/></button>
+                                </form>
+                                <a href=""><img title="Add to List" class="addlist-icons" src="~/img/Icon-svg/list-solid.svg"/></a>
+                            }
+                        </div>
                     </div>
 
                     <div>
@@ -81,7 +104,8 @@
                         <a asp-controller="Movie" 
                             asp-action="Index" 
                             asp-route-studio="@item.Studio_Name" 
-                            class="studiolink"><img style="width: 3rem; height: 3rem;" src="@item.Studio_logo"/></a>
+                            class="studiolink"><img title="@item.Studio_Name" style="width: 3rem; height: 3rem;" 
+                                src="@item.Studio_logo"/></a>
                     }
                 </div>
             </div>

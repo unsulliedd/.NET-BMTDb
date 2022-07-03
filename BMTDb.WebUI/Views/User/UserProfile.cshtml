@@ -21,10 +21,10 @@
                     <span>Member since - @Model.CreationDate.ToString("MMMM") @Model.CreationDate.Year</span>
                 </div>
                 <span class="profile-grid5">
-                    <a asp-controller="User" asp-action="Favourites">
+                    <a asp-controller="User" asp-action="Favourite">
                         <img class="profile-icons" src="/img/Icon-svg/heart-solid.svg"/></a>
                     <a asp-controller="User" asp-action="Watchlist">
-                        <img class="profile-icons" src="/img/Icon-svg/watchlist-solid.svg"/></a>
+                        <img class="profile-icons" style="width:34px" src="/img/Icon-svg/watchlist-solid.svg"/></a>
                     <a href="">
                         <img class="profile-icons" src="/img/Icon-svg/list-solid.svg"/></a>
                     <a asp-controller="User" asp-action="ProfileEdit">

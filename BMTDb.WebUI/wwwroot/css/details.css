@@ -158,6 +158,16 @@ h2 {font-size: 1.8rem;}
 
 
 /************* Utilities *************/
+.addlist-icons {
+    width: 24px;
+    margin-right: 5px;
+    filter:invert();
+}
+
+.addlist-icons:hover {
+    filter: invert(13%) sepia(87%) saturate(7497%) hue-rotate(7deg) brightness(103%) contrast(96%);
+}
+
 .dot {
     height: 6px;
     width: 6px;
@@ -169,7 +179,7 @@ h2 {font-size: 1.8rem;}
 .box {
     display: inline-block;
     color: #fff;
-    padding: 2px;
+    padding: 2px 3px 2px 3px;
     border-radius: 5px;
     border: 1px solid rgba(255,255,255,0.13);
 }
