@@ -14,7 +14,7 @@
 
         <partial name="_Header" />
    
-            <main role="main" class="pb-3">
+            <main role="main">
                 @if (TempData["message"] != null)
                 {
                     <partial name="_NotificationMessage" model="@(TempData.Get<NotificationModel>("message"))"/>

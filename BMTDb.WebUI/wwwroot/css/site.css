@@ -1,5 +1,4 @@
 /********** Responsive **********/
-
 @media (max-width: 768px) {
       html {
         font-size: 16px;
@@ -19,9 +18,7 @@
         justify-content: flex-end;
     }
 }
-
 /********** Responsive **********/
-
 
 html {
     font-size: 14px;
@@ -47,7 +44,7 @@ a:hover{
     color: dodgerblue
 }
 
-/*Scrollbar*/
+/***************** Scrollbar *****************/
 ::-webkit-scrollbar {width: 12px}
 ::-webkit-scrollbar-track {
     background: linear-gradient(to bottom, #304352, #d7d2cc);
@@ -59,13 +56,13 @@ a:hover{
     background: linear-gradient(to right, #bdc3c7, #2c3e50);
     border-radius: 5px;
 }
-/*Scrollbar*/
+/***************** Scrollbar *****************/
 
 /************** Dark Mode CSS **************/
 
 .darkmode {
-    --clr-light: #fff;              /*linear-gradient(to right, #e6dada, #274046)*/
-    --clr-dark: #121212;            /*linear-gradient(to right, #232526, #414345)*/
+    --clr-light: #fff;
+    --clr-dark: #121212;
     --foreground: var(--clr-light);
     --background: var(--clr-dark);
 }
@@ -139,10 +136,6 @@ a.dark-mode-toggle:hover {
     flex-direction: row;
     flex-wrap: nowrap;
     align-items: center;
-}
-
-.navbar-profile {
-
 }
 
 .navbar-avatar {
@@ -224,8 +217,9 @@ a.dark-mode-toggle:hover {
 /************** Navbar **************/
 /************** Footer **************/
 footer {
-    position: absolute;
+    position: relative;
     width: 100%;
+    z-index:-1;
 }
 .footer-logo {
     max-width: 250px;
@@ -234,11 +228,13 @@ footer {
     margin-left: 34px;
 }
 
+.nav-link-footer {
+    color: var(--foreground);
+}
 /************** Footer **************/
 
 
 /*********** SpotlightView ***********/
-
 .spotlight-backdrop {
     top: 0;
     left: 0;
@@ -290,12 +286,10 @@ footer {
     height: 40px;
     margin-bottom: 10px;
 }
-
 /*********** SpotlightView ***********/
 
 
 /************ Pagination ************/
-
 .pagination-row {
     display: flex;
     margin-top: 30px;
@@ -342,7 +336,6 @@ a.pagination-number-link {color: white}
 /************ Pagination ************/
 
 /*********** Message Box ***********/
-
 .msgbox {
     position: fixed;
     display: flex;
@@ -364,6 +357,7 @@ a.pagination-number-link {color: white}
     box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
     backdrop-filter: blur( 5px );
     border: 3px solid;
+    top: 80px;
 }
 
 .msgbox-msg {
@@ -390,5 +384,4 @@ a.pagination-number-link {color: white}
 .msgbox-add     {border-color: green}
 .msgbox-update  {border-color: #0c5bd7}
 .msgbox-delete  {border-color: red}
-
 /*********** Message Box ***********/
