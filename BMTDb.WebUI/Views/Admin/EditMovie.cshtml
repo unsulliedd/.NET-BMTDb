@@ -7,12 +7,16 @@
 <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
 
 <div class="container wrapper">
-    <h2><b>Update Movie</b></h2>
-    <hr />
+        <div class="container admin-lists-header">
+            <a class="back-link" href="/admin/dashboard">
+                <i class="fa-solid fa-circle-left" style="font-size: 25px;margin-right:10px;" title="Back"></i></a>
+                <h2>Update Movie</h2>
+        </div>
+    <hr>
     <form asp-controller="Admin" asp-action="EditMovie" method="post">
         <input type="hidden" name="MovieId" value="@Model.MovieId" />
 
-        <div class="add-movie-form">
+        <div class="add-movie-form mb-5">
             <div class="add-name">
                 <input class="feedback-input" asp-for="Title"           placeholder="Title"/>
                     <span asp-validation-for="Title" class="mt-1 span-validation text-danger"></span>

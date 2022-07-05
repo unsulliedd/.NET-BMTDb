@@ -7,7 +7,13 @@
 <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
 
 <div class="container-fluid wrapper">
-    <h2>Movie List</h2>
+        <div class="container admin-lists-header">
+            <a class="back-link" href="/admin/dashboard">
+                <i class="fa-solid fa-circle-left" style="font-size: 25px;margin-right:10px;" title="Back"></i></a>
+            <a class="back-link" href="/admin/addmovie">
+                <i class="fa-solid fa-circle-plus" style="font-size: 25px;margin-right:10px;" title="Add Movie"></i></a>
+                <h2>Movie List</h2>
+        </div>
     <hr>
     <table class="movielist-table">
         <thead>

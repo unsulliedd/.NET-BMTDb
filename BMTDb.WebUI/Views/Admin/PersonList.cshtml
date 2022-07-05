@@ -6,10 +6,16 @@
 
 <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
 
-<div class="container-fluid wrapper">
-    <h2>Person List</h2>
+<div class="container wrapper">
+        <div class="admin-lists-header">
+            <a class="back-link" href="/admin/dashboard">
+                <i class="fa-solid fa-circle-left" style="font-size: 25px;margin-right:10px;" title="Back"></i></a>
+            <a class="back-link" href="/admin/addperson">
+                <i class="fa-solid fa-circle-plus" style="font-size: 25px;margin-right:10px;" title="Add Person"></i></a>
+                <h2>Person List</h2>
+        </div>
     <hr>
-    <table class="personlist-table">
+    <table class="personlist-table row mb-5">
         <thead>
             <tr>
                 <td><b>Id</b></td>

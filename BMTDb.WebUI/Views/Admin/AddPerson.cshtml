@@ -7,10 +7,14 @@
 <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
 
 <div class="container wrapper">
-    <h2>Add Person</h2>
+        <div class="container admin-lists-header">
+            <a class="back-link" href="/admin/dashboard">
+                <i class="fa-solid fa-circle-left" style="font-size: 25px;margin-right:10px;" title="Back"></i></a>
+            <h2>Add Person</h2>
+        </div>
     <hr />
     <form asp-controller="Admin" asp-action="AddPerson" method="post" enctype="multipart/form-data" >
-        <div class="add-person-form">
+        <div class="add-person-form mb-5">
             <div class="person-form-1">
                 <span class="text-muted">Name</span>
                     <input class="feedback-input" asp-for="Name"            placeholder="Name"/>
@@ -35,7 +39,7 @@
                 <span class="text-muted">Biography</span>
                     <input class="feedback-input" asp-for="Biography"       placeholder="Biography">    
             </div>
-            <div class="person-form-5" style="margin-top: 25px">
+            <div class="person-form-5" style="margin-top: 35px">
                 <input type="submit" value="Add Person" class="add-btn"/>
             </div>
         </div>
