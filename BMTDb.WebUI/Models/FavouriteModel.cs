@@ -1,5 +1,7 @@
 ﻿#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor.
 
+using BMTDb.Entity;
+
 namespace BMTDb.WebUI.Models
 {
     public class FavouriteModel
@@ -20,5 +22,7 @@ namespace BMTDb.WebUI.Models
         public int? RunTime { get; set; }
         public DateTime ReleaseDate { get; set; }
         public DateTime AddedDate { get; set; } = DateTime.Now;
+        public List<Genre> Genres { get; set; }
+        public List<Studio> Studios { get; set; }
     }
 }

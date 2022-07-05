@@ -123,7 +123,10 @@ namespace BMTDb.WebUI.Controllers
                     RunTime = i.Movie.RunTime,
                     Status = i.Movie.Status,
                     ReleaseDate = i.Movie.ReleaseDate,
-                    AddedDate = i.AddedDate
+                    AddedDate = i.AddedDate,
+                    Genres = i.Movie.MovieGenres.Select(i => i.Genre).ToList(),
+                    Studios = i.Movie.MovieStudios.Select(i => i.Studios).ToList(),
+
                 }).ToList()
             });
         }
@@ -165,7 +168,10 @@ namespace BMTDb.WebUI.Controllers
                     RunTime = i.Movie.RunTime,
                     Status = i.Movie.Status,
                     ReleaseDate = i.Movie.ReleaseDate,
-                    AddedDate = i.AddedDate
+                    AddedDate = i.AddedDate,
+                    Genres = i.Movie.MovieGenres.Select(i => i.Genre).ToList(),
+                    Studios = i.Movie.MovieStudios.Select(i => i.Studios).ToList(),
+
                 }).ToList()
             });
         }

@@ -22,7 +22,9 @@ namespace BMTDb.Data.Concrete.EFCore
             {
                 return context.Favourites
                                 .Include(i => i.FavouriteItems)
-                                .ThenInclude(i => i.Movie)
+                                .ThenInclude(i => i.Movie).ThenInclude(i => i.MovieGenres).ThenInclude(i => i.Genre)
+                                .Include(i => i.FavouriteItems)
+                                .ThenInclude(i => i.Movie).ThenInclude(i => i.MovieStudios).ThenInclude(i => i.Studios)
                                 .FirstOrDefault(i => i.UserId == userId);
             }
         }
