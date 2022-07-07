@@ -51,10 +51,10 @@
                                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                                 style="display: flex;flex-direction: row;align-items: center;">
                                 <div style="display: flex; align-items: center">
-                                       @await Component.InvokeAsync("ProfileNavbar")
+                                      @await Component.InvokeAsync("ProfileNavbar")
                                 </div>
                             </a>
-                                <div class="dropdown-menu" aria-label="dropdownMenuButton">
+                                <div class="dropdown-menu dropdown-profile" aria-label="dropdownMenuButton">
 
                                     <a class="dropdown-item" asp-controller="User" asp-action="UserProfile">Profile</a>
                                     <a class="dropdown-item" asp-controller="User" asp-action="Favourite">Favourites</a>
@@ -64,6 +64,35 @@
                                     <a class="dropdown-item" asp-controller="Admin" asp-action="AdminDashBoard">Admin Dashboard</a>
                                 }
                                     <a class="dropdown-item" asp-controller="Account"  asp-action="Signout">Sign-out</a>
+                                    <div role="separator" class="dropdown-divider"></div>
+                                    <div class="social-panel">
+                                        <span>
+                                            <a href="https://github.com/unsulliedd">
+                                                <i class="social-icon fab fa-github"> </i>
+                                            </a>
+                                        </span>
+                                        <span>
+                                            <a href="https://twitter.com">
+                                                <i class="social-icon fab fa-twitter"></i>
+                                            </a>
+                                        </span>
+                                        <span>
+                                            <a href="https://facebook.com">
+                                                <i class="social-icon fab fa-facebook"></i>
+                                            </a>
+                                        </span>
+                                        <span>
+                                            <a href="https://youtube.com">
+                                                <i class="social-icon fab fa-youtube"></i>
+                                            </a>
+                                        </span>
+                                    </div>
+                                    <div role="separator" class="dropdown-divider"></div>
+                                    <div class="tools-panel">
+                                        <a class="dark-mode-toggle" id="dark-mode-toggle" href="#">
+                                            <img src="/img/icon-svg/moon-solid.svg" style="width:28px">
+                                        </a>
+                                    </div>
                                 </div>
                         </div>
                     }
@@ -74,12 +103,11 @@
                             <a class="btn btn-outline-light" asp-controller="Account" asp-action="SignIn">Login</a>
                             <a class="btn btn-primary mx-2"  asp-controller="Account" asp-action="SignUp">Sign-up</a>
                         </div>
-                    }
-                    
-                    <div class="navbar-dropdown">
-                        <span class="btn navbar-dropdown dropdown-toggle" data-bs-toggle="dropdown" 
-                            aria-haspopup="true" aria-expanded="false">
-                        </span>
+
+                        <div class="navbar-dropdown">
+                            <span class="btn navbar-dropdown dropdown-toggle" data-bs-toggle="dropdown" 
+                                aria-haspopup="true" aria-expanded="false">
+                            </span>
                             <div class="dropdown-menu dropdown-menu-navbar dropdown-menu-end">
                                 <h5 class="dropdown-text">Social</h5>
                                 <div role="separator" class="dropdown-divider"></div>
@@ -112,7 +140,8 @@
                                         </a>
                                     </div>
                             </div>  
-                    </div>
+                        </div>
+                    }
                 </div>
 
             </div>

@@ -144,6 +144,12 @@ a.dark-mode-toggle:hover {
     height: 32px;
     width: 32px;
     border-radius: 50%;
+    object-fit:cover;
+}
+
+.dropdown-profile {
+    font-size: 16px;
+    width: 12rem;
 }
 
 .navbar-dropdown {
