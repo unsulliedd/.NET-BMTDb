@@ -299,19 +299,3 @@ a.back-link{color: var(--foreground)}
 }
 
 /*************** Role Tables ***************/
-
-/**************** User Edit ****************/
-.useredit-left {
-    margin-right: 10%;
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-}
-
-.useredit-right {
-    width: 40%;
-    display: flex;
-    flex-direction: column;
-}
-/**************** User Edit ****************/
-
