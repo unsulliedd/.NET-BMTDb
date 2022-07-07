@@ -59,25 +59,39 @@ namespace BMTDb.WebUI.Controllers
                     Birthday = user.Birthday,
                     Gender = user.Gender,
                     Email = user.Email,
+                    ProfilePic = user.ProfilePic,
                 });
             }
             return Redirect("~/User/UserProfile");
         }
 
         [HttpPost]
-        public async Task<IActionResult> ProfileEdit(UserDetailsModel model)
+        public async Task<IActionResult> ProfileEdit(UserDetailsModel model, IFormFile file )
         {
             if (ModelState.IsValid)
             {
                 var user = await _userManager.FindByIdAsync(model.UserId);
                 if (user != null)
                 {
+
                     user.FirstName = model.FirstName;
                     user.LastName = model.LastName;
                     user.UserName = model.UserName;
                     user.Birthday = model.Birthday;
                     user.Gender = model.Gender;
                     user.Email = model.Email;
+                    user.ProfilePic = model?.ProfilePic;
+
+                    if (file != null)
+                    {
+                        var extention = Path.GetExtension(file.FileName);
+                        var randomName = string.Format($"{Guid.NewGuid()}{extention}");
+                        user.ProfilePic = randomName;
+                        var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\img\\UserPictures", randomName);
+
+                        using var stream = new FileStream(path, FileMode.Create);
+                        await file.CopyToAsync(stream);
+                    }
 
                     var result = await _userManager.UpdateAsync(user);
 
@@ -163,7 +177,10 @@ namespace BMTDb.WebUI.Controllers
                     MovieId = i.MovieId,
                     Title = i.Movie.Title,
                     MoviePoster = i.Movie.MoviePoster,
+                    MovieBackdrop = i.Movie.MovieBackdrop,
                     Director = i.Movie.Director,
+                    MovieInfo = i.Movie.MovieInfo,
+                    MovieTagline = i.Movie.MovieTagline,
                     MovieRatings = i.Movie.MovieRatings,
                     RunTime = i.Movie.RunTime,
                     Status = i.Movie.Status,

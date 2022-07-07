@@ -140,3 +140,39 @@ img.profile-icons:hover {
 }
 
 /***********User Add Movie***********/
+
+/**************** User Edit ****************/
+.useredit-left {
+    margin-right: 10%;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+}
+
+.useredit-right {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+}
+
+.useredit-pic {
+    max-width: fit-content;
+    padding: 0;
+}
+
+.useredit-img {
+    max-width: 180px;
+    max-height: 180px;
+    border: 2px;
+}
+
+.user-edit-header {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    align-items: center;
+}
+
+a.back-link:hover {color: crimson}
+a.back-link {color: var(--foreground)}
+/**************** User Edit ****************/

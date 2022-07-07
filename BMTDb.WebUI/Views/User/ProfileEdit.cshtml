@@ -3,16 +3,16 @@
     ViewData["Title"] = "User Edit";
 }
 
-<link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/user.css" asp-append-version="true" />
 
 <div class="container wrapper">
-    <div class="admin-lists-header">
+    <div class="user-edit-header">
     <a class="back-link" href="/u/profile">
         <i class="fa-solid fa-circle-left" style="font-size: 25px;margin-right:10px;"></i></a>
         <h3>Edit User</h3>
     </div>
     <hr>
-    <form class="d-flex flex-row" asp-controller="User" asp-action="ProfileEdit" method="POST">
+    <form class="d-flex flex-row mb-5" asp-controller="User" asp-action="ProfileEdit" method="POST" enctype="multipart/form-data">
         <div class="useredit-left">
             <input type="hidden" name="UserId" value="@Model.UserId">
 
@@ -45,7 +45,20 @@
                     <option value="Female">Female</option>
                 </select>
 
-                <button class="btn btn-primary mt-4" type="submit">Save Changes</button>
+            <span class="text-muted mt-3">Profile Image</span>
+            <div class="useredit-pic feedback-input">
+                @if(@Model.ProfilePic == null)
+                {
+                    <img class="useredit-img" style="filter:invert()" src="/img/Other/avatar-defult.png">
+                }
+                else
+                {
+                <img class="useredit-img" src="/img/UserPictures/@Model.ProfilePic">
+                }
+            </div>
+            <input type="file" name="file" class="my-2"/>
+
+            <button class="btn btn-primary mt-4" type="submit">Save Changes</button>
         </div>
     </form>
 </div>
