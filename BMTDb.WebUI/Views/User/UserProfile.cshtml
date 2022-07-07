@@ -8,42 +8,47 @@
 <div id="background"></div>
 
 <div class="container-fluid wrapper">
-    <div class="profile-header-wrapper mb-5">
-        <div class="container">
-            <div class="profile-header">
-                <div class="profile-grid1">
+    <div class="profile-background mb-5">
+        <div class="container-md">
+            <div class="profile-wrapper">
+                <div class="profile-user">
+                    <div class="profile-pic">
                     @if (Model.ProfilePic != null)
                     {
-                        <img class="profile-img" src="@Model.ProfilePic">
+                        <img class="profile-img" src="/img/UserPictures/@Model.ProfilePic">
                     }
                     else
                     {
                         <img class="profile-img" style="filter:invert()" src="/img/Other/avatar-defult.png">
                     }
+                    </div>
+                    <div class="profile-info">
+                        <div class="profile-username">
+                            <h2>Hello, @Model.UserName</h2>
+                        </div>
+                        <div class="profile-details">
+                            <span>@Model.FirstName
+                                @Model.LastName</span>
+                            <span>Member since - @Model.CreationDate.ToString("MMMM") @Model.CreationDate.Year</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="profile-grid2">
-                    <h2>Hello, @Model.UserName</h2>
-                </div>
-                <div class="profile-grid3">
-                    <span>@Model.FirstName
-                    @Model.LastName</span>
-                    <span>Member since - @Model.CreationDate.ToString("MMMM") @Model.CreationDate.Year</span>
-                </div>
-                <span class="profile-grid5">
+                <div class="profile-link">
                     <a asp-controller="User" asp-action="Favourite">
                         <img class="profile-icons" src="/img/Icon-svg/heart-solid.svg"/></a>
                     <a asp-controller="User" asp-action="Watchlist">
                         <img class="profile-icons" style="width:34px" src="/img/Icon-svg/watchlist-solid.svg"/></a>
                     <a href="">
-                        <img class="profile-icons" src="/img/Icon-svg/list-solid.svg"/></a>
+                        <img class="profile-icons" style="margin-right:6px" src="/img/Icon-svg/list-solid.svg"/></a>
                     <a asp-controller="User" asp-action="ProfileEdit">
                         <img class="profile-icons" src="/img/Icon-svg/gear-solid.svg"/></a>
-                </span>
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="profile-main">
 
+    <div class="container-md profile-main">
+        @await Component.InvokeAsync("RecentlyViews")
     </div>
 </div>
