@@ -1,0 +1,105 @@
+﻿@model FavouriteModel
+@{
+    ViewData["Title"] = "Favourites";
+}
+
+<link rel="stylesheet" href="~/css/user.css" asp-append-version="true" />
+
+<div id="background"></div>
+
+<div class="container-fluid wrapper">
+    <div class="profile-header-wrapper mb-5">
+        @await Component.InvokeAsync("ProfileHeader")
+    </div>
+
+    <div class="container wrapper">
+        <div class="profile-main">
+            <div class="profile-filter-row">
+                <div class="profile-filter">
+                    <form asp-controller="User" asp-action="Watchlist" method="POST">
+                        <select onchange="this.form.submit()" class="form-select form-select-lg mb-3" name="SortOrder">
+                            <option value="default">Sort</option>
+                            <option value="Name_Ascending">Title (A-Z)</option>
+                            <option value="Name_Descending">Title (Z-A)</option>
+                            <option value="Date_Ascending">Release Date Ascending</option>
+                            <option value="Date_Descending">Release Date Descending</option>
+                            <option value="Rating_Ascending">Rating Ascending</option>
+                            <option value="Rating_Descending">Rating Descending</option>
+                            <option value="Rating_Ascending">Added Date Ascending</option>
+                            <option value="Rating_Descending">Added Date Descending</option>
+                        </select>
+                    </form>
+                </div>
+            </div>
+
+            <div class="profile-list">
+                <div class="profile-list-items">
+                    <div>
+                        @if(Model.FavouriteItems.Count == 0)
+                        {
+                            @await Html.PartialAsync("_nocontent")
+                        }
+                    </div>
+                    @foreach (var item in Model.FavouriteItems)
+                    {                
+                        <div class="profile-list-items-card">
+                            <div class="list-card">
+                                <div class="list-card-wrapper">
+                                    <img class="list-card-poster" src="@item.MoviePoster"/>
+                                    <div class="list-card-text">
+                                        <div style="display:inline-flex;">
+                                            <h1 class="list-card-title">@item.Title</h1> 
+                                                <h1 class="list-card-title text-muted" style="padding-left:10px">
+                                                (@item.ReleaseDate.Year)</h1>
+                                        </div>
+                                        <div class="list-card-subinfo">
+                                            <span class="box">@(item.RunTime / 60)h @(item.RunTime % 60)m</span>
+                                                <span class="dot mx-2"></span>
+                                            <span style="display: inline;">
+                                                @foreach (var items in item.Genres)
+                                                {   
+                                                    <a asp-controller="Movie" asp-action="Index" asp-route-genre="@items.Name" 
+                                                        class="genrelink">@items.Name</a>
+                                                }
+                                            </span>
+                                                <span class="dot mx-2"></span>
+                                            <span>@item.Director</span>
+                                        </div>
+                                        <div class="mt-3" style="font-weight: 600;">@item.MovieTagline</div>
+                                        <div class="list-card-desc">
+                                            <p style="display: inline-block;color:white">
+                                                @item.MovieInfo
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="list-card-actions">
+                                    <a class="list-card-actions-link" href="#"><i class="fa-solid fa-share-nodes"></i></a>
+                                    <form asp-controller="User" asp-action="AddtoWatchlist" method="POST">
+                                        <input type="hidden" name="MovieId" value="@item.MovieId"/>
+                                        <input type="hidden" name="AddedDate" value="@DateTime.UtcNow" />
+                                            <button class="list-card-actions-link" type="submit">
+                                                <img title="Add to Watchlist" class="addlist-icons"
+                                                    src="~/img/Icon-svg/watchlist-solid.svg"/>
+                                            </button>
+                                    </form>
+                                    <form asp-controller="User" asp-action="RemoveFromFavourite" method="POST">
+                                        <input type="hidden" name="MovieId" value="@item.MovieId"/>
+                                            <button class="list-card-actions-link" type="submit"
+                                            onclick="return confirm('Are you sure you want to remove @item.Title from favourites?')">
+                                                <i title="Remove" class="fa-solid fa-x"></i>
+                                            </button>
+                                    </form>
+                                </div>
+                            </div>
+                                <div class="list-card-background">
+                                    <img class="list-card-background-img" src="@item.MovieBackdrop">
+                                </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

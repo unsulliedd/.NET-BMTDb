@@ -1,4 +1,64 @@
-﻿
+﻿@media screen and (max-width: 1200px) {
+    .profile-list-items-card {
+        width: 100% !important;
+        margin: 50px auto !important;
+    }
+
+    .list-card {
+        background: #000000a8 80% !important;
+        display: inline-grid;
+        width: fit-content !important;
+    }
+
+    .list-card-wrapper {
+        width: 100%;
+        margin-top: 45px;
+        margin-bottom:0 !important;
+    }
+
+    .list-card-desc {
+        width: 100% !important;
+        height: 165px !important;
+        overflow-y: auto !important;
+    }
+
+    .list-card-background-img {
+        width: 100% !important;
+        object-position: top;
+    }
+}
+@media screen and (max-width: 768px) {
+    .list-card-title {
+        font-weight: 600 !important;
+        font-size: 18px !important;
+    }
+
+    .list-card-desc {
+        width: 100% !important;
+        height: 165px !important;
+        overflow-y: auto !important;
+    }
+
+    .list-card-actions {
+        margin-bottom:8px;
+    }
+
+    .profile-wrapper {
+    padding: 10px 5px 10px 5px !important;
+    }
+}
+@media screen and (max-width: 560px) {
+    .list-card-title {
+        font-weight: 500 !important;
+        font-size: 16px !important;
+    }
+    .list-card-desc {
+        width: 100% !important;
+        height: 155px !important;
+        overflow-y: auto !important;
+    }
+}
+
 .wrapper {margin-top: 80px}
 
 .user-background {
@@ -44,6 +104,7 @@
 }
 
 .profile-username {
+    color:white;
     margin-top: 110px;
 }
 
@@ -71,8 +132,141 @@ img.profile-icons:hover {
 
 /***********Profile Page***********/
 
-/***********User Add Movie***********/
+/***********Lists Page***********/
+.profile-filter-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
 
+.profile-list {
+    display:flex;
+    flex-direction:column;
+}
+
+.profile-list-items-card {
+    position: relative;
+    display: block;
+    width: 1000px;
+    height: 400px;
+    margin: 50px auto;
+    overflow: hidden;
+    border-radius: 10px;
+    transition: all 0.4s;
+}
+
+.profile-list-items-card:hover {
+    transform: scale(1.02);
+    transition: all 0.4s;
+}
+
+.list-card {
+    position: relative;
+    z-index: 2;
+    border-radius: 10px;
+    width: 1000px;
+    height: 400px;
+    background: linear-gradient(to right, #0d0d0c 50%, transparent 100%);
+}
+
+.list-card-wrapper {
+    position: relative;
+    padding: 20px;
+    color: white;
+    margin-bottom: 10px;
+}
+
+.list-card-poster {
+    position: relative;
+    float: left;
+    margin-right: 20px;
+    height: 265px;
+    border-radius: 5px;
+}
+
+.list-card-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.list-card-title {
+    color: white;
+    font-weight: 400;
+    font-size:2rem;
+}
+
+.list-card-desc {
+    margin-top: 10px;
+    width: 55%;
+    height: 205px;
+}
+
+.list-card-actions {
+    font-size: 18px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: flex-end;
+    color: white;
+    width: 100%;
+    margin-bottom: 8px;
+    z-index:3;
+}
+
+.list-card-actions-link{
+    background: none;
+    border: none;
+    color: white;
+}
+
+.list-card-actions-link:hover {
+    color: red;
+    font-size: 22px;
+    transition: all 0.4s;
+    margin-bottom: 30px;
+}
+
+.list-card-background-img {
+    position: absolute;
+    top: 0;
+    z-index: 1;
+    height: 100%;
+    right: 0;
+    background-size: cover;
+    border-radius: 11px;
+    width: 60%;
+    background-position: -100% 10%;
+    object-fit: cover;
+}
+
+.dot {
+    height: 6px;
+    width: 6px;
+    background: linear-gradient(to right, #e6dada, #274046);
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.box {
+    display: inline-block;
+    color: #fff;
+    padding: 2px 3px 2px 3px;
+    border-radius: 5px;
+    border: 1px solid rgba(255,255,255,0.13);
+}
+
+.addlist-icons {
+    width: 24px;
+    margin-right: 5px;
+    filter: invert();
+}
+
+.addlist-icons:hover {
+    filter: invert(13%) sepia(87%) saturate(7497%) hue-rotate(7deg) brightness(103%) contrast(96%);
+}
+/***********Lists Page***********/
+
+/***********User Add Movie***********/
 .feedback-input {
     color: var(--foreground);
     font-weight: 500;
@@ -173,6 +367,11 @@ img.profile-icons:hover {
     align-items: center;
 }
 
-a.back-link:hover {color: crimson}
-a.back-link {color: var(--foreground)}
+a.back-link:hover {
+    color: crimson
+}
+
+a.back-link {
+    color: var(--foreground)
+}
 /**************** User Edit ****************/

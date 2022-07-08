@@ -16,6 +16,9 @@ namespace BMTDb.WebUI.Models
         public int MovieId { get; set; }
         public string? Title { get; set; }
         public string? MoviePoster { get; set; }
+        public string? MovieBackdrop { get; set; }
+        public string? MovieInfo { get; set; }
+        public string? MovieTagline { get; set; }
         public string? Director { get; set; }
         public string? MovieRatings { get; set; }
         public string? Status { get; set; }
