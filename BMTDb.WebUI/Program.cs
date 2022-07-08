@@ -12,11 +12,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllersWithViews(                                    //MVC
+builder.Services.AddControllersWithViews(                                    
     options => {options.Filters.Add(typeof(UserActivityFilter));}
     );    
 
-builder.Services.AddDbContext<ApplicationContext>                           //Connection String
+builder.Services.AddDbContext<ApplicationContext>   //Connection String
     (options => options.UseSqlServer(@"Server=(LocalDB)\MSSQLLocalDB; 
         AttachDbFilename=C:\Users\berkk\Documents\Visual Studio 2022\Databases\BMTDb.MovieDb.mdf; 
         Database=BMTDb.MovieDb; Integrated Security=TRUE"));
@@ -26,7 +26,7 @@ builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<Appl
 //IdentityOptions Service
 builder.Services.Configure<IdentityOptions>(options => {
 
-    // password
+    //password
     options.Password.RequireDigit = true;
     options.Password.RequireLowercase = true;
     options.Password.RequireUppercase = true;
@@ -34,7 +34,7 @@ builder.Services.Configure<IdentityOptions>(options => {
     options.Password.RequiredLength = 8;
 
 
-    // SignIn
+    //SignIn
     options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     options.User.RequireUniqueEmail = true;
     options.SignIn.RequireConfirmedEmail = true;
@@ -212,12 +212,17 @@ app.MapControllerRoute(
 
 app.MapControllerRoute(
     name: "MovieStudio",
-    pattern: "Movie/{studio?}",
+    pattern: "movie/{studio?}",
     defaults: new { controller = "Movie", action = "Index" });
 
 app.MapControllerRoute(
     name: "Movies",
-    pattern: "Movies/{genre?}",
+    pattern: "movies/{genre?}",
+    defaults: new { controller = "Movie", action = "Index" });
+
+app.MapControllerRoute(
+    name: "MovieSort",
+    pattern: "movies/sort/{sortOrder?}",
     defaults: new { controller = "Movie", action = "Index" });
 
 app.MapControllerRoute(

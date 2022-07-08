@@ -90,9 +90,9 @@ namespace BMTDb.Service.Concrete
             return _movieRepository.GetMovieDetails(id);
         }
 
-        public List<Movie> GetMoviebyFilter(string name, string Studio_Name, int page, int pageSize)
+        public List<Movie> GetMoviebyFilter(string name, string Studio_Name, string sortOrder, int page, int pageSize)
         {
-            return _movieRepository.GetMoviebyFilter(name, Studio_Name, page, pageSize);
+            return _movieRepository.GetMoviebyFilter(name, Studio_Name, sortOrder, page, pageSize);
         }
 
         public List<Movie> GetMovies(int page, int pageSize)

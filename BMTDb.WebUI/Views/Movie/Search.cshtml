@@ -30,13 +30,20 @@
 
             <div class="filter-card card mb-3">
                 <div class="filter-title">
-                    <h2>Sort</h2>
+                    <h4>Sort</h4>
                 </div>
                 <div class="filter-card-select px-2">
-                    <select class="form-select form-select-lg mb-3" aria-label="Sort">
-                        <option selected>Sort</option>
-
-                    </select>
+                    <form asp-controller="Movie" asp-action="Index" method="POST">
+                        <select onchange="this.form.submit()" class="form-select form-select-lg mb-3" name="SortOrder">
+                            <option value="default">Sort</option>
+                            <option value="Name_Ascending">Title (A-Z)</option>
+                            <option value="Name_Descending">Title (Z-A)</option>
+                            <option value="Date_Ascending">Release Date Ascending</option>
+                            <option value="Date_Descending">Release Date Descending</option>
+                            <option value="Rating_Ascending">Rating Ascending</option>
+                            <option value="Rating_Descending">Rating Descending</option>
+                        </select>
+                    </form>
                 </div>
             </div>
 

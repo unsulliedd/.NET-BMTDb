@@ -13,7 +13,7 @@ namespace BMTDb.WebUI.Controllers
             _movieService = movieService;
         }
 
-        public IActionResult Index(string genre, string studio, int page = 1)
+        public IActionResult Index(string genre, string studio, string sortOrder, int page = 1)
         {
             const int pageSize = 20;
             var movieViewModel = new MovieViewModel()
@@ -24,9 +24,10 @@ namespace BMTDb.WebUI.Controllers
                     CurrentPage = page,
                     ItemPerPage = pageSize,
                     CurrentGenre = genre,
-                    CurrentStudio = studio
+                    CurrentStudio = studio,
+                    SortOrder = sortOrder
                 },
-                Movies = _movieService.GetMoviebyFilter(genre, studio, page, pageSize)
+                Movies = _movieService.GetMoviebyFilter(genre, studio, sortOrder, page, pageSize)
             };
             return View(movieViewModel);
         }

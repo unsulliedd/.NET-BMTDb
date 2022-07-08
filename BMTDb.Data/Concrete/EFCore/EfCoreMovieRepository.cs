@@ -42,7 +42,7 @@ namespace BMTDb.Data.Concrete.EFCore
             }
         }
 
-        public List<Movie> GetMoviebyFilter(string name, string Studio_Name, int page, int pageSize)
+        public List<Movie> GetMoviebyFilter(string name, string Studio_Name, string sortOrder, int page, int pageSize)
         {
             using var context = new BMTDbContext();
             {
@@ -62,15 +62,29 @@ namespace BMTDb.Data.Concrete.EFCore
                                 .ThenInclude(i => i.Studios)
                                 .Where(i => i.MovieStudios.Any(a => a.Studios.Studio_Name.ToLower() == Studio_Name.ToLower()));
                 }
-
-                return movies.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+                switch (sortOrder)
+                {
+                    case "Name_Ascending":
+                        return movies.OrderBy(i => i.Title).Skip((page - 1) * pageSize).Take(pageSize).ToList();
+                    case "Name_Descending":
+                        return movies.OrderByDescending(i => i.Title).Skip((page - 1) * pageSize).Take(pageSize).ToList(); 
+                    case "Date_Ascending":
+                        return movies.OrderBy(i => i.ReleaseDate).Skip((page - 1) * pageSize).Take(pageSize).ToList();
+                    case "Date_Descending":
+                        return movies.OrderByDescending(i => i.ReleaseDate).Skip((page - 1) * pageSize).Take(pageSize).ToList();
+                    case "Rating_Ascending":
+                        return movies.OrderBy(i => i.MovieRatings).Skip((page - 1) * pageSize).Take(pageSize).ToList();
+                    case "Rating_Descending":
+                        return movies.OrderByDescending(i => i.MovieRatings).Skip((page - 1) * pageSize).Take(pageSize).ToList();
+                    default:
+                        return movies.Skip((page - 1) * pageSize).Take(pageSize).ToList(); 
+                }
             }
         }
 
         public Movie GetMovieDetails(int id)
         {
             using var context = new BMTDbContext();
-
             return context.Movies
                             .Where(i => i.MovieId == id)
                             .Include(i => i.MovieGenres)
@@ -177,7 +191,6 @@ namespace BMTDb.Data.Concrete.EFCore
                 }
             }
         }
-
 
     }
 }

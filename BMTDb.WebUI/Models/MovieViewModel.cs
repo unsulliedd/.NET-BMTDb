@@ -11,6 +11,7 @@ namespace BMTDb.WebUI.Models
         public int CurrentPage { get; set; }
         public string CurrentGenre { get; set; }
         public string CurrentStudio { get; set; }
+        public string SortOrder { get; set; }
         public int TotalPages()
         {
             return (int)Math.Ceiling((decimal)TotalItem / ItemPerPage);

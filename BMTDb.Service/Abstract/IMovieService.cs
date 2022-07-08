@@ -9,7 +9,7 @@ namespace BMTDb.Service.Abstract
 {
     public interface IMovieService : IValidator<Movie>
     {
-        List<Movie> GetMoviebyFilter(string name, string Studio_Name, int page, int pageSize);
+        List<Movie> GetMoviebyFilter(string name, string Studio_Name, string sortOrder, int page, int pageSize);
         List<Movie> GetMovies(int page, int pageSize);
         List<Movie> GetSearchResult(string searchString);
         Movie GetMovieDetails(int id);
