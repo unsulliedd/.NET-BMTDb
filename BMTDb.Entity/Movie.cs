@@ -27,14 +27,12 @@ namespace BMTDb.Entity
         public int? RunTime { get; set; }
         public int? Budget { get; set; }
         public string? Status { get; set; }
-
         public string? IMDBId { get; set; }
         public string? TMDbId { get; set; }
-
+        public int Popularity { get; set; } = 0;
 
         public List<MovieStudio> MovieStudios { get; set; }
         public List<MovieGenre> MovieGenres { get; set; }
         public List<MovieCrew> MovieCrews { get; set; }
-
     }
 }
