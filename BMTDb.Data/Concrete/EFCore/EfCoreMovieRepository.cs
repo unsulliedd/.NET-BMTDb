@@ -85,6 +85,8 @@ namespace BMTDb.Data.Concrete.EFCore
         public Movie GetMovieDetails(int id)
         {
             using var context = new BMTDbContext();
+            var cmd = @"UPDATE Movies SET Popularity = Popularity+1 WHERE MovieId=@p0";
+            context.Database.ExecuteSqlRaw(cmd, id);
             return context.Movies
                             .Where(i => i.MovieId == id)
                             .Include(i => i.MovieGenres)
