@@ -136,7 +136,7 @@ img.profile-icons:hover {
 .profile-filter-row {
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
+    justify-content: space-between;
 }
 
 .profile-list {
@@ -237,6 +237,13 @@ img.profile-icons:hover {
     width: 60%;
     background-position: -100% 10%;
     object-fit: cover;
+}
+
+.form-control {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 1rem;
+    font-size: 1.25rem;
 }
 
 .dot {

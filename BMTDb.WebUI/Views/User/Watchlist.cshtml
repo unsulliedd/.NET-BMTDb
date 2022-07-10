@@ -15,18 +15,25 @@
     <div class="container wrapper">
         <div class="profile-main">
             <div class="profile-filter-row">
+                <div class="filter-card-search">
+                    <form class="d-flex" action="/search" style="width:100%">
+                        <div class="input-group">
+                            <input name="q" type="text" class="form-control" placeholder="Search"/>
+                        </div>
+                    </form>
+                </div>
                 <div class="profile-filter">
                     <form asp-controller="User" asp-action="Watchlist" method="POST">
                         <select onchange="this.form.submit()" class="form-select form-select-lg mb-3" name="SortOrder">
-                            <option value="default">Sort</option>
-                            <option value="Name_Ascending">Title (A-Z)</option>
-                            <option value="Name_Descending">Title (Z-A)</option>
-                            <option value="Date_Ascending">Release Date Ascending</option>
-                            <option value="Date_Descending">Release Date Descending</option>
-                            <option value="Rating_Ascending">Rating Ascending</option>
-                            <option value="Rating_Descending">Rating Descending</option>
-                            <option value="Rating_Ascending">Added Date Ascending</option>
-                            <option value="Rating_Descending">Added Date Descending</option>
+                            <option value="Ascending_AddedDate">Sort</option>
+                            <option value="Ascending_Title">Title (A-Z)</option>
+                            <option value="Title">Title (Z-A)</option>
+                            <option value="ReleaseDate">Release Date Descending</option>
+                            <option value="Ascending_ReleaseDate">Release Date Ascending</option>
+                            <option value="MovieRatings">Rating Descending</option>
+                            <option value="Ascending_MovieRatings">Rating Ascending</option>
+                            <option value="AddedDate">Added Date Descending</option>
+                            <option value="Ascending_AddedDate">Added Date Ascending</option>
                         </select>
                     </form>
                 </div>
