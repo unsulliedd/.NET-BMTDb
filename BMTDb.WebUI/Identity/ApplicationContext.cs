@@ -9,5 +9,7 @@ namespace BMTDb.WebUI.Identity
         {
 
         }
+
+        public DbSet<UserActivity>? UserActivities { get; set; }
     }
 }
