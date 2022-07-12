@@ -3,6 +3,7 @@
 using BMTDb.Entity;
 using BMTDb.Service.Abstract;
 using BMTDb.WebUI.Extensions;
+using BMTDb.WebUI.Filters;
 using BMTDb.WebUI.Identity;
 using BMTDb.WebUI.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -17,20 +18,24 @@ namespace BMTDb.WebUI.Controllers
         private readonly IMovieService _movieService;
         private readonly IWatchlistService _watchlistService;
         private readonly IFavouriteService _favouriteService;
+        private readonly UserActivityFilter _userActivityFilter;
 
         public UserController(IMovieService movieService, UserManager<User> userManager, IWatchlistService watchlistService, 
-            IFavouriteService favouriteService)
+            IFavouriteService favouriteService, UserActivityFilter userActivityFilter)
         {
             _movieService = movieService;
             _watchlistService = watchlistService;
             _userManager = userManager;
             _favouriteService = favouriteService;
+            _userActivityFilter = userActivityFilter;
         }
 
         public async Task<IActionResult> UserProfile()
         {
-            var userid = _userManager.GetUserId(HttpContext.User);
-            var user = await _userManager.FindByIdAsync(userid);
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var userActivity = _userActivityFilter.GetUserActivity(user.UserName);
+            var movies = _movieService.GetUserMovielist(userActivity.Select(i => i.Data).ToList());
+
             if (user != null)
             {
                 return View(new UserProfileModel()
@@ -41,9 +46,17 @@ namespace BMTDb.WebUI.Controllers
                     Gender = user.Gender,
                     ProfilePic = user.ProfilePic,
                     CreationDate = user.CreationDate,
+                    Movie = movies,
                 });
             }
             return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult RemoveFromRecentlyViewed(int movieId)
+        {
+            var username = _userManager.GetUserName(User);
+            _movieService.RemoveFromRecentlyViewed(username, movieId);
+            return RedirectToAction("UserProfile", "User");
         }
 
         public async Task<IActionResult> ProfileEdit()
