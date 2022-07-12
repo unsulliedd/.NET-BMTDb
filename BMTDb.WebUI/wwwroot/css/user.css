@@ -130,8 +130,87 @@ img.profile-icons:hover {
     filter: invert(13%) sepia(87%) saturate(7497%) hue-rotate(7deg) brightness(103%) contrast(96%);
 }
 
-/***********Profile Page***********/
+.profile-recentlyviewed {
+    margin-top: 2rem;
+    margin-bottom: 8rem;
+    display: grid;
+    grid-template-columns: repeat(15, auto);
+    grid-gap: 20px;
+    position: relative;
+    overflow-x: auto;
+}
 
+.recentlyviewed-card {
+    position: relative;
+    overflow: hidden;
+    width: 210px;
+    height: 410px;
+    background: rgba( 0, 0, 0, 0.7 );
+    backdrop-filter: blur( 5px );
+    border-radius: 10px;
+    border: 1.5px solid #1f1d1d;
+    box-shadow: 0 2px 8px rgb(0 0 0 / 10%);
+}
+
+.recentlyviewed-poster {
+    width: 100%;
+    height: 310.5px;
+    cursor: pointer;
+    display: inline-block;
+    object-fit: cover;
+    border-radius: 5px;
+    position: relative;
+}
+
+.recentlyviewed-card-actions {
+    top: 0;
+    width: 100%;
+    height: 25px;
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    background:none;
+}
+
+.recentlyviewed-card-actions:hover {
+    background: #000000cc;
+    position: relative;
+}
+
+.recentlyviewed-card-icon {
+    top: 0;
+    right: 0;
+    border: none;
+    color: white;
+    background: none;
+    filter: opacity(0.3);
+    z-index: 2;
+    position: relative;
+}
+
+.recentlyviewed-card-icon:hover {
+    filter: opacity(1);
+    color: red;
+    transform: scale(1.08);
+    transition: transform 0.4s;
+}
+
+.recentlyviewed-card-content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    padding: 8px 5px 5px 5px;
+    position: relative;
+}
+
+.recentlyviewed-card-title {
+    font-size: 16px;
+    font-weight: 400;
+    height: 52px;
+}
+/***********Profile Page***********/
 /***********Lists Page***********/
 .profile-filter-row {
     display: flex;
