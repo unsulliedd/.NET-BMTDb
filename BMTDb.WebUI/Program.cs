@@ -73,6 +73,8 @@ builder.Services.AddScoped<IWatchlistService, WatchlistManager>();
 builder.Services.AddScoped<IFavouriteRepository, EFCoreFavouriteRepository>();
 builder.Services.AddScoped<IFavouriteService, FavouriteManager>();
 
+builder.Services.AddScoped<UserActivityFilter>();
+
 //Reads Appsettings.json
 builder.Services.AddScoped<IEmailSender, SmtpEmailSender>(i =>
     new SmtpEmailSender(
