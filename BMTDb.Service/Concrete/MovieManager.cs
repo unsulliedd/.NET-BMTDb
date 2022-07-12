@@ -114,5 +114,13 @@ namespace BMTDb.Service.Concrete
             return _movieRepository.GetSearchResult(searchString);
         }
 
+        public List<Movie> GetUserMovielist(List<int> data)
+        {
+            return _movieRepository.GetUserMovielist(data);
+        }
+        public void RemoveFromRecentlyViewed(string username, int movieId)
+        {
+            _movieRepository.RemoveFromRecentlyViewed(username, movieId);
+        }
     }
 }

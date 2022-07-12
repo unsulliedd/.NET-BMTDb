@@ -194,5 +194,35 @@ namespace BMTDb.Data.Concrete.EFCore
             }
         }
 
+        public List<Movie> GetUserMovielist(List<int> data)
+        {
+            using var context = new BMTDbContext();
+            {
+                var movies = context.Movies.AsQueryable();
+                Movie? movie = null;
+                List<Movie>? result = new();
+
+                for (int i = 0; i < data.Count; i++)
+                {
+                    int id = data.ElementAt(data.Count - i - 1);
+
+                    movie = context.Movies
+                                .Where(i => i.MovieId == id).FirstOrDefault();
+                    if (!result.Any(i=>i.MovieId == movie.MovieId))
+                    {
+                        result.Add(movie);
+                    }
+                }
+                return result.Take(15).ToList();
+            }
+        }
+        public void RemoveFromRecentlyViewed(string username, int movieId)
+        {
+            using (var context = new BMTDbContext())
+            {
+                var cmd = @"DELETE from UserActivities WHERE UserName=@p0 and Data=@p1";
+                context.Database.ExecuteSqlRaw(cmd, username, movieId);
+            }
+        }
     }
 }

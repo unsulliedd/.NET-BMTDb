@@ -21,5 +21,7 @@ namespace BMTDb.Service.Abstract
         void Delete(Movie entity);
         int GetCountbyFilter(string genre, string studio);
         int GetMovieCount();
+        List<Movie> GetUserMovielist(List<int> data);
+        void RemoveFromRecentlyViewed(string username, int movieId);
     }
 }
