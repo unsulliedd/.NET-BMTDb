@@ -115,7 +115,7 @@ h2 {font-size: 1.8rem;}
 .details-studio {
     display: flex;
     flex-wrap: nowrap;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
 }
 
