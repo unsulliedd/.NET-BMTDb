@@ -254,7 +254,12 @@ a:hover.genre-list {color:black}
     padding: 8px 5px 5px 5px;
     position: relative;
 }
-.movie-card-title {
-    height: 52px;
+.movie-card-title {height: 52px}
+
+.watchlist-icon {
+    width: 21px;
+    filter: invert()
 }
+
+.watchlist-icon:hover {filter: invert(15%) sepia(89%) saturate(7373%) hue-rotate(356deg) brightness(97%) contrast(111%)}
 /************ Movie Card ************/

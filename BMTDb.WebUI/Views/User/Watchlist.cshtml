@@ -86,7 +86,7 @@
                                         <input type="hidden" name="MovieId" value="@item.MovieId"/>
                                         <input type="hidden" name="AddedDate" value="@DateTime.UtcNow" />
                                             <button class="list-card-actions-link" type="submit">
-                                                <i class="fa-solid fa-heart"></i>
+                                                <i title="Add to Favourites" class="fa-solid fa-heart"></i>
                                             </button>
                                     </form>
                                     <form asp-controller="User" asp-action="RemoveFromWatchlist" method="POST">

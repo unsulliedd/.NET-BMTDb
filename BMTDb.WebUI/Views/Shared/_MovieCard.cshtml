@@ -9,14 +9,14 @@
                 <input type="hidden" name="MovieId" value="@Model.MovieId"/>
                 <input type="hidden" name="AddedDate" value="@DateTime.UtcNow" />
                     <button class="movie-card-icon" type="submit">
-                        <i class="fa-solid fa-heart"></i>
+                        <i title="Add to Favourites" class="fa-solid fa-heart"></i>
                     </button>
             </form>
             <form asp-controller="User" asp-action="AddtoWatchlist" method="POST">
                 <input type="hidden" name="MovieId" value="@Model.MovieId"/>
                 <input type="hidden" name="AddedDate" value="@DateTime.UtcNow" />
                     <button class="movie-card-icon" type="submit">
-                        <img title="Add to Watchlist" style="width: 21px;filter: invert();"
+                        <img title="Add to Watchlist" class="watchlist-icon"
                             src="~/img/Icon-svg/watchlist-solid.svg"/>
                     </button>
             </form>
