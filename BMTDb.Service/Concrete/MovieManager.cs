@@ -19,6 +19,7 @@ namespace BMTDb.Service.Concrete
         private readonly IMovieRepository _movieRepository;
 
         public string ErrorMessage {get; set;}
+
         public bool Validation(Movie entity)
         {
             var isValid = true;
@@ -83,6 +84,11 @@ namespace BMTDb.Service.Concrete
         public Movie GetById(int id)
         {
             return _movieRepository.GetById(id);
+        }
+
+        public List<Movie> GetByPopularity()
+        {
+            return _movieRepository.GetByPopularity();
         }
 
         public Movie GetMovieDetails(int id)

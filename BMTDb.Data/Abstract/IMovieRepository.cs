@@ -18,5 +18,6 @@ namespace BMTDb.Data.Abstract
         int GetMovieCount();
         List<Movie> GetUserMovielist(List<int> data);
         void RemoveFromRecentlyViewed(string username, int movieId);
+        List<Movie> GetByPopularity();
     }
 }

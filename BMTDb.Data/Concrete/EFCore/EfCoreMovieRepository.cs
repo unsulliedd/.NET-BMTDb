@@ -224,5 +224,15 @@ namespace BMTDb.Data.Concrete.EFCore
                 context.Database.ExecuteSqlRaw(cmd, username, movieId);
             }
         }
+
+        public List<Movie> GetByPopularity()
+        {
+            using var context = new BMTDbContext();
+            {
+                var movies = context.Movies.AsQueryable();
+
+                return movies.OrderByDescending(i => i.Popularity).Take(20).ToList();
+            }
+        }
     }
 }

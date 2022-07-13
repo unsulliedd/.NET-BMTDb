@@ -15,6 +15,7 @@ namespace BMTDb.Service.Abstract
         Movie GetMovieDetails(int id);
         Movie GetById(int id);
         List<Movie> GetAll();
+        List<Movie> GetByPopularity();
         bool Create(Movie entity);
         void Update(Movie entity);
         bool Update(Movie entity, int[] genreIds, int[] studioIds, int[] crewIds);
