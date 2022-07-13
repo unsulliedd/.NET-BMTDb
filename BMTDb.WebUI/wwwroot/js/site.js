@@ -126,3 +126,17 @@ function randomBackground() {
 document.addEventListener("DOMContentLoaded", randomBackground);
 
 /************* Random Background *************/
+
+/************* Scroll Buttons *************/
+
+const buttonRight = document.getElementById('right-scroll');
+const buttonLeft = document.getElementById('left-scroll');
+
+buttonRight.onclick = function () {
+    document.getElementById('home-display').scrollLeft += 40;
+};
+buttonLeft.onclick = function () {
+    document.getElementById('home-display').scrollLeft -= 40;
+};
+
+/************* Scroll Buttons *************/
