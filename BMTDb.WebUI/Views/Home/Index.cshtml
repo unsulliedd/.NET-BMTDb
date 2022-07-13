@@ -1,48 +1,44 @@
-﻿@{
+﻿@model MovieViewModel
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div id="SpotlightView" class="carousel slide" data-bs-ride="carousel">
+<link rel="stylesheet" href="~/css/home.css" asp-append-version="true" />
+
+<div id="background"></div>
+
+<div id="SpotlightView" class="carousel slide mb-4" data-bs-ride="carousel">
         <div class="carousel-indicators">
-            <button type="button" data-bs-target="#SpotlightView" data-bs-slide-to="0" aria-label="Slide 1" class="active" aria-current="true"></button>
-            <button type="button" data-bs-target="#SpotlightView" data-bs-slide-to="1" aria-label="Slide 2" class=""></button>
-            <button type="button" data-bs-target="#SpotlightView" data-bs-slide-to="2" aria-label="Slide 3" class=""></button>
+            @for (var i = 0; i < 3; i++)
+            {
+                <button type="button" data-bs-target="#SpotlightView" 
+                    data-bs-slide-to="@(i)" aria-label="Slide @(i+1)" class="@(i == 0 ? "active" : "")" 
+                    aria-current="true">
+                </button>
+            }
         </div>
 
     <div class="carousel-inner">
-
-        <div class="carousel-item active">
-            <img class="spotlight-backdrop" src="https://www.themoviedb.org/t/p/original/tRS6jvPM9qPrrnx2KRp3ew96Yot.jpg" alt="First slide">
-            <div class="container">
-                <div class="carousel-caption text-start">
-                    <img class="spotlight-logos-position1" src="https://www.themoviedb.org/t/p/original/6RYiJRK4BGJcjSifkxQ8hYPU5We.png" alt="First slide logo" />
-                    <p>In his second year of fighting crime, Batman uncovers corruption in Gotham City that connects to his own family while facing a serial killer known as the Riddler.</p>
-                    <p style="font-family: Garamond, serif;"><a class="btn btn-spotlight" href="#">Unmask the Truth</a></p>
+        @for (var i = 0; i < 3; i++)
+        {
+            var item = Model.Movies[i];
+            <div class="carousel-item @(i == 0 ? "active" : "")">
+                <img class="spotlight-backdrop" src="@item.MovieBackdrop" alt="First slide">
+                <div class="container">
+                    <div class="carousel-caption carousel-text@(-(i+1))">
+                        <img class="spotlight-logos-position@(i+1)" src="@item.MovieLogo" alt="@(i+1). slide logo" />
+                        <p>@item.MovieInfo</p>
+                        <p style="font-family: Garamond, serif;">
+                            <a class="btn btn-spotlight" 
+                                asp-controller="Movie" asp-action="Details" asp-route-id="@item.MovieId">
+                                @item.MovieTagline
+                            </a>
+                        </p>
+                    </div>
                 </div>
-            </div>
-        </div>
-
-        <div class="carousel-item">
-            <img class="spotlight-backdrop" src="https://www.themoviedb.org/t/p/original/eNI7PtK6DEYgZmHWP9gQNuff8pv.jpg" alt="Second slide">
-            <div class="container">
-                <div class="carousel-caption">
-                    <img class="spotlight-logos-position2" src="https://www.themoviedb.org/t/p/original/yjxeUjfIWeyIZxhNXs8TAP8kij2.png" alt="The Matrix: Resurrections" />
-                    <p style="font-family: Garamond, serif;"><a class="btn btn-spotlight mt-3" href="#">Return to the source.</a></p>
-                </div>
-            </div>
-        </div>
-
-        <div class="carousel-item">
-            <img class="spotlight-backdrop" src="https://www.themoviedb.org/t/p/original/tMfVxjefWwV0vsi9fWzr4zQ2HOu.jpg" alt="Third slide">
-            <div class="container">
-                <div class="carousel-caption text-end">
-                    <img class="spotlight-logos-position3" src="https://www.themoviedb.org/t/p/original/woifx7xduIyJYq8ktCiN36zt9Xu.png" alt="Dune" />
-                    <p>Paul Atreides, a brilliant and gifted young man born into a great destiny beyond his understanding, 
-                        must travel to the most dangerous planet in the universe to ensure the future of his family and his people.</p>
-                    <p style="font-family: Garamond, serif;"><a class="btn btn-spotlight" href="#">Beyond fear, destiny awaits</a></p>
-                </div>
-            </div>
-        </div>
+            </div> 
+        }
     </div>
 
     <button class="carousel-control-prev" type="button" data-bs-target="#SpotlightView" data-bs-slide="prev">
@@ -57,7 +53,112 @@
     
 </div>
     
-<div class="container">
-    <hr />
+<div class="container-fluid home-container">
+    <h2 class="home-section-title">What's Popular</h2>
+    <div class="home-sections home-popular-movies">
+        <button id="left-scroll" class="left-scroll scroll-buttons" type="button">
+            <i class="fa-solid fa-angle-left"></i>
+        </button>
+        <div id="home-display" class="home-display">
+            @foreach (var movie in Model.Movies)
+            {
+                <div class="home-card my-4">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <div class="home-card-actions">
+                            <form asp-controller="User" asp-action="AddtoFavourite" method="POST">
+                                <input type="hidden" name="MovieId" value="@movie.MovieId"/>
+                                <input type="hidden" name="AddedDate" value="@DateTime.UtcNow" />
+                                <button class="home-card-icon" type="submit">
+                                    <i title="Add to Favourites" class="fa-solid fa-heart"></i>
+                                </button>
+                            </form>
+                            <form asp-controller="User" asp-action="AddtoWatchlist" method="POST">
+                                <input type="hidden" name="MovieId" value="@movie.MovieId"/>
+                                <input type="hidden" name="AddedDate" value="@DateTime.UtcNow" />
+                                <button class="home-card-icon" type="submit">
+                                    <img title="Add to Watchlist" class="watchlist-icon"
+                                            src="~/img/Icon-svg/watchlist-solid.svg"/>
+                                </button>
+                            </form>
+                                <a class="home-card-icon" style="width: 24px" 
+                                    href="#">
+                                    <i class="fa-solid fa-share-nodes" style="margin-top: 5px;"></i>
+                                </a>
+                        </div>
+                    }
+                    <a asp-controller="Movie" asp-action="Details" asp-route-id="@movie.MovieId"> 
+                            <img class="home-card-poster" src="@movie.MoviePoster"/>
+                    </a>
+                    <div class="home-card-content">
+                        <h3 class="home-card-title">
+                            <a asp-controller="Movie" asp-action="Details" asp-route-id="@movie.MovieId">
+                                @movie.Title
+                            </a>
+                        </h3>
+                        <p class="home-card-date">@movie.ReleaseDate.ToShortDateString()</p>
+                    </div>
+                </div>
+                }
+        </div>
+        <button id="right-scroll" class="right-scroll scroll-buttons" type="button">
+            <i class="fa-solid fa-angle-right"></i>
+        </button>
+    </div>
 
+    <h2 class="home-section-title">Recently Released</h2>
+    <div class="home-sections home-popular-movies">
+        <button class="left-scroll scroll-buttons" type="button">
+            <i class="fa-solid fa-angle-left"></i>
+        </button>
+        <div class="home-display">
+            @foreach (var movie in Model.Movies.OrderByDescending(i=>i.ReleaseDate))
+            {
+                <div class="home-card my-4">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <div class="home-card-actions">
+                            <form asp-controller="User" asp-action="AddtoFavourite" method="POST">
+                                <input type="hidden" name="MovieId" value="@movie.MovieId"/>
+                                <input type="hidden" name="AddedDate" value="@DateTime.UtcNow" />
+                                <button class="home-card-icon" type="submit">
+                                    <i title="Add to Favourites" class="fa-solid fa-heart"></i>
+                                </button>
+                            </form>
+                            <form asp-controller="User" asp-action="AddtoWatchlist" method="POST">
+                                <input type="hidden" name="MovieId" value="@movie.MovieId"/>
+                                <input type="hidden" name="AddedDate" value="@DateTime.UtcNow" />
+                                <button class="home-card-icon" type="submit">
+                                    <img title="Add to Watchlist" class="watchlist-icon"
+                                            src="~/img/Icon-svg/watchlist-solid.svg"/>
+                                </button>
+                            </form>
+                                <a class="home-card-icon" style="width: 24px" 
+                                    href="#">
+                                    <i class="fa-solid fa-share-nodes" style="margin-top: 5px;"></i>
+                                </a>
+                        </div>
+                    }
+                    <a asp-controller="Movie" asp-action="Details" asp-route-id="@movie.MovieId"> 
+                            <img class="home-card-poster" src="@movie.MoviePoster"/>
+                    </a>
+                    <div class="home-card-content">
+                        <h3 class="home-card-title">
+                            <a asp-controller="Movie" asp-action="Details" asp-route-id="@movie.MovieId">
+                                @movie.Title
+                            </a>
+                        </h3>
+                        <p class="home-card-date">@movie.ReleaseDate.ToShortDateString()</p>
+                    </div>
+                </div>
+                }
+        </div>
+        <button class="right-scroll scroll-buttons" type="button">
+            <i class="fa-solid fa-angle-right"></i>
+        </button>
+    </div>
+
+    <div>
+
+    </div>
 </div>
