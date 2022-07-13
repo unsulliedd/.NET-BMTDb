@@ -237,7 +237,7 @@ a:hover.genre-list {color:black}
     transition: transform 0.4s;
 }
 .poster {
-    width: 100%;
+    width: 100.1%;
     height: 310.5px;
     cursor: pointer;
     display: inline-block;

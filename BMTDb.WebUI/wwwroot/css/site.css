@@ -26,6 +26,7 @@ html {
     position: relative;
     min-height: 100%;
     -webkit-font-smoothing: antialiased;
+    scroll-behavior: smooth;
 }
 
 body {
@@ -44,8 +45,21 @@ a:hover{
     color: dodgerblue
 }
 
+.scroll-buttons{
+    background:none;
+    border:none;
+    font-size:45px;
+}
+
+.scroll-buttons:hover {
+    transition:all 0.4s;
+    color:red;
+}
+
 /***************** Scrollbar *****************/
-::-webkit-scrollbar {width: 12px}
+::-webkit-scrollbar {
+    width: 12px
+}
 ::-webkit-scrollbar-track {
     background: linear-gradient(to bottom, #304352, #d7d2cc);
     box-shadow: inset 0 0 5px grey;
@@ -122,9 +136,7 @@ a.dark-mode-toggle:hover {
     justify-content: flex-end;
 }
 
-.navbar-login, .navbar-search {
-    display: inline-flex
-}
+.navbar-login, .navbar-search {display: inline-flex}
 
 .navbar-user {
     display: flex;
@@ -234,65 +246,8 @@ footer {
     margin-left: 34px;
 }
 
-.nav-link-footer {
-    color: var(--foreground);
-}
+.nav-link-footer {color: var(--foreground)}
 /************** Footer **************/
-
-
-/*********** SpotlightView ***********/
-.spotlight-backdrop {
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 512px;
-    object-fit: cover;
-    object-position: top;
-    opacity: 0.9;
-}
-
-.carousel-item {
-    height: 512px;
-    background: #000000;
-    min-width: 100%;
-}
-
-.btn-spotlight {
-    color: #fff;
-    background: linear-gradient(to right, #000000, #434343);
-    border: hidden;
-    padding: 0.5rem 1rem;
-    font-size: 1.25rem;
-    border-radius: 5px;
-}
-
-.btn-spotlight:hover {
-    background: linear-gradient(to right, #e6dada, #274046);
-    color:black;
-    transition: background 0.3s linear;
-    border:hidden;
-}
-
-.spotlight-logos-position1 {
-    object-fit: fill;
-    margin-bottom: 10px;
-    width: 240px;
-    height: 105px;
-}
-
-.spotlight-logos-position2 {
-    object-fit: fill;
-    width: 390px;
-    height: 88px;
-}
-
-.spotlight-logos-position3 {
-    object-fit: fill;
-    width: 236px;
-    height: 40px;
-    margin-bottom: 10px;
-}
-/*********** SpotlightView ***********/
 
 
 /************ Pagination ************/

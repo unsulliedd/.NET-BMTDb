@@ -20,7 +20,10 @@
                             src="~/img/Icon-svg/watchlist-solid.svg"/>
                     </button>
             </form>
-            <a class="movie-card-icon" style="width: 24px;" href="#"><i class="fa-solid fa-share-nodes"></i></a>
+            <a class="movie-card-icon" style="width: 24px" 
+                href="#">
+                <i class="fa-solid fa-share-nodes" style="margin-top: 5px;"></i>
+            </a>
         </div>
         }
         <a asp-controller="Movie" asp-action="Details" asp-route-id="@Model.MovieId"> 
