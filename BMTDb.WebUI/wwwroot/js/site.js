@@ -129,14 +129,20 @@ document.addEventListener("DOMContentLoaded", randomBackground);
 
 /************* Scroll Buttons *************/
 
-const buttonRight = document.getElementById('right-scroll');
-const buttonLeft = document.getElementById('left-scroll');
+const buttonRight = document.querySelectorAll(".right-scroll");
+const buttonLeft = document.querySelectorAll(".left-scroll");
+const scroll = document.querySelectorAll(".home-display");
 
-buttonRight.onclick = function () {
-    document.getElementById('home-display').scrollLeft += 40;
-};
-buttonLeft.onclick = function () {
-    document.getElementById('home-display').scrollLeft -= 40;
-};
+buttonRight.forEach((item, index) => {
+    item.addEventListener("click", () => {
+        scroll[index].scrollLeft += 110;
+    });
+});
+
+buttonLeft.forEach((item, index) => {
+    item.addEventListener("click", () => {
+        scroll[index].scrollLeft -= 110;
+    });
+});
 
 /************* Scroll Buttons *************/
