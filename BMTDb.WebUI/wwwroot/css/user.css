@@ -109,9 +109,11 @@
 }
 
 .profile-details {
+    display: flex;
     color: darkgray;
     font-size: 18px;
     font-weight: 500;
+    flex-direction: column;
 }
 
 .profile-img {

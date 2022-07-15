@@ -66,6 +66,7 @@
 .spotlight-logos-position2 {
     object-fit: fill;
     width: 300px;
+    margin-bottom: 5px;
 }
 
 .spotlight-logos-position3 {
@@ -96,7 +97,7 @@
 }
 
 .home-section-title {
-    margin-left:48px;
+    margin-left:34.5px;
     color:white;
 }
 
@@ -113,10 +114,12 @@
 
 .home-card-poster {
     width: 100.1%;
+    height: 240px;
     cursor: pointer;
     display: inline-block;
     object-fit: cover;
-    border-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
     position: relative;
 }
 

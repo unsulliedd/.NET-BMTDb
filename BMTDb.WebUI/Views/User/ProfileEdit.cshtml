@@ -49,13 +49,14 @@
             <div class="useredit-pic feedback-input">
                 @if(@Model.ProfilePic == null)
                 {
-                    <img class="useredit-img" style="filter:invert()" src="/img/Other/avatar-defult.png">
+                    <img class="useredit-img" style="filter:invert(var(--foreground))" src="/img/Other/avatar-defult.png">
                 }
                 else
                 {
                 <img class="useredit-img" src="/img/UserPictures/@Model.ProfilePic">
                 }
             </div>
+
             <input type="file" name="file" class="my-2"/>
 
             <button class="btn btn-primary mt-4" type="submit">Save Changes</button>
