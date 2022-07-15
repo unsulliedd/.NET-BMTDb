@@ -201,7 +201,10 @@ namespace BMTDb.Data.Concrete.EFCore
                 var movies = context.Movies.AsQueryable();
                 Movie? movie = null;
                 List<Movie>? result = new();
-
+                if (data.Count > 100)
+                {
+                    data.RemoveRange(0, 25);
+                }
                 for (int i = 0; i < data.Count; i++)
                 {
                     int id = data.ElementAt(data.Count - i - 1);
