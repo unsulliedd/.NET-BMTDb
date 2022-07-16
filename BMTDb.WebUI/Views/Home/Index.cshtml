@@ -1,4 +1,4 @@
-﻿@model MovieViewModel
+﻿@model TMDBListsApiResults
 
 @{
     ViewData["Title"] = "Home Page";
@@ -56,63 +56,11 @@
 <div class="container-fluid home-container">
     <h2 class="home-section-title">What's Popular</h2>
     <div class="home-sections home-popular-movies">
-        <button id="left-scroll" class="left-scroll scroll-buttons" type="button">
+        <button class="left-scroll scroll-buttons" type="button">
             <i class="fa-solid fa-angle-left"></i>
         </button>
         <div id="home-display" class="home-display">
             @foreach (var movie in Model.Movies)
-            {
-                <div class="home-card my-4">
-                    @if (User.Identity.IsAuthenticated)
-                    {
-                        <div class="home-card-actions">
-                            <form asp-controller="User" asp-action="AddtoFavourite" method="POST">
-                                <input type="hidden" name="MovieId" value="@movie.MovieId"/>
-                                <input type="hidden" name="AddedDate" value="@DateTime.UtcNow" />
-                                <button class="home-card-icon" type="submit">
-                                    <i title="Add to Favourites" class="fa-solid fa-heart"></i>
-                                </button>
-                            </form>
-                            <form asp-controller="User" asp-action="AddtoWatchlist" method="POST">
-                                <input type="hidden" name="MovieId" value="@movie.MovieId"/>
-                                <input type="hidden" name="AddedDate" value="@DateTime.UtcNow" />
-                                <button class="home-card-icon" type="submit">
-                                    <img title="Add to Watchlist" class="watchlist-icon"
-                                            src="~/img/Icon-svg/watchlist-solid.svg"/>
-                                </button>
-                            </form>
-                                <a class="home-card-icon" style="width: 24px" 
-                                    href="#">
-                                    <i class="fa-solid fa-share-nodes" style="margin-top: 5px;"></i>
-                                </a>
-                        </div>
-                    }
-                    <a asp-controller="Movie" asp-action="Details" asp-route-id="@movie.MovieId"> 
-                            <img class="home-card-poster" src="@movie.MoviePoster"/>
-                    </a>
-                    <div class="home-card-content">
-                        <h3 class="home-card-title">
-                            <a asp-controller="Movie" asp-action="Details" asp-route-id="@movie.MovieId">
-                                @movie.Title
-                            </a>
-                        </h3>
-                        <p class="home-card-date">@movie.ReleaseDate.ToShortDateString()</p>
-                    </div>
-                </div>
-                }
-        </div>
-        <button id="right-scroll" class="right-scroll scroll-buttons" type="button">
-            <i class="fa-solid fa-angle-right"></i>
-        </button>
-    </div>
-
-    <h2 class="home-section-title">Recently Released</h2>
-    <div class="home-sections home-popular-movies">
-        <button class="left-scroll scroll-buttons" type="button">
-            <i class="fa-solid fa-angle-left"></i>
-        </button>
-        <div class="home-display">
-            @foreach (var movie in Model.Movies.OrderByDescending(i=>i.ReleaseDate))
             {
                 <div class="home-card my-4">
                     @if (User.Identity.IsAuthenticated)
@@ -158,7 +106,115 @@
         </button>
     </div>
 
-    <div>
+    <h2 class="home-section-title">Upcoming</h2>
+    <div class="home-sections home-popular-movies">
+        <button class="left-scroll scroll-buttons" type="button">
+            <i class="fa-solid fa-angle-left"></i>
+        </button>
+        <div class="home-display">
+            @foreach (var movie in Model.TMDBApiUpcoming)
+            {
+                <div class="home-card my-4">
+                    <a href="#">
+                        <img class="home-card-poster" src="@Url.Content("https://www.themoviedb.org/t/p/w1280" + @movie.poster_path)" />
+                    </a>
+                    <div class="home-card-content">
+                        <h3 class="home-card-title">
+                            <a href="#">
+                                @movie.title
+                            </a>
+                        </h3>
+                        <p class="home-card-date">@movie.release_date</p>
+                    </div>
+                </div>
+            }
+        </div>
+        <button class="right-scroll scroll-buttons" type="button">
+            <i class="fa-solid fa-angle-right"></i>
+        </button>
+    </div>
 
+    <h2 class="home-section-title">Popular Movies</h2>
+    <div class="home-sections home-popular-movies">
+        <button class="left-scroll scroll-buttons" type="button">
+            <i class="fa-solid fa-angle-left"></i>
+        </button>
+        <div class="home-display">
+            @foreach (var movie in Model.TMDBApiPopular)
+            {
+                <div class="home-card my-4">
+                    <a href="#">
+                        <img class="home-card-poster" src="@Url.Content("https://www.themoviedb.org/t/p/w1280" + @movie.poster_path)" />
+                    </a>
+                    <div class="home-card-content">
+                        <h3 class="home-card-title">
+                            <a href="#">
+                                @movie.title
+                            </a>
+                        </h3>
+                        <p class="home-card-date">@movie.release_date</p>
+                    </div>
+                </div>
+            }
+        </div>
+        <button class="right-scroll scroll-buttons" type="button">
+            <i class="fa-solid fa-angle-right"></i>
+        </button>
+    </div>
+
+    <h2 class="home-section-title">Tv Shows Airing Today</h2>
+    <div class="home-sections home-popular-movies">
+        <button class="left-scroll scroll-buttons" type="button">
+            <i class="fa-solid fa-angle-left"></i>
+        </button>
+        <div class="home-display">
+            @foreach (var tv in Model.TMDBApiAiringTodayTv)
+            {
+                <div class="home-card my-4">
+                    <a href="#">
+                        <img class="home-card-poster" src="@Url.Content("https://www.themoviedb.org/t/p/w1280" + @tv.poster_path)" />
+                    </a>
+                    <div class="home-card-content">
+                        <h3 class="home-card-title">
+                            <a href="#">
+                                @tv.name
+                            </a>
+                        </h3>
+                        <p class="home-card-date">@tv.first_air_date</p>
+                    </div>
+                </div>
+            }
+        </div>
+        <button class="right-scroll scroll-buttons" type="button">
+            <i class="fa-solid fa-angle-right"></i>
+        </button>
+    </div>
+
+    <h2 class="home-section-title">On the Air Tv</h2>
+    <div class="home-sections home-popular-movies">
+        <button class="left-scroll scroll-buttons" type="button">
+            <i class="fa-solid fa-angle-left"></i>
+        </button>
+        <div class="home-display">
+            @foreach (var tv in Model.TMDBApiOnAirTv)
+            {
+                <div class="home-card my-4">
+                    <a href="#">
+                        <img class="home-card-poster" src="@Url.Content("https://www.themoviedb.org/t/p/w1280" + @tv.poster_path)" />
+                    </a>
+                    <div class="home-card-content">
+                        <h3 class="home-card-title">
+                            <a href="#">
+                                @tv.name
+                            </a>
+                        </h3>
+                        <p class="home-card-date">@tv.first_air_date</p>
+                    </div>
+                </div>
+            }
+        </div>
+        <button class="right-scroll scroll-buttons" type="button">
+            <i class="fa-solid fa-angle-right"></i>
+        </button>
     </div>
 </div>
