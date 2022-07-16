@@ -17,7 +17,8 @@ namespace BMTDb.WebUI.Filters
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
             await next();
-            if (context.HttpContext.User.Identity.Name != null)
+            var user = context.HttpContext.User.Identity.Name;
+            if (user != null)
             {
                 int data;
 
@@ -25,17 +26,15 @@ namespace BMTDb.WebUI.Filters
                 var controller = routeData.Values["controller"];
                 var action = routeData.Values["action"];
                 var id = routeData.Values["id"];
+
                 var url = $"{controller}/{action}/{id}";
 
                 if (url == $"Movie/Details/{id}")
                 {
-                    var arguments = context.ActionArguments;
-                    var value = arguments.FirstOrDefault().Value;
+                    //var arguments = context.ActionArguments;
+                    //var value = arguments.FirstOrDefault().Value;
 
-                    data = Convert.ToInt32(value);
-
-                    var user = context.HttpContext.User.Identity.Name;
-
+                    data = Convert.ToInt32(id);
                     var ipAddress = context.HttpContext.Connection.RemoteIpAddress.ToString();
 
                     await SaveUserActivity(data, url, user, ipAddress);
