@@ -29,6 +29,7 @@ namespace BMTDb.WebUI.Models
         [RegularExpression(@"^tt[0-9]*$", ErrorMessage ="IMDb Id must start with \"tt\" and follows with number")]
         public string? IMDBId { get; set; }
         [RegularExpression(@"^[0-9]*$", ErrorMessage = "TMDb Id must be number")]
+        [Required(ErrorMessage = "TMDb Id can't be empty") ]
         public string? TMDbId { get; set; }
         
         public List<Studio>? SelectedStudios { get; set; }
