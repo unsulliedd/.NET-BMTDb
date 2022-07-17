@@ -194,7 +194,7 @@ namespace BMTDb.Data.Concrete.EFCore
             }
         }
 
-        public List<Movie> GetUserMovielist(List<int> data)
+        public List<Movie> GetUserMovielist(List<int> data,string username)
         {
             using var context = new BMTDbContext();
             {
@@ -203,20 +203,25 @@ namespace BMTDb.Data.Concrete.EFCore
                 List<Movie>? result = new();
                 if (data.Count > 100)
                 {
-                    data.RemoveRange(0, 25);
+                    var cmd = @"DELETE TOP(50) from UserActivities Where UserName=@p0";
+                    context.Database.ExecuteSqlRaw(cmd, username);
                 }
-                for (int i = 0; i < data.Count; i++)
+                if (data.Count > 0)
                 {
-                    int id = data.ElementAt(data.Count - i - 1);
-
-                    movie = context.Movies
-                                .Where(i => i.MovieId == id).FirstOrDefault();
-                    if (!result.Any(i=>i.MovieId == movie.MovieId))
+                    for (int i = 0; i < data.Count; i++)
                     {
-                        result.Add(movie);
+                        int id = data.ElementAt(data.Count - i - 1);
+
+                        movie = context.Movies
+                                    .Where(i => i.MovieId == id).FirstOrDefault();
+                        if (!result.Any(i => i.MovieId == movie.MovieId))
+                        {
+                            result.Add(movie);
+                        }
                     }
+                    return result.Take(15).ToList();
                 }
-                return result.Take(15).ToList();
+                return null;
             }
         }
         public void RemoveFromRecentlyViewed(string username, int movieId)

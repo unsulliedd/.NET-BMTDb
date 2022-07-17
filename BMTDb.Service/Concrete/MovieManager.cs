@@ -120,9 +120,9 @@ namespace BMTDb.Service.Concrete
             return _movieRepository.GetSearchResult(searchString);
         }
 
-        public List<Movie> GetUserMovielist(List<int> data)
+        public List<Movie> GetUserMovielist(List<int> data, string username)
         {
-            return _movieRepository.GetUserMovielist(data);
+            return _movieRepository.GetUserMovielist(data, username);
         }
         public void RemoveFromRecentlyViewed(string username, int movieId)
         {

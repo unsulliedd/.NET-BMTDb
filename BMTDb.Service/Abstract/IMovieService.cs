@@ -22,7 +22,7 @@ namespace BMTDb.Service.Abstract
         void Delete(Movie entity);
         int GetCountbyFilter(string genre, string studio);
         int GetMovieCount();
-        List<Movie> GetUserMovielist(List<int> data);
+        List<Movie> GetUserMovielist(List<int> data, string username);
         void RemoveFromRecentlyViewed(string username, int movieId);
     }
 }
