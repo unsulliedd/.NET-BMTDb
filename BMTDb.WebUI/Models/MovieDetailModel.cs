@@ -7,6 +7,8 @@ namespace BMTDb.WebUI.Models
     public class MovieDetailModel
     {
         public Movie Movie { get; set; }
+        public OMDBApiResponse OMDBApiResponse { get; set; }
+        public TMDbApiMovieDetail TMDbApiMovieDetail { get; set; }
         public List<Genre> Genres { get; set; }
         public List<Studio> Studios { get; set; }
         public List<Person> Persons { get; set; }

@@ -1,7 +1,12 @@
-﻿using BMTDb.Entity;
+﻿#pragma warning disable CS8601 // Possible null reference assignment.
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+
+using BMTDb.Data.Concrete.EFCore;
+using BMTDb.Entity;
 using BMTDb.Service.Abstract;
 using BMTDb.WebUI.Models;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace BMTDb.WebUI.Controllers
 {
@@ -32,7 +37,7 @@ namespace BMTDb.WebUI.Controllers
             return View(movieViewModel);
         }
 
-        public IActionResult Details(int? id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
@@ -40,19 +45,81 @@ namespace BMTDb.WebUI.Controllers
             }
 
             Movie movies = _movieService.GetMovieDetails((int)id);
+            string? ImdbId = movies?.IMDBId;
+            string? TmdbId = movies?.TMDbId;
 
-            if (id == null)
+            string OMDBapiKey = "5c3ac17d";
+            string TMDBapiKey = "e9e71fba25c4cdd53c7ced78867ba28d";
+
+            var baseAddressOMDB = new Uri("http://www.omdbapi.com/");
+            var baseAddressTMDB = new Uri("http://api.themoviedb.org/3/");
+
+            using var httpClientOMDB = new HttpClient { BaseAddress = baseAddressOMDB };
+            using var httpClientTMDB = new HttpClient { BaseAddress = baseAddressTMDB };
+
+            httpClientOMDB.DefaultRequestHeaders.TryAddWithoutValidation("accept", "application/json");
+            httpClientTMDB.DefaultRequestHeaders.TryAddWithoutValidation("accept", "application/json");
+
+            if (string.IsNullOrEmpty(ImdbId) && TmdbId != null)
             {
-                return View("Error");
+                using var responseTMDB = await httpClientTMDB.GetAsync("movie/" + TmdbId + "?api_key=" + TMDBapiKey + "&language=en-US");
+                string TMDBapiResponse = await responseTMDB.Content.ReadAsStringAsync();
+
+                TMDbApiMovieDetail? TMDBrootObject = JsonConvert.DeserializeObject<TMDbApiMovieDetail>(TMDBapiResponse);    //Deserialize TMDb
+
+                var entity = _movieService.GetMovieDetails((int)id);
+                entity.IMDBId = TMDBrootObject.imdb_id;
+                var context = new BMTDbContext();
+                _movieService.Update(entity);
+
+                using var responseOMDB = await httpClientOMDB.GetAsync("?apikey=" + OMDBapiKey + "&i=" + TMDBrootObject.imdb_id);
+                string OMDBapiResponse = await responseOMDB.Content.ReadAsStringAsync();
+
+                OMDBApiResponse? OMDBrootObject = JsonConvert.DeserializeObject<OMDBApiResponse>(OMDBapiResponse);  //Deserialize OMdb
+
+                return View(new MovieDetailModel
+                {
+                    OMDBApiResponse = OMDBrootObject,
+                    TMDbApiMovieDetail = TMDBrootObject,
+                    Movie = movies,
+                    Genres = movies.MovieGenres.Select(i => i.Genre).ToList(),
+                    Studios = movies.MovieStudios.Select(i => i.Studios).ToList(),
+                    Persons = movies.MovieCrews.Select(i => i.Person).ToList()
+                });
             }
-            return View(new MovieDetailModel
+            else if (string.IsNullOrEmpty(TmdbId))
             {
-                Movie = movies,
-                Genres =  movies.MovieGenres.Select(i => i.Genre).ToList(),
-                Studios = movies.MovieStudios.Select(i => i.Studios).ToList(),
-                Persons = movies.MovieCrews.Select(i => i.Person).ToList()
-            });
+                return View(new MovieDetailModel
+                {
+                    Movie = movies,
+                    Genres = movies.MovieGenres.Select(i => i.Genre).ToList(),
+                    Studios = movies.MovieStudios.Select(i => i.Studios).ToList(),
+                    Persons = movies.MovieCrews.Select(i => i.Person).ToList()
+                });
+            }
+            else
+            {
+                using var responseOMDB = await httpClientOMDB.GetAsync("?apikey=" + OMDBapiKey + "&i=" + ImdbId);
+                using var responseTMDB = await httpClientTMDB.GetAsync("movie/" + TmdbId + "?api_key=" + TMDBapiKey + "&append_to_response=videos,images,credits&language=en");
+
+                string OMDBapiResponse = await responseOMDB.Content.ReadAsStringAsync();
+                string TMDBapiResponse = await responseTMDB.Content.ReadAsStringAsync();
+
+                OMDBApiResponse? OMDBrootObject = JsonConvert.DeserializeObject<OMDBApiResponse>(OMDBapiResponse);
+                TMDbApiMovieDetail? TMDBrootObject = JsonConvert.DeserializeObject<TMDbApiMovieDetail>(TMDBapiResponse);
+
+                return View(new MovieDetailModel
+                {
+                    OMDBApiResponse = OMDBrootObject,
+                    TMDbApiMovieDetail = TMDBrootObject,
+                    Movie = movies,
+                    Genres = movies.MovieGenres.Select(i => i.Genre).ToList(),
+                    Studios = movies.MovieStudios.Select(i => i.Studios).ToList(),
+                    Persons = movies.MovieCrews.Select(i => i.Person).ToList()
+                });
+            }
         }
+
         public IActionResult Search(string q)
         {
             var movieViewModel = new MovieViewModel()
