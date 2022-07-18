@@ -70,7 +70,14 @@
             </div>
         </div>
         <div class="admin-main-col-2">
-
+            <h2 class="main-head mb-4">Api Calls</h2>
+            <form asp-controller="Admin" asp-action="UpdateDatabase">
+                <button type="submit" class="btn btn-primary text-light">Update Database for People</button>
+            </form>
+            <form class="d-inline-flex" asp-controller="Admin" asp-action="AddMovieFromTmdb">
+                <input class="feedback-input my-2" style="width:250px; height:40px" name="TMdbId" placeholder="Enter TMDb Id"/>
+                <button type="submit" class="btn btn-primary text-light m-2">Add Movie</button>
+            </form>
         </div>
         <div class="admin-main-col-3">
             <h2 class="main-head mb-4">Recently Added Movies</h2>

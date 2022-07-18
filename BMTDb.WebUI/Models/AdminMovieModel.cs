@@ -15,8 +15,8 @@ namespace BMTDb.WebUI.Models
         [Required(ErrorMessage = "Movie Info Cannot be Empty")]
         [MinLength(50, ErrorMessage = "Minumum Character More Than 50")]
         public string? MovieInfo { get; set; }
-        [RegularExpression(@"^.*www.youtube.com/embed/.*$", ErrorMessage = "Url Must Contains \"embed\" link")]
-        [Url (ErrorMessage = "Must be HTTPS Url")]
+        [RegularExpression(@"^.*youtube.com/embed/.*$", ErrorMessage = "Url Must Contains \"embed\" link")]
+        [Url (ErrorMessage = "Must be valid Url")]
         public string? Trailer { get; set; }
         public string? MoviePoster { get; set; }
         public string? MovieBackdrop { get; set; }

@@ -175,11 +175,14 @@ button.delete-btn {
     color: black;
 }
 
-    .personlist-table td {
-        padding: 10px 15px;
-    }
+.personlist-table td {
+    padding: 10px 15px;
+}
 /*********** PersonList Table Styles ***********/
 
+.useredit-left {
+    margin-right: 100px;
+}
 
 /*********** Add Movie GridView ***********/
 

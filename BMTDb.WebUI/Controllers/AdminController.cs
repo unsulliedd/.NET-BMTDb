@@ -1,4 +1,9 @@
-﻿using BMTDb.Entity;
+﻿#pragma warning disable CS8602 // Dereference of a possibly null reference.
+#pragma warning disable CS8604 // Possible null reference argument.
+
+using BMTDb.Data.Concrete.EFCore;
+using BMTDb.Entity;
+using BMTDb.Entity.TMDbApi_Entity;
 using BMTDb.Service.Abstract;
 using BMTDb.WebUI.Extensions;
 using BMTDb.WebUI.Identity;
@@ -7,6 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace BMTDb.WebUI.Controllers
 {
@@ -46,7 +52,7 @@ namespace BMTDb.WebUI.Controllers
         //Admin/Movie
         public IActionResult MovieList(int page = 1)
         {
-            const int pageSize = 10;
+            const int pageSize = 20;
             var adminItemListModel = new AdminItemListModel()
             {
                 AdminPageInfo = new AdminPageInfo()
@@ -586,6 +592,127 @@ namespace BMTDb.WebUI.Controllers
                 MessageIcon = "fa - solid fa - exclamation"
             });
             return RedirectToAction("RoleList");
+        }
+
+        public async Task<IActionResult> UpdateDatabase()
+        {
+            string json = "start";
+            var idlist = new List<IdList>();
+            using StreamReader jsonfile = new(@"C:\Users\berkk\Downloads\person_ids_06_16_2022.json");
+            json = jsonfile.ReadToEnd();
+            idlist = JsonConvert.DeserializeObject<List<IdList>>(json);
+            if (idlist != null)
+            {
+                foreach (var TmdbId in idlist.Select(i => i.id))
+                {
+                    string TMDBapiKey = "e9e71fba25c4cdd53c7ced78867ba28d";
+                    var baseAddressTMDB = new Uri("http://api.themoviedb.org/3/");
+                    using var httpClientTMDB = new HttpClient { BaseAddress = baseAddressTMDB };
+                    httpClientTMDB.DefaultRequestHeaders.TryAddWithoutValidation("accept", "application/json");
+                    using var responseTMDB = await httpClientTMDB.GetAsync("person/" + TmdbId + "?api_key=" + TMDBapiKey + "&language=en-US");
+                    string TMDBapiResponse = await responseTMDB.Content.ReadAsStringAsync();
+
+                    TMDbApiPersonModel? TMDBrootObject = JsonConvert.DeserializeObject<TMDbApiPersonModel>(TMDBapiResponse);
+                    if (TMDBrootObject != null)
+                    {
+                        var entity = new TMDbPerson()
+                        {
+                            Name = TMDBrootObject.name,
+                            Adult = TMDBrootObject.adult,
+                            Biography = TMDBrootObject.biography,
+                            Birthday = TMDBrootObject.birthday,
+                            Deathday = TMDBrootObject.deathday,
+                            Gender = TMDBrootObject.gender,
+                            Homepage = TMDBrootObject.homepage,
+                            Imdb_id = TMDBrootObject.imdb_id,
+                            Known_for_Department = TMDBrootObject.known_for_department,
+                            Place_of_Birth = TMDBrootObject.place_of_birth,
+                            Popularity = TMDBrootObject.popularity,
+                            Profile_Path = TMDBrootObject.profile_path,
+                        };
+                        var context = new BMTDbContext();
+                        context.Set<TMDbPerson>().Add(entity);
+                        context.SaveChanges();
+                        return RedirectToAction("Dashboard", "Admin");
+                    }
+                    TempData.Put("message", new NotificationModel
+                    {
+                        Message = "Api response returned null",
+                        MessageType = "error",
+                        MessageIcon = "fa-solid fa-exclamation"
+                    });
+                    return RedirectToAction("Dashboard", "Admin");
+                }
+            }
+            TempData.Put("message", new NotificationModel
+            {
+                Message = "Id List is null",
+                MessageType = "error",
+                MessageIcon = "fa-solid fa-exclamation"
+            });
+            return RedirectToAction("Dashboard", "Admin");
+        }
+
+        public async Task<IActionResult> AddMovieFromTmdbAsync(string TmdbId) 
+        {
+            string TMDBapiKey = "e9e71fba25c4cdd53c7ced78867ba28d";
+
+            var baseAddressTMDB = new Uri("http://api.themoviedb.org/3/");
+            using var httpClientTMDB = new HttpClient { BaseAddress = baseAddressTMDB };
+
+            httpClientTMDB.DefaultRequestHeaders.TryAddWithoutValidation("accept", "application/json");
+            using var responseTMDB = await httpClientTMDB.GetAsync("movie/" + TmdbId + "?api_key=" + TMDBapiKey + "&append_to_response=videos,images,credits&language=en");
+            string TMDBapiResponse = await responseTMDB.Content.ReadAsStringAsync();
+
+            TMDbApiMovieDetail? TMDBrootObject = JsonConvert.DeserializeObject<TMDbApiMovieDetail>(TMDBapiResponse);
+
+            if (TMDBrootObject != null)
+            {
+                var entity = new Movie()
+                {
+                    Title = TMDBrootObject.title,
+                    Director = TMDBrootObject.credits.crew.Where(i=>i.job == "Director").Select(i=>i.name).FirstOrDefault(),
+                    MovieTagline = TMDBrootObject.tagline,
+                    MovieInfo = TMDBrootObject.overview,
+                    MoviePoster   = Url.Content("https://image.tmdb.org/t/p/original" + TMDBrootObject.poster_path),
+                    MovieBackdrop = Url.Content("https://image.tmdb.org/t/p/original" + TMDBrootObject.backdrop_path),
+                    ReleaseDate = Convert.ToDateTime(TMDBrootObject.release_date),
+                    RunTime = TMDBrootObject.runtime,
+                    Budget = TMDBrootObject.budget,
+                    MovieRatings = null,
+                    IMDBId = TMDBrootObject.imdb_id,
+                    TMDbId = TMDBrootObject.id.ToString(),
+                    MovieLogo = Url.Content("https://image.tmdb.org/t/p/original" 
+                                + TMDBrootObject.images.logos.Select(i => i.file_path).FirstOrDefault()),
+                    Trailer = Url.Content("https://youtube.com/embed/" 
+                                + TMDBrootObject.videos.results.Where(i => i.type == "Trailer").Select(i => i.key).FirstOrDefault())
+                };
+                if (_movieService.Create(entity))
+                {
+                    TempData.Put("message", new NotificationModel
+                    {
+                        Message = $"\"{entity.Title}\" is added",
+                        MessageType = "add",
+                        MessageIcon = "fa-solid fa-plus"
+                    });
+                    return RedirectToAction("Dashboard", "Admin");
+
+                }
+                TempData.Put("message", new NotificationModel
+                {
+                    Message = "Unkown Error",
+                    MessageType = "error",
+                    MessageIcon = "fa-solid fa-exclamation"
+                });
+                return RedirectToAction("Dashboard", "Admin");
+            }
+            TempData.Put("message", new NotificationModel
+            {
+                Message = "Api Response returned null",
+                MessageType = "error",
+                MessageIcon = "fa-solid fa-exclamation"
+            });
+            return RedirectToAction("Dashboard", "Admin");
         }
 
     }
