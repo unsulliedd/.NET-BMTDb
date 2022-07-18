@@ -34,10 +34,23 @@ namespace BMTDb.WebUI.Controllers
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
             var userActivity = _userActivityFilter.GetUserActivity(user.UserName);
-            var movies = _movieService.GetUserMovielist(userActivity.Select(i => i.Data).ToList());
+            var movies = _movieService.GetUserMovielist(userActivity.Select(i => i.Data).ToList(),user.UserName);
 
             if (user != null)
             {
+                if (movies != null)
+                {
+                    return View(new UserProfileModel()
+                    {
+                        UserName = user.UserName,
+                        FirstName = user.FirstName,
+                        LastName = user.LastName,
+                        Gender = user.Gender,
+                        ProfilePic = user.ProfilePic,
+                        CreationDate = user.CreationDate,
+                        Movie = movies,
+                    });
+                }
                 return View(new UserProfileModel()
                 {
                     UserName = user.UserName,
@@ -46,7 +59,6 @@ namespace BMTDb.WebUI.Controllers
                     Gender = user.Gender,
                     ProfilePic = user.ProfilePic,
                     CreationDate = user.CreationDate,
-                    Movie = movies,
                 });
             }
             return RedirectToAction("Index", "Home");

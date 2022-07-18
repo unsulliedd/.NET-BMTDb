@@ -51,50 +51,53 @@
         <div class="my-5 text-light">
             <h2>Recently Viewed</h2>
         </div>
-        @if(Model.Movie.Count == 0)
+        @if(Model.Movie == null)
         {   
             @await Html.PartialAsync("_nocontent")
         }
-        <div class="profile-recentlyviewed">
-            @foreach (var movie in Model.Movie)
-            {    
-                <div class="recentlyviewed-card mb-4">
-                    <div class="recentlyviewed-card-actions">
-                        <form asp-controller="User" asp-action="AddtoFavourite" method="POST">
-                            <input type="hidden" name="MovieId" value="@movie.MovieId"/>
-                            <input type="hidden" name="AddedDate" value="@DateTime.UtcNow" />
-                                <button class="recentlyviewed-card-icon" type="submit">
-                                    <i title="Add to Favourites" class="fa-solid fa-heart"></i>
-                                </button>
-                        </form>
-                        <form asp-controller="User" asp-action="AddtoWatchlist" method="POST">
-                            <input type="hidden" name="MovieId" value="@movie.MovieId"/>
-                            <input type="hidden" name="AddedDate" value="@DateTime.UtcNow" />
-                                <button class="recentlyviewed-card-icon" type="submit">
-                                    <img title="Add to Watchlist" class="watchlist-icon"
-                                        src="~/img/Icon-svg/watchlist-solid.svg"/>
-                                </button>
-                        </form>
-                        <form asp-controller="User" asp-action="RemoveFromRecentlyViewed" method="POST">
-                            <input type="hidden" name="MovieId" value="@movie.MovieId"/>
-                                <button class="recentlyviewed-card-icon" type="submit">
-                                    <i title="Remove" class="fa-solid fa-x"></i>
-                                </button>
-                        </form>
+        else
+        {
+            <div class="profile-recentlyviewed">
+                @foreach (var movie in Model.Movie)
+                {    
+                    <div class="recentlyviewed-card mb-4">
+                        <div class="recentlyviewed-card-actions">
+                            <form asp-controller="User" asp-action="AddtoFavourite" method="POST">
+                                <input type="hidden" name="MovieId" value="@movie.MovieId"/>
+                                <input type="hidden" name="AddedDate" value="@DateTime.UtcNow" />
+                                    <button class="recentlyviewed-card-icon" type="submit">
+                                        <i title="Add to Favourites" class="fa-solid fa-heart"></i>
+                                    </button>
+                            </form>
+                            <form asp-controller="User" asp-action="AddtoWatchlist" method="POST">
+                                <input type="hidden" name="MovieId" value="@movie.MovieId"/>
+                                <input type="hidden" name="AddedDate" value="@DateTime.UtcNow" />
+                                    <button class="recentlyviewed-card-icon" type="submit">
+                                        <img title="Add to Watchlist" class="watchlist-icon"
+                                            src="~/img/Icon-svg/watchlist-solid.svg"/>
+                                    </button>
+                            </form>
+                            <form asp-controller="User" asp-action="RemoveFromRecentlyViewed" method="POST">
+                                <input type="hidden" name="MovieId" value="@movie.MovieId"/>
+                                    <button class="recentlyviewed-card-icon" type="submit">
+                                        <i title="Remove" class="fa-solid fa-x"></i>
+                                    </button>
+                            </form>
+                        </div>
+                        <a asp-controller="Movie" asp-action="Details" asp-route-id="@movie.MovieId"> 
+                            <img class="recentlyviewed-poster" src="@movie.MoviePoster"/>
+                        </a>
+                        <div class="recentlyviewed-card-content">
+                            <h3 class="recentlyviewed-card-title">
+                                <a asp-controller="Movie" asp-action="Details" asp-route-id="@movie.MovieId">
+                                    @movie.Title
+                                </a>
+                            </h3>
+                            <p class="text-light">@movie.ReleaseDate.ToShortDateString()</p>
+                        </div>
                     </div>
-                    <a asp-controller="Movie" asp-action="Details" asp-route-id="@movie.MovieId"> 
-                        <img class="recentlyviewed-poster" src="@movie.MoviePoster"/>
-                    </a>
-                    <div class="recentlyviewed-card-content">
-                        <h3 class="recentlyviewed-card-title">
-                            <a asp-controller="Movie" asp-action="Details" asp-route-id="@movie.MovieId">
-                                @movie.Title
-                            </a>
-                        </h3>
-                        <p class="text-light">@movie.ReleaseDate.ToShortDateString()</p>
-                    </div>
-                </div>
-            }
-        </div>
+                }
+            </div>
+        }
     </div>
 </div>
