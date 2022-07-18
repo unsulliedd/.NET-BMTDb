@@ -51,13 +51,13 @@ h2 {font-size: 1.8rem;}
 
 
 /************* Grid Template *************/
-.info-bar {
-    padding-top: 25px;
+.movie-details {
+    padding-top: 10px;
     display: grid;
     grid-template-columns: 300px 1060px;
-    grid-template-rows: 120px 300px 300px;
+    grid-template-rows: 120px 340px 450px;
     grid-column-gap: 30px;
-    grid-row-gap: 60px;
+    grid-row-gap: 40px;
 }
 
 .details-poster { /*1*/
@@ -76,16 +76,17 @@ h2 {font-size: 1.8rem;}
 
 .details-info { /*3*/
     grid-area: 2 / 2 / 3 / 3;
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(0,0,0,0.7);
     padding: 10px;
     color: white;
     border-radius: 10px;
+    margin-bottom: 15px;
 }
 
 .details-cast { /*4*/
     display: grid;
     grid-area: 3 / 1 / 4 / 3;
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(0,0,0,0.7);
     border-radius: 10px;
     align-content: center;
 }
@@ -94,30 +95,46 @@ h2 {font-size: 1.8rem;}
 
 /************* Details Info *************/
 .info-inside {
-    display: grid;
-    grid-template-columns: 1000px 40px;
-    grid-template-rows: 240px 40px;
-    grid-column-gap: 0px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
 }
 
-.info-inside-main   {grid-area: 1 / 1 / 2 / 3}
-.info-inside-footer {grid-area: 2 / 2 / 3 / 3}
+.info {
+    height: 100px;
+    overflow: auto;
+    text-overflow: clip;
+    margin-bottom: 12px;
+}
+
+.info-inside-footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+}
 
 .details-row {
     display: flex;
     flex-direction: column;
 }
 
+.details-crew {
+    display: flex;
+    flex-direction: row;
+    width: 75%;
+}
+
+.details-number {
+    display: flex;
+    width: 75%;
+}
+
 .genre-list {
     display: inline;
 }
 
-.details-studio {
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: flex-end;
-    align-items: center;
-}
 .studiologo {
     width: auto;
     height: 3rem;
@@ -145,10 +162,23 @@ h2 {font-size: 1.8rem;}
 
 
 /************* Details Cast *************/
+.details-cast-row {
+    display: grid;
+    grid-template-columns: repeat(20, auto);
+    width: 100%;
+    overflow-y:hidden;
+    overflow-x: auto;
+    align-items: center;
+}
+
+.actor-card{
+    display:flex;
+    flex-direction:column;
+}
+
 .actor-photo {
-    height: 200px;
-    width: 140px;
-    background: #808080;
+    height: 232px;
+    width: auto;
     border-radius: 10px;
     transition: background 0.8s;
     overflow: hidden;
@@ -158,6 +188,7 @@ h2 {font-size: 1.8rem;}
     justify-content: center;
     align-items: center;
     position: relative;
+    object-fit: cover;
 }
 /************* Details Cast *************/
 

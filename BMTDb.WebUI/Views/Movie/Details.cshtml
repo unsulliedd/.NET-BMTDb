@@ -11,7 +11,7 @@
 </div>
 
 <div class="container container-details">
-    <div class="info-bar">
+    <div class="movie-details">
         <div class="details-logo">
             <img class="logo-img" src="@Model.Movie.MovieLogo"/>
         </div>
@@ -30,7 +30,7 @@
                             <h2>@Model.Movie.Title</h2> <h2 class="text-muted px-1">(@Model.Movie.ReleaseDate.Year)</h2>
                         </div>
                         <div class="d-flex">
-                            @if (User.Identity.IsAuthenticated)
+                            @if (User.Identity != null && User.Identity.IsAuthenticated)
                             {
                                 <form asp-controller="User" asp-action="AddtoFavourite" method="POST">
                                     <input type="hidden" name="MovieId" value="@Model.Movie.MovieId"/>
@@ -69,18 +69,63 @@
                 </div>
 
                 <div class="details-rating my-2">
-                    <span style="padding-right:0.5rem"><img class="ratings-logo" src="/img/ratinglogo/Metacritic.svg"/>
-                        @Model.Movie.MovieRatings</span>
-                    <span class="px-2"><img class="ratings-logo" src="/img/ratinglogo/Trakt_RED.svg"/>
+                    <span style="padding-right:0.5rem">
+                        <img class="ratings-logo" src="/img/ratinglogo/Metacritic.svg"/>
+                        @if (Model.OMDBApiResponse.Metascore != null)
+                        {
+                            @Model.OMDBApiResponse.Metascore
+                        }
+                        else
+                        {
+                            <span>N/A</span>
+                        }
+                    </span>
+                    <span class="px-2"><i class="fa-solid fa-star"></i>
                         @Model.Movie.MovieRatings </span>
-                    <span class="px-2"><img class="ratings-logo" src="/img/ratinglogo/RT_AUDIENCE_SCORE.svg"/>
-                        @Model.Movie.MovieRatings</span>
-                    <span class="px-2"><img class="ratings-logo" src="/img/ratinglogo/RT_CERTIFICATE_FRESH.svg"/>
-                        @Model.Movie.MovieRatings</span>
-                    <span class="px-2"><img class="ratings-logo" src="/img/ratinglogo/IMDB.svg"/>
-                        @Model.Movie.MovieRatings</span>
-                    <span><img class="ratings-logo" src="/img/ratinglogo/TMDb.svg"/>
-                        @Model.Movie.MovieRatings</span>
+                    <span class="px-2">
+                        <img class="ratings-logo" src="/img/ratinglogo/RT_AUDIENCE_SCORE.svg"/>
+                        @if (Model.OMDBApiResponse.Ratings != null)
+                        {
+                            @Model.OMDBApiResponse.Ratings.Where(i=>i.Source == "Rotten Tomatoes").Select(i=>i.Value).FirstOrDefault()
+                        }
+                        else
+                        {
+                            <span>N/A</span>
+                        }
+                    </span>
+                    <span class="px-2">
+                        <img class="ratings-logo" src="/img/ratinglogo/RT_CERTIFICATE_FRESH.svg"/>
+                        @if (Model.OMDBApiResponse.Ratings != null)
+                        {
+                            @Model.OMDBApiResponse.Ratings.Where(i=>i.Source == "Rotten Tomatoes").Select(i=>i.Value).FirstOrDefault()
+                        }
+                        else
+                        {
+                            <span>N/A</span>
+                        }
+                    </span>
+                    <span class="px-2">
+                        <img class="ratings-logo" src="/img/ratinglogo/IMDB.svg"/>
+                        @if (Model.OMDBApiResponse.imdbRating != null)
+                        {
+                            @Model.OMDBApiResponse.imdbRating
+                        }
+                        else
+                        {
+                            <span>N/A</span>
+                        }
+                    </span>
+                    <span>
+                        <img class="ratings-logo" src="/img/ratinglogo/TMDb.svg"/>
+                        @if (Model.TMDbApiMovieDetail.vote_average != null)
+                        {
+                            @Model.TMDbApiMovieDetail.vote_average
+                        }
+                        else
+                        {
+                            <span>N/A</span>
+                        }
+                    </span>
                 </div>
 
                 <div>
@@ -92,39 +137,59 @@
                 </div>
 
                 <div class="details-crew">
-                    Director: @Model.Movie.Director
+                    <p class="me-3">Director: @Model.Movie.Director</p>
+                    <p class="me-3">Writer: @Model.OMDBApiResponse.Writer</p>
                 </div>
-
             </div>
 
             <div class="info-inside-footer">
-                <div class="details-studio">     
-                    @foreach (var item in Model.Studios)
+                <div class="details-number">
+                    <p class="me-3">Box Office: @Model.OMDBApiResponse.BoxOffice</p>
+                    <p class="me-3">Awards: @Model.OMDBApiResponse.Awards</p>
+                </div>
+
+                <div class="details-studio">
+                    @if (Model.TMDbApiMovieDetail.production_companies != null)
                     {
-                        <a asp-controller="Movie" 
-                            asp-action="Index" 
-                            asp-route-studio="@item.Studio_Name" 
-                            class="studiolink"><img title="@item.Studio_Name" style="width: auto; height: 3rem;" 
-                                src="@item.Studio_logo"/></a>
+                        @for (var i = 0; i < 1; i++)
+                        {
+                            var item = Model.TMDbApiMovieDetail.production_companies[i];
+                            <a asp-controller="Movie" asp-action="Index" asp-route-studio="@item.name" 
+                                class="studiolink"><img title="@item.name" class="studiologo" 
+                                    src="@Url.Content("https://www.themoviedb.org/t/p/w154/"+@item.logo_path)"/>
+                            </a>
+                        }
                     }
                 </div>
             </div>
 
         </div>
 
-        <div class="details-cast">
-            <div class="actor-card px-3">
-                <ol style="list-style:none; padding-inline-start:0">
-                    <li>
-                        @foreach (var item in Model.Persons)
+        <div class="details-cast my-5">
+            <div class="details-cast-row">
+            @if (Model.TMDbApiMovieDetail.credits != null && Model.TMDbApiMovieDetail.credits.cast != null)
+            {
+                @foreach (var item in Model.TMDbApiMovieDetail.credits.cast.Take(20).ToList())
+                {
+                    <div class="actor-card mx-3 my-5">
+                        @if (item.profile_path != null)
                         {
-                            <a asp-controller="Movie" asp-action="Index" asp-route-person="@item.Name">
-                            <img class="actor-photo" src="@item.PhotoUrl"><img /> 
-                                @item.Name</a>
-                                
+                            <img class="actor-photo"
+                                src="@Url.Content("https://www.themoviedb.org/t/p/h632/"+@item.profile_path)">
+                            <img/>
                         }
-                    </li>
-                </ol>
+                        else
+                        {
+                            <img class="actor-photo" style="width: 155px;"
+                                src="/img/Other/defaultActor.jpg">
+                            <img/>  
+                        }
+                        <div class="py-2" style="font-size:12px" >
+                            @item.name
+                        </div>
+                    </div>
+                }
+            }
             </div>
         </div>
 
