@@ -8,11 +8,14 @@ using System.Threading.Tasks;
 
 namespace BMTDb.Entity
 {
-    public class MovieStudio
+    public class Credit
     {
-        public int StudioId { get; set; }
-        public Studio Studios { get; set; }
+        public int Id { get; set; }
         public int MovieId { get; set; }
-        public Movie Movie { get; set; }
+        public Movie Movies { get; set; }
+        public int? CastId { get; set; }
+        public Cast Casts { get; set; }
+        public int? CrewId { get; set; }
+        public Crew Crews { get; set; }
     }
 }

@@ -15,6 +15,5 @@ namespace BMTDb.Entity
         public string? Name { get; set; }
 
         public List<MovieGenre>? MovieGenres { get; set; }
-        public List<TvShowGenre>? TvShowGenres { get; set; }
     }
 }
