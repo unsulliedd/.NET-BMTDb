@@ -22,9 +22,9 @@ namespace BMTDb.WebUI.Models
         public string? MovieBackdrop { get; set; }
         public string? MovieLogo { get; set; }
         public string? MovieTagline { get; set; }
-        public string? MovieRatings { get; set; }
+        public double? MovieRatings { get; set; }
         public int? RunTime { get; set; }
-        public int? Budget { get; set; }
+        public double? Budget { get; set; }
         public string? Status { get; set; }
         [RegularExpression(@"^tt[0-9]*$", ErrorMessage ="IMDb Id must start with \"tt\" and follows with number")]
         public string? IMDBId { get; set; }
@@ -32,7 +32,7 @@ namespace BMTDb.WebUI.Models
         [Required(ErrorMessage = "TMDb Id can't be empty") ]
         public string? TMDbId { get; set; }
         
-        public List<Studio>? SelectedStudios { get; set; }
+        public List<ProductionCompany>? SelectedStudios { get; set; }
         public List<Genre>? SelectedGenres { get; set; }
     }
 }

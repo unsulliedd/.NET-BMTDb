@@ -69,7 +69,6 @@ namespace BMTDb.WebUI.Controllers
 
                 var entity = _movieService.GetMovieDetails((int)id);
                 entity.IMDBId = TMDBrootObject.imdb_id;
-                var context = new BMTDbContext();
                 _movieService.Update(entity);
 
                 using var responseOMDB = await httpClientOMDB.GetAsync("?apikey=" + OMDBapiKey + "&i=" + TMDBrootObject.imdb_id);
@@ -83,8 +82,8 @@ namespace BMTDb.WebUI.Controllers
                     TMDbApiMovieDetail = TMDBrootObject,
                     Movie = movies,
                     Genres = movies.MovieGenres.Select(i => i.Genre).ToList(),
-                    Studios = movies.MovieStudios.Select(i => i.Studios).ToList(),
-                    Persons = movies.MovieCrews.Select(i => i.Person).ToList()
+                    ProductionCompanies = movies.MovieProductionCompanies.Select(i => i.ProductionCompanies).ToList(),
+                    Casts = movies.MovieCredits.Select(i => i.Casts).ToList()
                 });
             }
             else if (string.IsNullOrEmpty(TmdbId))
@@ -93,8 +92,8 @@ namespace BMTDb.WebUI.Controllers
                 {
                     Movie = movies,
                     Genres = movies.MovieGenres.Select(i => i.Genre).ToList(),
-                    Studios = movies.MovieStudios.Select(i => i.Studios).ToList(),
-                    Persons = movies.MovieCrews.Select(i => i.Person).ToList()
+                    ProductionCompanies = movies.MovieProductionCompanies.Select(i => i.ProductionCompanies).ToList(),
+                    Casts = movies.MovieCredits.Select(i => i.Casts).ToList()
                 });
             }
             else
@@ -114,8 +113,8 @@ namespace BMTDb.WebUI.Controllers
                     TMDbApiMovieDetail = TMDBrootObject,
                     Movie = movies,
                     Genres = movies.MovieGenres.Select(i => i.Genre).ToList(),
-                    Studios = movies.MovieStudios.Select(i => i.Studios).ToList(),
-                    Persons = movies.MovieCrews.Select(i => i.Person).ToList()
+                    ProductionCompanies = movies.MovieProductionCompanies.Select(i => i.ProductionCompanies).ToList(),
+                    Casts = movies.MovieCredits.Select(i => i.Casts).ToList()
                 });
             }
         }

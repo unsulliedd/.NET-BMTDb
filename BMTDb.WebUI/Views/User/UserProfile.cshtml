@@ -19,7 +19,7 @@
                     }
                     else
                     {
-                        <img class="profile-img" style="filter:invert()" src="/img/Other/avatar-defult.png">
+                        <img class="profile-img" style="filter:invert()" src="/img/Other/avatar-default.png">
                     }
                     </div>
                     <div class="profile-info">
@@ -85,7 +85,7 @@
                             </form>
                         </div>
                         <a asp-controller="Movie" asp-action="Details" asp-route-id="@movie.MovieId"> 
-                            <img class="recentlyviewed-poster" src="@movie.MoviePoster"/>
+                            <img class="recentlyviewed-poster" src="@movie.Poster"/>
                         </a>
                         <div class="recentlyviewed-card-content">
                             <h3 class="recentlyviewed-card-title">

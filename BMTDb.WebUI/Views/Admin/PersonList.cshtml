@@ -24,7 +24,7 @@
                 <td><b>Biography</b></td>
                 <td><b>Place of Birth</b></td>
                 <td><b>Birthday</b></td>
-                <td><b>Job</b></td>
+                <td><b>Known for Department</b></td>
                 <td><b>Deathday</b></td>
                 <td><b>IMDB Id</b></td>
             </tr>
@@ -34,17 +34,17 @@
             {
             <tr>
                 <td>@item.PersonId</td>
-                <td><img src="@item.PhotoUrl" width="80" /></td>
+                <td><img src="@item.ProfilePicture" width="80" /></td>
                 <td>@item.Name</td>
                 <td>@item.Biography</td>
-                <td>@item.PlaceOfBirth</td>
+                <td>@item.Place_of_Birth</td>
                 <td>@item.Birthday</td>
-                <td>@item.Job</td>
+                <td>@item.Known_for_Department</td>
                 @if (item.Deathday!=null)
                 {
                     <td>@item.Deathday</td>
                 }
-                <td>@item.Imdb_Id</td>
+                <td>@item.ImdbId</td>
                 <td>
                     <a href="/admin/edit-person/@item.PersonId"><img style="width: 28px" title='Edit' 
                         src="/img/icon-svg/pencil-square.svg" viewBox="0 0 28 28" /></a>

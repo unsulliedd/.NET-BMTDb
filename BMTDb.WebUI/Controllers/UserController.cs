@@ -160,18 +160,18 @@ namespace BMTDb.WebUI.Controllers
                         FavouriteItemId = i.Id,
                         MovieId = i.MovieId,
                         Title = i.Movie.Title,
-                        MoviePoster = i.Movie.MoviePoster,
-                        MovieBackdrop = i.Movie.MovieBackdrop,
+                        MoviePoster = i.Movie.Poster,
+                        MovieBackdrop = i.Movie.Backdrop,
                         Director = i.Movie.Director,
-                        MovieInfo = i.Movie.MovieInfo,
-                        MovieTagline = i.Movie.MovieTagline,
-                        MovieRatings = i.Movie.MovieRatings,
+                        MovieInfo = i.Movie.Info,
+                        MovieTagline = i.Movie.Tagline,
+                        MovieRatings = i.Movie.Ratings,
                         RunTime = i.Movie.RunTime,
                         Status = i.Movie.Status,
                         ReleaseDate = i.Movie.ReleaseDate,
                         AddedDate = i.AddedDate,
                         Genres = i.Movie.MovieGenres.Select(i => i.Genre).ToList(),
-                        Studios = i.Movie.MovieStudios.Select(i => i.Studios).ToList(),
+                        ProductionCompanies = i.Movie.MovieProductionCompanies.Select(i => i.ProductionCompanies).ToList(),
 
                     }).ToList()
                 });
@@ -186,18 +186,18 @@ namespace BMTDb.WebUI.Controllers
                         FavouriteItemId = i.Id,
                         MovieId = i.MovieId,
                         Title = i.Movie.Title,
-                        MoviePoster = i.Movie.MoviePoster,
-                        MovieBackdrop = i.Movie.MovieBackdrop,
+                        MoviePoster = i.Movie.Poster,
+                        MovieBackdrop = i.Movie.Backdrop,
                         Director = i.Movie.Director,
-                        MovieInfo = i.Movie.MovieInfo,
-                        MovieTagline = i.Movie.MovieTagline,
-                        MovieRatings = i.Movie.MovieRatings,
+                        MovieInfo = i.Movie.Info,
+                        MovieTagline = i.Movie.Tagline,
+                        MovieRatings = i.Movie.Ratings,
                         RunTime = i.Movie.RunTime,
                         Status = i.Movie.Status,
                         ReleaseDate = i.Movie.ReleaseDate,
                         AddedDate = i.AddedDate,
                         Genres = i.Movie.MovieGenres.Select(i => i.Genre).ToList(),
-                        Studios = i.Movie.MovieStudios.Select(i => i.Studios).ToList(),
+                        ProductionCompanies = i.Movie.MovieProductionCompanies.Select(i => i.ProductionCompanies).ToList(),
 
                     }).OrderBy(i => i.GetType().GetProperty(sortOrder.Split('_').Last()).GetValue(i)).ToList()
                 });
@@ -212,18 +212,18 @@ namespace BMTDb.WebUI.Controllers
                         FavouriteItemId = i.Id,
                         MovieId = i.MovieId,
                         Title = i.Movie.Title,
-                        MoviePoster = i.Movie.MoviePoster,
-                        MovieBackdrop = i.Movie.MovieBackdrop,
+                        MoviePoster = i.Movie.Poster,
+                        MovieBackdrop = i.Movie.Backdrop,
                         Director = i.Movie.Director,
-                        MovieInfo = i.Movie.MovieInfo,
-                        MovieTagline = i.Movie.MovieTagline,
-                        MovieRatings = i.Movie.MovieRatings,
+                        MovieInfo = i.Movie.Info,
+                        MovieTagline = i.Movie.Tagline,
+                        MovieRatings = i.Movie.Ratings,
                         RunTime = i.Movie.RunTime,
                         Status = i.Movie.Status,
                         ReleaseDate = i.Movie.ReleaseDate,
                         AddedDate = i.AddedDate,
                         Genres = i.Movie.MovieGenres.Select(i => i.Genre).ToList(),
-                        Studios = i.Movie.MovieStudios.Select(i => i.Studios).ToList(),
+                        ProductionCompanies = i.Movie.MovieProductionCompanies.Select(i => i.ProductionCompanies).ToList(),
 
                     }).OrderByDescending(i => i.GetType().GetProperty(sortOrder.Split('_').Last()).GetValue(i)).ToList()
                 });
@@ -263,18 +263,18 @@ namespace BMTDb.WebUI.Controllers
                         WatchlistItemId = i.Id,
                         MovieId = i.MovieId,
                         Title = i.Movie.Title,
-                        MoviePoster = i.Movie.MoviePoster,
-                        MovieBackdrop = i.Movie.MovieBackdrop,
+                        MoviePoster = i.Movie.Poster,
+                        MovieBackdrop = i.Movie.Backdrop,
                         Director = i.Movie.Director,
-                        MovieInfo = i.Movie.MovieInfo,
-                        MovieTagline = i.Movie.MovieTagline,
-                        MovieRatings = i.Movie.MovieRatings,
+                        MovieInfo = i.Movie.Info,
+                        MovieTagline = i.Movie.Tagline,
+                        MovieRatings = i.Movie.Ratings,
                         RunTime = i.Movie.RunTime,
                         Status = i.Movie.Status,
                         ReleaseDate = i.Movie.ReleaseDate,
                         AddedDate = i.AddedDate,
                         Genres = i.Movie.MovieGenres.Select(i => i.Genre).ToList(),
-                        Studios = i.Movie.MovieStudios.Select(i => i.Studios).ToList(),
+                        ProductionCompanies = i.Movie.MovieProductionCompanies.Select(i => i.ProductionCompanies).ToList(),
 
                     }).ToList()
                 });
@@ -289,18 +289,18 @@ namespace BMTDb.WebUI.Controllers
                         WatchlistItemId = i.Id,
                         MovieId = i.MovieId,
                         Title = i.Movie.Title,
-                        MoviePoster = i.Movie.MoviePoster,
-                        MovieBackdrop = i.Movie.MovieBackdrop,
+                        MoviePoster = i.Movie.Poster,
+                        MovieBackdrop = i.Movie.Backdrop,
                         Director = i.Movie.Director,
-                        MovieInfo = i.Movie.MovieInfo,
-                        MovieTagline = i.Movie.MovieTagline,
-                        MovieRatings = i.Movie.MovieRatings,
+                        MovieInfo = i.Movie.Info,
+                        MovieTagline = i.Movie.Tagline,
+                        MovieRatings = i.Movie.Ratings,
                         RunTime = i.Movie.RunTime,
                         Status = i.Movie.Status,
                         ReleaseDate = i.Movie.ReleaseDate,
                         AddedDate = i.AddedDate,
                         Genres = i.Movie.MovieGenres.Select(i => i.Genre).ToList(),
-                        Studios = i.Movie.MovieStudios.Select(i => i.Studios).ToList(),
+                        ProductionCompanies = i.Movie.MovieProductionCompanies.Select(i => i.ProductionCompanies).ToList(),
 
                     }).OrderBy(i => i.GetType().GetProperty(sortOrder.Split('_').Last()).GetValue(i)).ToList()
                 });
@@ -315,18 +315,18 @@ namespace BMTDb.WebUI.Controllers
                         WatchlistItemId = i.Id,
                         MovieId = i.MovieId,
                         Title = i.Movie.Title,
-                        MoviePoster = i.Movie.MoviePoster,
-                        MovieBackdrop = i.Movie.MovieBackdrop,
+                        MoviePoster = i.Movie.Poster,
+                        MovieBackdrop = i.Movie.Backdrop,
                         Director = i.Movie.Director,
-                        MovieInfo = i.Movie.MovieInfo,
-                        MovieTagline = i.Movie.MovieTagline,
-                        MovieRatings = i.Movie.MovieRatings,
+                        MovieInfo = i.Movie.Info,
+                        MovieTagline = i.Movie.Tagline,
+                        MovieRatings = i.Movie.Ratings,
                         RunTime = i.Movie.RunTime,
                         Status = i.Movie.Status,
                         ReleaseDate = i.Movie.ReleaseDate,
                         AddedDate = i.AddedDate,
                         Genres = i.Movie.MovieGenres.Select(i => i.Genre).ToList(),
-                        Studios = i.Movie.MovieStudios.Select(i => i.Studios).ToList(),
+                        ProductionCompanies = i.Movie.MovieProductionCompanies.Select(i => i.ProductionCompanies).ToList(),
 
                     }).OrderByDescending(i => i.GetType().GetProperty(sortOrder).GetValue(i)).ToList()
                 });
@@ -370,17 +370,16 @@ namespace BMTDb.WebUI.Controllers
                 {
                     Title = model.Title,
                     Director = model.Director,
-                    MovieTagline = model.MovieTagline,
-                    MovieInfo = model.MovieInfo,
-                    MoviePoster = model.MoviePoster,
-                    MovieBackdrop = model.MovieBackdrop,
+                    Tagline = model.MovieTagline,
+                    Info = model.MovieInfo,
+                    Poster = model.MoviePoster,
+                    Backdrop = model.MovieBackdrop,
                     ReleaseDate = model.ReleaseDate,
                     RunTime = model.RunTime,
                     Budget = model.Budget,
-                    MovieRatings = model.MovieRatings,
                     IMDBId = model.IMDBId,
                     TMDbId = model.TMDbId,
-                    MovieLogo = model.MovieLogo,
+                    Logo = model.MovieLogo,
                     Trailer = model.Trailer,
                 };
 
@@ -388,7 +387,7 @@ namespace BMTDb.WebUI.Controllers
                 {
                     var extention = Path.GetExtension(file.FileName);
                     var randomName = string.Format($"{Guid.NewGuid()}{extention}");
-                    entity.MoviePoster = randomName;
+                    entity.Poster = randomName;
                     var path = Path.Combine(Directory.GetCurrentDirectory(),"wwwroot\\img\\Content",randomName);
 
                     using var stream = new FileStream(path, FileMode.Create);

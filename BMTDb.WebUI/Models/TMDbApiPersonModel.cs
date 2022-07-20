@@ -20,7 +20,7 @@ namespace BMTDb.WebUI.Models
         public string? profile_path { get; set; }
     }
 
-    public class Cast
+    public class ApiCast
     {
         public bool? adult { get; set; }
         public int? gender { get; set; }
@@ -38,12 +38,12 @@ namespace BMTDb.WebUI.Models
 
     public class Root
     {
-        public List<Cast>? cast { get; set; }
-        public List<Crew>? crew { get; set; }
+        public List<ApiCast>? cast { get; set; }
+        public List<ApiCrew>? crew { get; set; }
         public int id { get; set; }
     }
 
-    public class Crew
+    public class ApiCrew
     {
         public bool? adult { get; set; }
         public int? gender { get; set; }

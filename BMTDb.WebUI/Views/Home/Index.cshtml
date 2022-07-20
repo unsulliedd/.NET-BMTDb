@@ -20,24 +20,27 @@
         </div>
 
     <div class="carousel-inner">
-        @for (var i = 0; i < 3; i++)
+        @if (Model.Movies != null && Model.Movies.Count != 0)
         {
-            var item = Model.Movies[i];
-            <div class="carousel-item @(i == 0 ? "active" : "")">
-                <img class="spotlight-backdrop" src="@item.MovieBackdrop" alt="First slide">
-                <div class="container">
-                    <div class="carousel-caption carousel-text@(-(i+1))">
-                        <img class="spotlight-logos-position@(i+1)" src="@item.MovieLogo" alt="@(i+1). slide logo" />
-                        <p>@item.MovieInfo</p>
-                        <p style="font-family: Garamond, serif;">
-                            <a class="btn btn-spotlight" 
+            @for (var i = 0; i < 3; i++)
+            {
+                var item = Model.Movies[i];
+                <div class="carousel-item @(i == 0 ? "active" : "")">
+                    <img class="spotlight-backdrop" src="@item.Backdrop" alt="First slide">
+                    <div class="container">
+                        <div class="carousel-caption carousel-text@(-(i+1))">
+                            <img class="spotlight-logos-position@(i+1)" src="@item.Logo" alt="@(i+1). slide logo" />
+                            <p>@item.Info</p>
+                            <p style="font-family: Garamond, serif;">
+                                <a class="btn btn-spotlight" 
                                 asp-controller="Movie" asp-action="Details" asp-route-id="@item.MovieId">
-                                @item.MovieTagline
-                            </a>
-                        </p>
+                                    @item.Tagline
+                                </a>
+                            </p>
+                        </div>
                     </div>
                 </div>
-            </div> 
+            }
         }
     </div>
 
@@ -88,7 +91,7 @@
                         </div>
                     }
                     <a asp-controller="Movie" asp-action="Details" asp-route-id="@movie.MovieId"> 
-                            <img class="home-card-poster" src="@movie.MoviePoster"/>
+                            <img class="home-card-poster" src="@movie.Poster"/>
                     </a>
                     <div class="home-card-content">
                         <h3 class="home-card-title">

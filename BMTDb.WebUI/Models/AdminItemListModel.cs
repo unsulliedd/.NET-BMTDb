@@ -18,7 +18,7 @@ namespace BMTDb.WebUI.Models
     {
         public List<Movie> Movies { get; set; }
         public List<Genre> Genres { get; set; }
-        public List<Studio> Studios { get; set; }
+        public List<ProductionCompany> ProductionCompanies { get; set; }
         public List<Person> Persons { get; set; }
         public AdminPageInfo AdminPageInfo { get; set; }
     }

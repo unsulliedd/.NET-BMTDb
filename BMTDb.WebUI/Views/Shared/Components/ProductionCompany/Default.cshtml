@@ -1,0 +1,12 @@
+﻿@model List<ProductionCompany>
+
+@foreach (var item in Model)
+{
+    <li style="padding:5px">
+    <a asp-controller="Movie" 
+    asp-action="Index" 
+    asp-route-studio="@item.Name"
+    class="dropdown-list @(ViewBag.SelectedStudio == item.Name?"active":"")">
+        @item.Name</a>
+    </li>
+}

@@ -1,9 +1,7 @@
 ﻿#pragma warning disable CS8602 // Dereference of a possibly null reference.
 #pragma warning disable CS8604 // Possible null reference argument.
 
-using BMTDb.Data.Concrete.EFCore;
 using BMTDb.Entity;
-using BMTDb.Entity.TMDbApi_Entity;
 using BMTDb.Service.Abstract;
 using BMTDb.WebUI.Extensions;
 using BMTDb.WebUI.Identity;
@@ -21,13 +19,13 @@ namespace BMTDb.WebUI.Controllers
     {
         private readonly IMovieService _movieService;
         private readonly IGenreService _genreService;
-        private readonly IStudioService _studioService;
+        private readonly IProductionCompanyService _studioService;
         private readonly IPersonService _personService;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UserManager<User> _userManager;
 
         public AdminController(IMovieService movieService, IPersonService personService, 
-            IGenreService genreService, IStudioService studioService,
+            IGenreService genreService, IProductionCompanyService studioService,
             RoleManager<IdentityRole> roleManager, UserManager<User> userManager)
         {
             _movieService = movieService;
@@ -44,7 +42,7 @@ namespace BMTDb.WebUI.Controllers
             {
                 Movies = _movieService.GetAll(),
                 Genres = _genreService.GetAll(),
-                Studios = _studioService.GetAll(),
+                ProductionCompanies = _studioService.GetAll(),
                 Persons = _personService.GetAll(),
             });
         }
@@ -82,17 +80,17 @@ namespace BMTDb.WebUI.Controllers
                 {
                     Title = model.Title,
                     Director = model.Director,
-                    MovieTagline = model.MovieTagline,
-                    MovieInfo = model.MovieInfo,
-                    MoviePoster = model.MoviePoster,
-                    MovieBackdrop = model.MovieBackdrop,
+                    Tagline = model.MovieTagline,
+                    Info = model.MovieInfo,
+                    Poster = model.MoviePoster,
+                    Backdrop = model.MovieBackdrop,
                     ReleaseDate = model.ReleaseDate,
                     RunTime = model.RunTime,
                     Budget = model.Budget,
-                    MovieRatings = model.MovieRatings,
+                    Ratings = model.MovieRatings,
                     IMDBId = model.IMDBId,
                     TMDbId = model.TMDbId,
-                    MovieLogo = model.MovieLogo,
+                    Logo = model.MovieLogo,
                     Trailer = model.Trailer
                 };
 
@@ -131,20 +129,20 @@ namespace BMTDb.WebUI.Controllers
                 MovieId = entity.MovieId,
                 Title = entity.Title,
                 Director = entity.Director,
-                MovieTagline = entity.MovieTagline,
-                MovieInfo = entity.MovieInfo,
-                MoviePoster = entity.MoviePoster,
-                MovieBackdrop = entity.MovieBackdrop,
+                MovieTagline = entity.Tagline,
+                MovieInfo = entity.Info,
+                MoviePoster = entity.Poster,
+                MovieBackdrop = entity.Backdrop,
                 ReleaseDate = entity.ReleaseDate,
                 RunTime = entity.RunTime,
-                MovieRatings = entity.MovieRatings,
+                MovieRatings = entity.Ratings,
                 Budget = entity.Budget,
                 IMDBId = entity.IMDBId,
                 TMDbId = entity.TMDbId,
-                MovieLogo = entity.MovieLogo,
+                MovieLogo = entity.Logo,
                 Trailer = entity.Trailer,
                 SelectedGenres = entity.MovieGenres.Select(i => i.Genre).ToList(),
-                SelectedStudios = entity.MovieStudios.Select(i => i.Studios).ToList(),
+                SelectedStudios = entity.MovieProductionCompanies.Select(i => i.ProductionCompanies).ToList(),
             };
 
             ViewBag.Genres = _genreService.GetAll();
@@ -168,17 +166,17 @@ namespace BMTDb.WebUI.Controllers
 
                 entity.Title = model.Title;
                 entity.Director = model.Director;
-                entity.MovieTagline = model.MovieTagline;
-                entity.MovieInfo = model.MovieInfo;
-                entity.MoviePoster = model.MoviePoster;
-                entity.MovieBackdrop = model.MovieBackdrop;
+                entity.Tagline = model.MovieTagline;
+                entity.Info = model.MovieInfo;
+                entity.Poster = model.MoviePoster;
+                entity.Backdrop = model.MovieBackdrop;
                 entity.ReleaseDate = model.ReleaseDate;
                 entity.RunTime = model.RunTime;
-                entity.MovieRatings = model.MovieRatings;
+                entity.Ratings = model.MovieRatings;
                 entity.Budget = model.Budget;
                 entity.IMDBId = model.IMDBId;
                 entity.TMDbId = model.TMDbId;
-                entity.MovieLogo = model.MovieLogo;
+                entity.Logo = model.MovieLogo;
                 entity.Trailer = model.Trailer;
 
                 if(_movieService.Update(entity, genreIds, studioIds, crewIds))
@@ -253,12 +251,12 @@ namespace BMTDb.WebUI.Controllers
                 {
                     Name = model.Name,
                     Biography = model.Biography,
-                    PhotoUrl = model.PhotoUrl,
+                    ProfilePicture = model.PhotoUrl,
                     Birthday = model.Birthday,
-                    PlaceOfBirth = model.PlaceOfBirth,
-                    Job = model.Job,
+                    Place_of_Birth = model.PlaceOfBirth,
+                    Known_for_Department = model.Job,
                     Deathday = model.Deathday,
-                    Imdb_Id = model.Imdb_Id,
+                    ImdbId = model.Imdb_Id,
                 };
 
                 if (_personService.Create(entity))
@@ -295,12 +293,12 @@ namespace BMTDb.WebUI.Controllers
                 PersonId = entity.PersonId,
                 Name = entity.Name,
                 Biography = entity.Biography,
-                PhotoUrl = entity.PhotoUrl,
+                PhotoUrl = entity.ProfilePicture,
                 Birthday = entity.Birthday,
-                PlaceOfBirth = entity.PlaceOfBirth,
-                Job = entity.Job,
+                PlaceOfBirth = entity.Place_of_Birth,
+                Job = entity.Known_for_Department,
                 Deathday = entity.Deathday,
-                Imdb_Id = entity.Imdb_Id
+                Imdb_Id = entity.ImdbId
             };
             return View(model);
         }
@@ -320,12 +318,12 @@ namespace BMTDb.WebUI.Controllers
 
                 entity.Name = model.Name;
                 entity.Biography = model.Biography;
-                entity.PhotoUrl = model.PhotoUrl;
+                entity.ProfilePicture = model.PhotoUrl;
                 entity.Birthday = model.Birthday;
-                entity.PlaceOfBirth = model.PlaceOfBirth;
-                entity.Job = model.Job;
+                entity.Place_of_Birth = model.PlaceOfBirth;
+                entity.Known_for_Department = model.Job;
                 entity.Deathday = model.Deathday;
-                entity.Imdb_Id = model.Imdb_Id;
+                entity.ImdbId = model.Imdb_Id;
 
                 _personService.Update(entity);
 
@@ -615,7 +613,7 @@ namespace BMTDb.WebUI.Controllers
                     TMDbApiPersonModel? TMDBrootObject = JsonConvert.DeserializeObject<TMDbApiPersonModel>(TMDBapiResponse);
                     if (TMDBrootObject != null)
                     {
-                        var entity = new TMDbPerson()
+                        var entity = new Person()
                         {
                             Name = TMDBrootObject.name,
                             Adult = TMDBrootObject.adult,
@@ -624,15 +622,13 @@ namespace BMTDb.WebUI.Controllers
                             Deathday = TMDBrootObject.deathday,
                             Gender = TMDBrootObject.gender,
                             Homepage = TMDBrootObject.homepage,
-                            Imdb_id = TMDBrootObject.imdb_id,
+                            ImdbId = TMDBrootObject.imdb_id,
                             Known_for_Department = TMDBrootObject.known_for_department,
                             Place_of_Birth = TMDBrootObject.place_of_birth,
                             Popularity = TMDBrootObject.popularity,
-                            Profile_Path = TMDBrootObject.profile_path,
+                            ProfilePicture = TMDBrootObject.profile_path,
                         };
-                        var context = new BMTDbContext();
-                        context.Set<TMDbPerson>().Add(entity);
-                        context.SaveChanges();
+                        _personService.Create(entity);
                         return RedirectToAction("Dashboard", "Admin");
                     }
                     TempData.Put("message", new NotificationModel
@@ -672,17 +668,19 @@ namespace BMTDb.WebUI.Controllers
                 {
                     Title = TMDBrootObject.title,
                     Director = TMDBrootObject.credits.crew.Where(i=>i.job == "Director").Select(i=>i.name).FirstOrDefault(),
-                    MovieTagline = TMDBrootObject.tagline,
-                    MovieInfo = TMDBrootObject.overview,
-                    MoviePoster   = Url.Content("https://image.tmdb.org/t/p/original" + TMDBrootObject.poster_path),
-                    MovieBackdrop = Url.Content("https://image.tmdb.org/t/p/original" + TMDBrootObject.backdrop_path),
+                    Tagline = TMDBrootObject.tagline,
+                    Info = TMDBrootObject.overview,
+                    Poster   = Url.Content("https://image.tmdb.org/t/p/original" + TMDBrootObject.poster_path),
+                    Backdrop = Url.Content("https://image.tmdb.org/t/p/original" + TMDBrootObject.backdrop_path),
                     ReleaseDate = Convert.ToDateTime(TMDBrootObject.release_date),
+                    Original_Language = TMDBrootObject.original_language,
                     RunTime = TMDBrootObject.runtime,
                     Budget = TMDBrootObject.budget,
-                    MovieRatings = null,
+                    Ratings = null,
+                    Popularity = TMDBrootObject.popularity,
                     IMDBId = TMDBrootObject.imdb_id,
                     TMDbId = TMDBrootObject.id.ToString(),
-                    MovieLogo = Url.Content("https://image.tmdb.org/t/p/original" 
+                    Logo = Url.Content("https://image.tmdb.org/t/p/original" 
                                 + TMDBrootObject.images.logos.Select(i => i.file_path).FirstOrDefault()),
                     Trailer = Url.Content("https://youtube.com/embed/" 
                                 + TMDBrootObject.videos.results.Where(i => i.type == "Trailer").Select(i => i.key).FirstOrDefault())

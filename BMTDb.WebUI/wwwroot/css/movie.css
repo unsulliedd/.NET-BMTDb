@@ -114,8 +114,7 @@ a.dropdown-list.active {
 }
 
 a.dropdown-list {color:black}
-a.dropdown-list:hover{color:red}
-.dropdown-menu.show {width:100%}
+a.dropdown-list:hover{color:red;background}
 
 /****** Accordion *******/
 .accordion {
@@ -194,7 +193,8 @@ a:hover.genre-list {color:black}
     width: 200px;
     height: 400px;
     align-content: flex-start;
-    border: 1.5px #e3e3e3;
+    border-bottom: 1.5px inset #3b3b3b;
+    border-right:  2px inset #3b3b3b;
     border-radius: 10px;
     box-shadow: 0 2px 8px rgb(0 0 0 / 10%);
     display: flex;

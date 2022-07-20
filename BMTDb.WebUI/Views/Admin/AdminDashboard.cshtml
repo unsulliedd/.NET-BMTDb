@@ -59,7 +59,7 @@
                         <li>Total Tv Shows: 0</li>
                         <li>Total Persons:  @Model.Persons.Count</li>
                         <li>Total Genres:   @Model.Genres.Count</li>
-                        <li>Total Studios:  @Model.Studios.Count</li>
+                        <li>Total Studios:  @Model.ProductionCompanies.Count</li>
                     </ul>
                 </div>
 
@@ -85,7 +85,7 @@
                 @foreach (var item in (Model.Movies.Count > 10 ? Model.Movies.Skip(Model.Movies.Count - 10) : Model.Movies).Reverse())
                 {
                     <li class="recently-item my-3"><a asp-controller="Movie" asp-action="Details" asp-route-id="@item.MovieId">
-                        <span><img class="list-poster" src="@item.MoviePoster"></span></a>
+                        <span><img class="list-poster" src="@item.Poster"></span></a>
                         <span class="list-title" style="margin-left:2rem">@item.Title</span>
                         <a style="margin-left:0.75rem" href="/admin/edit-movie/@item.MovieId"><img style="width: 18px" title='Edit' 
                         src="/img/icon-svg/pencil-solid.svg" viewBox="0 0 28 28" /></a>

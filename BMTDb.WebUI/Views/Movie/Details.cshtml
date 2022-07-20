@@ -7,18 +7,18 @@
 <link rel="stylesheet" href="~/css/details.css" asp-append-version="true" />
 
 <div class="details-background">
-    <img class="details-backdrop" src="@Model.Movie.MovieBackdrop" />
+    <img class="details-backdrop" src="@Model.Movie.Backdrop" />
 </div>
 
 <div class="container container-details">
     <div class="movie-details">
         <div class="details-logo">
-            <img class="logo-img" src="@Model.Movie.MovieLogo"/>
+            <img class="logo-img" src="@Model.Movie.Logo"/>
         </div>
         
         <div class="details-poster">
-            <a href="@Model.Movie.MoviePoster">
-                <img class="poster-img" src="@Model.Movie.MoviePoster" title="@Model.Movie.Title" /></a>
+            <a href="@Model.Movie.Poster">
+                <img class="poster-img" src="@Model.Movie.Poster" title="@Model.Movie.Title" /></a>
         </div>
 
         <div class="details-info info-inside">
@@ -81,7 +81,7 @@
                         }
                     </span>
                     <span class="px-2"><i class="fa-solid fa-star"></i>
-                        @Model.Movie.MovieRatings </span>
+                        @Model.Movie.Ratings </span>
                     <span class="px-2">
                         <img class="ratings-logo" src="/img/ratinglogo/RT_AUDIENCE_SCORE.svg"/>
                         @if (Model.OMDBApiResponse.Ratings != null)
@@ -129,11 +129,11 @@
                 </div>
 
                 <div>
-                    <h5 class="text-muted my-2">@Model.Movie.MovieTagline</h5>
+                    <h5 class="text-muted my-2">@Model.Movie.Tagline</h5>
                 </div>
 
                 <div class="info">
-                    <p>@Model.Movie.MovieInfo</p>
+                    <p>@Model.Movie.Info</p>
                 </div>
 
                 <div class="details-crew">

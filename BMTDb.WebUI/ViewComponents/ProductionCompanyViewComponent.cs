@@ -5,19 +5,19 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BMTDb.WebUI.ViewComponents
 {
-    public class StudioViewComponent : ViewComponent
+    public class ProductionCompanyViewComponent : ViewComponent
     {
-        private IStudioService _studioService;
+        private IProductionCompanyService _productionCompanyService;
 
-        public StudioViewComponent(IStudioService studioService)
+        public ProductionCompanyViewComponent(IProductionCompanyService productionCompanyService)
         {
-            _studioService = studioService;
+            _productionCompanyService = productionCompanyService;
         }
         public IViewComponentResult Invoke() 
         {
             if (RouteData.Values["studio"] != null)
                 ViewBag.SelectedStudio = RouteData?.Values["studio"];
-            return View(_studioService.GetAll());
+            return View(_productionCompanyService.GetAll());
         }
     }
 }

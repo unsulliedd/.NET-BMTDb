@@ -2,7 +2,7 @@
 
 <div class="movie-card">
     <div class="movie-card-inner">
-        @if(User.Identity.IsAuthenticated)
+        @if(User.Identity != null && User.Identity.IsAuthenticated)
         {
         <div class="movie-card-actions">
             <form asp-controller="User" asp-action="AddtoFavourite" method="POST">
@@ -27,7 +27,7 @@
         </div>
         }
         <a asp-controller="Movie" asp-action="Details" asp-route-id="@Model.MovieId"> 
-            <img class="poster" src="@Model.MoviePoster"/>
+            <img class="poster" src="@Model.Poster"/>
         </a>
             <div class="poster-content">
                 <h3  class="movie-card-title">

@@ -74,8 +74,8 @@
                 {
                     @for (int i = 0; i < Model.SelectedStudios.Count; i++)
                     {
-                        <input type="hidden" name="SelectedStudios[@i].StudioId" value="@Model.SelectedStudios[@i].StudioId">
-                        <input type="hidden" name="SelectedStudios[@i].Studio_Name" value="@Model.SelectedStudios[@i].Studio_Name">
+                        <input type="hidden" name="SelectedStudios[@i].StudioId" value="@Model.SelectedStudios[@i].ProductionCompanyId">
+                        <input type="hidden" name="SelectedStudios[@i].Studio_Name" value="@Model.SelectedStudios[@i].Name">
                     }
                 }
 
@@ -92,13 +92,14 @@
                     }
                 </div>
                 <div class="add-genre add-moviestudio">
-                    @foreach (var item in (List<Studio>)ViewBag.Studios)
+                    @foreach (var item in (List<ProductionCompany>)ViewBag.Studios)
                     {
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="studioIds" value="@item.StudioId" id="studio_@item.StudioId"
-                                @(Model.SelectedStudios.Any(i=>i.StudioId==item.StudioId)? "checked" : "")>
-                            <label class="form-check-label" for="studio_@item.StudioId">
-                                @item.Studio_Name
+                            <input class="form-check-input" type="checkbox" name="studioIds" 
+                                value="@item.ProductionCompanyId" id="studio_@item.ProductionCompanyId"
+                                @(Model.SelectedStudios.Any(i=>i.ProductionCompanyId==item.ProductionCompanyId)? "checked" : "")>
+                            <label class="form-check-label" for="studio_@item.ProductionCompanyId">
+                                @item.Name
                             </label>
                         </div>
                     }

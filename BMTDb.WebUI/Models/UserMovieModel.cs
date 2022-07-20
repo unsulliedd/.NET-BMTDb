@@ -22,7 +22,6 @@ namespace BMTDb.WebUI.Models
         public string? MovieBackdrop { get; set; }
         public string? MovieLogo { get; set; }
         public string? MovieTagline { get; set; }
-        public string? MovieRatings { get; set; }
         public int? RunTime { get; set; }
         public int? Budget { get; set; }
         public string? Status { get; set; }

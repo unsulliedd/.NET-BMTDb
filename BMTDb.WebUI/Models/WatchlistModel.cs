@@ -20,12 +20,12 @@ namespace BMTDb.WebUI.Models
         public string? MovieInfo { get; set; }
         public string? MovieTagline { get; set; }
         public string? Director { get; set; }
-        public string? MovieRatings { get; set; }
+        public double? MovieRatings { get; set; }
         public string? Status { get; set; }
         public int? RunTime { get; set; }
         public DateTime ReleaseDate { get; set; }
         public DateTime AddedDate { get; set; } = DateTime.Now;
         public List<Genre> Genres { get; set; }
-        public List<Studio> Studios { get; set; }
+        public List<ProductionCompany> ProductionCompanies { get; set; }
     }
 }
