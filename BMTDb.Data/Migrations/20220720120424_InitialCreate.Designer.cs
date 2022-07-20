@@ -4,6 +4,7 @@ using BMTDb.Data.Concrete.EFCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BMTDb.Data.Migrations
 {
     [DbContext(typeof(BMTDbContext))]
-    partial class BMTDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220720120424_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -239,8 +241,8 @@ namespace BMTDb.Data.Migrations
                     b.Property<string>("Backdrop")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double?>("Budget")
-                        .HasColumnType("float");
+                    b.Property<int?>("Budget")
+                        .HasColumnType("int");
 
                     b.Property<string>("Director")
                         .HasColumnType("nvarchar(max)");
@@ -257,8 +259,8 @@ namespace BMTDb.Data.Migrations
                     b.Property<string>("Original_Language")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("Popularity")
-                        .HasColumnType("float");
+                    b.Property<int>("Popularity")
+                        .HasColumnType("int");
 
                     b.Property<string>("Poster")
                         .HasColumnType("nvarchar(max)");
