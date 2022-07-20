@@ -1,5 +1,4 @@
-﻿#pragma warning disable IDE0063
-#pragma warning disable CS8603
+﻿#pragma warning disable CS8603
 
 using BMTDb.Data.Abstract;
 using Microsoft.EntityFrameworkCore;
@@ -11,50 +10,37 @@ using System.Threading.Tasks;
 
 namespace BMTDb.Data.Concrete.EFCore
 {
-    public class EFCoreGenericRepository<TEntity, TContext> : IRepository<TEntity>
+    public class EFCoreGenericRepository<TEntity> : IRepository<TEntity>
         where TEntity  : class
-        where TContext : DbContext, new()
     {
+        protected readonly DbContext context;
+        public EFCoreGenericRepository(DbContext context)
+        {
+            this.context = context;
+        }
+
         public List<TEntity> GetAll()
         {
-            using (var context = new TContext())
-            {
-                return context.Set<TEntity>().ToList();
-            }
+            return context.Set<TEntity>().ToList();
         }
 
         public TEntity GetById(int id)
         {
-            using (var context = new TContext())
-            {
-                return context.Set<TEntity>().Find(id);
-            }
+            return context.Set<TEntity>().Find(id);
         }
         public void Create(TEntity entity)
         {
-            using (var context = new TContext())
-            {
-                context.Set<TEntity>().Add(entity);
-                context.SaveChanges();
-            }
+            context.Set<TEntity>().Add(entity);
         }
 
         public void Delete(TEntity entity)
         {
-            using (var context = new TContext())
-            {
-                context.Set<TEntity>().Remove(entity);
-                context.SaveChanges();
-            }
+            context.Set<TEntity>().Remove(entity);
         }
 
         public virtual void Update(TEntity entity)
         {
-            using (var context = new TContext())
-            {
-                context.Entry(entity).State = EntityState.Modified;
-                context.SaveChanges();
-            }
+            context.Entry(entity).State = EntityState.Modified;
         }
     }
 }

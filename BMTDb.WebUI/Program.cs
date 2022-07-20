@@ -14,12 +14,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews(                                    
     options => {options.Filters.Add(typeof(UserActivityFilter));}
-    );    
+    );
 
-builder.Services.AddDbContext<ApplicationContext>   //Connection String
-    (options => options.UseSqlServer(@"Server=(LocalDB)\MSSQLLocalDB; 
-        AttachDbFilename=C:\Users\berkk\Documents\Visual Studio 2022\Databases\BMTDb.MovieDb.mdf; 
-        Database=BMTDb.MovieDb; Integrated Security=TRUE"));
+builder.Services.AddDbContext<BMTDbContext>         //BMTDbContext Connection String
+    (options => options.UseSqlServer(builder.Configuration.GetConnectionString("SqlConnection")));
+builder.Services.AddDbContext<ApplicationContext>   //ApplicationContext Connection String
+    (options => options.UseSqlServer(builder.Configuration.GetConnectionString("SqlConnection")));
 
 builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<ApplicationContext>().AddDefaultTokenProviders();
 
@@ -32,7 +32,6 @@ builder.Services.Configure<IdentityOptions>(options => {
     options.Password.RequireUppercase = true;
     options.Password.RequireNonAlphanumeric = false;
     options.Password.RequiredLength = 8;
-
 
     //SignIn
     options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -55,22 +54,13 @@ builder.Services.ConfigureApplicationCookie(options => {
 });
 
 //Inject Services
-builder.Services.AddScoped<IMovieRepository, EfCoreMovieRepository>();
+builder.Services.AddScoped<IUnitofWork, UnitofWork>();
+
 builder.Services.AddScoped<IMovieService, MovieManager>();
-
-builder.Services.AddScoped<IGenreRepository, EfCoreGenreRepository>();
 builder.Services.AddScoped<IGenreService, GenreManager>();
-
-builder.Services.AddScoped<IStudioRepository,EFCoreStudioRepository>();
-builder.Services.AddScoped<IStudioService, StudioManager>();
-
-builder.Services.AddScoped<IPersonRepository,EFCorePersonRepository>();
+builder.Services.AddScoped<IProductionCompanyService, ProductionCompanyManager>();
 builder.Services.AddScoped<IPersonService, PersonManager>();
-
-builder.Services.AddScoped<IWatchlistRepository, EFCoreWatchlistRepository>();
 builder.Services.AddScoped<IWatchlistService, WatchlistManager>();
-
-builder.Services.AddScoped<IFavouriteRepository, EFCoreFavouriteRepository>();
 builder.Services.AddScoped<IFavouriteService, FavouriteManager>();
 
 builder.Services.AddScoped<UserActivityFilter>();

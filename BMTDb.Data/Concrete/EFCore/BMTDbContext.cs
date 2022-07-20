@@ -9,19 +9,21 @@ using System.Threading.Tasks;
 
 namespace BMTDb.Data.Concrete.EFCore
 {
-    public class BMTDbContext:DbContext
+    public class BMTDbContext : DbContext
     {
+        public BMTDbContext(DbContextOptions<BMTDbContext> options) : base(options)
+        {
+
+        }
+
         //Movies
         public DbSet<Movie>? Movies { get; set; }
         public DbSet<Genre>? Genres { get; set; }
-        public DbSet<Studio>? Studios { get; set; }
-
-
-        //Tv
-        public DbSet<TvShow>? TvShows { get; set; }
-        public DbSet<Season>? Seasons { get; set; }
-        public DbSet<Episode>? Episodes { get; set; }
-        public DbSet<Network>? Networks { get; set; }
+        public DbSet<Credit>? Credits { get; set; }
+        public DbSet<Cast>? Casts { get; set; }
+        public DbSet<Crew>? Crews { get; set; }
+        public DbSet<ProductionCompany>? ProductionCompanies { get; set; }
+        public DbSet<ProductionCountry>? ProductionCountries { get; set; }
 
         //People
         public DbSet<Person>? Persons { get; set; }
@@ -32,37 +34,24 @@ namespace BMTDb.Data.Concrete.EFCore
         public DbSet<Favourite>? Favourites { get; set; }
         public DbSet<FavouriteItem>? FavouriteItems { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)       
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            /*Connection String*/
-            optionsBuilder.UseSqlServer
-            (@"Server=(LocalDB)\MSSQLLocalDB; 
-                AttachDbFilename=C:\Users\berkk\Documents\Visual Studio 2022\Databases\BMTDb.MovieDb.mdf;
-                Database=BMTDb.MovieDb;
-                Integrated Security=TRUE"
-            );
-            /*Connection String*/
-        }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)  //Fluent Api
-        {
-            modelBuilder.Entity<MovieCrew>()
-                .HasKey(c => new { c.MovieId, c.PersonId });
-            modelBuilder.Entity<TvShowCrew>()
-                .HasKey(c => new { c.TvShowId, c.PersonId });
             modelBuilder.Entity<MovieGenre>()
                 .HasKey(c => new { c.MovieId, c.GenreId });
-            modelBuilder.Entity<MovieStudio>()
-                .HasKey(c => new { c.MovieId, c.StudioId });
-            modelBuilder.Entity<TvShowGenre>()
-                .HasKey(c => new { c.TvShowId, c.GenreId });
-            modelBuilder.Entity<TvShowNetwork>()
-                .HasKey(c => new { c.TvShowId, c.NetworkId });
-            modelBuilder.Entity<TvShowSeason>()
-                .HasKey(c => new { c.TvShowId, c.SeasonId });
-            modelBuilder.Entity<SeasonEpisode>()
-                .HasKey(c => new { c.SeasonId, c.EpisodeId });
+            modelBuilder.Entity<MovieProductionCompany>()
+                .HasKey(c => new { c.MovieId, c.ProductionCompanyId });
+            modelBuilder.Entity<MovieProductionCountry>()
+                .HasKey(c => new { c.MovieId, c.ProductionCountryId });
+            modelBuilder.Entity<Credit>()
+                .HasKey(c => new { c.MovieId, c.Id });
+            modelBuilder.Entity<Credit>()
+                .HasKey(c => new {c.CastId, c.Id});
+            modelBuilder.Entity<Credit>()
+                .HasKey(c => new { c.CrewId, c.Id });
+            modelBuilder.Entity<PersonCast>()
+                .HasKey(c => new { c.PersonId, c.CastId });
+            modelBuilder.Entity<PersonCrew>()
+                .HasKey(c => new { c.PersonId, c.CrewId });
         }
-
     }
 }

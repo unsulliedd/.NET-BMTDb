@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BMTDb.Data.Abstract
 {
-    public interface IStudioRepository:IRepository<Studio>
+    public interface IProductionCompanyRepository:IRepository<ProductionCompany>
     {
 
     }

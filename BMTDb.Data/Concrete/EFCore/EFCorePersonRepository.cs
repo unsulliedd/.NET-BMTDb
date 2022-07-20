@@ -1,5 +1,5 @@
-﻿#pragma warning disable CS8602 // Dereference of a possibly null reference.
-#pragma warning disable IDE0063 // Use simple 'using' statement
+﻿#pragma warning disable CS8603 // Possible null reference return.
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
 
 using BMTDb.Data.Abstract;
 using BMTDb.Entity;
@@ -11,26 +11,27 @@ using System.Threading.Tasks;
 
 namespace BMTDb.Data.Concrete.EFCore
 {
-    public class EFCorePersonRepository : EFCoreGenericRepository<Person, BMTDbContext>, IPersonRepository
+    public class EFCorePersonRepository : EFCoreGenericRepository<Person>, IPersonRepository
     {
+        public EFCorePersonRepository(BMTDbContext context) : base(context)
+        {
+
+        }
+        private BMTDbContext BMTDbContext
+        {
+            get { return context as BMTDbContext; }
+        }
+
         public int GetPersonCount()
         {
-            using (var context = new BMTDbContext())
-            {
-                var persons = context.Persons.AsQueryable();
-
+                var persons = BMTDbContext.Persons.AsQueryable();
                 return persons.Count();
-            }
         }
 
         public List<Person> GetPersons(int page, int pageSize)
         {
-            using var context = new BMTDbContext();
-            {
-                var persons = context.Persons.AsQueryable();
-
-                return persons.Skip((page - 1) * pageSize).Take(pageSize).ToList();
-            }
+            var persons = BMTDbContext.Persons.AsQueryable();
+            return persons.Skip((page - 1) * pageSize).Take(pageSize).ToList();
         }
     }
 }

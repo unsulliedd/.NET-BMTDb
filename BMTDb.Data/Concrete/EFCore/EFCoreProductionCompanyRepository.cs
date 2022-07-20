@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace BMTDb.Data.Concrete.EFCore
 {
-    public class EfCoreGenreRepository : EFCoreGenericRepository<Genre>,IGenreRepository
+    public class EFCoreProductionCompanyRepository : EFCoreGenericRepository<ProductionCompany>,IProductionCompanyRepository
     {
-        public EfCoreGenreRepository(BMTDbContext context) : base(context)
+        public EFCoreProductionCompanyRepository(BMTDbContext context) : base(context)
         {
 
         }
