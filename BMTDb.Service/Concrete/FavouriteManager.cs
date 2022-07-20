@@ -11,20 +11,22 @@ namespace BMTDb.Service.Concrete
 {
     public class FavouriteManager : IFavouriteService
     {
-        private readonly IFavouriteRepository _favouriteRepository;
-        public FavouriteManager(IFavouriteRepository favouriteRepository)
+        private readonly IUnitofWork _unitofWork;
+
+        public FavouriteManager(IUnitofWork unitofWork)
         {
-            _favouriteRepository = favouriteRepository;
+            _unitofWork = unitofWork;
         }
 
         public void InitializeFavourite(string userId)
         {
-            _favouriteRepository.Create(new Favourite() { UserId = userId });
+            _unitofWork.Favourites.Create(new Favourite() { UserId = userId });
+            _unitofWork.Save();
         }
 
         public Favourite GetFavouritebyUserId(string userId)
         {
-            return _favouriteRepository.GetByUserId(userId);
+            return _unitofWork.Favourites.GetByUserId(userId);
         }
 
         public void AddtoFavourite(string userId, int MovieId, DateTime AddedDate)
@@ -41,7 +43,8 @@ namespace BMTDb.Service.Concrete
                         AddedDate = AddedDate,
                         FavouriteId = favourite.Id
                     });
-                    _favouriteRepository.Update(favourite);
+                    _unitofWork.Favourites.Update(favourite);
+                    _unitofWork.Save();
                 }
             }
         }
@@ -51,7 +54,8 @@ namespace BMTDb.Service.Concrete
             var favourite = GetFavouritebyUserId(userId);
             if (favourite != null)
             {
-                _favouriteRepository.RemoveFromFavourite(favourite.Id, movieId);
+                _unitofWork.Favourites.RemoveFromFavourite(favourite.Id, movieId);
+                _unitofWork.Save();
             }
         }
     }

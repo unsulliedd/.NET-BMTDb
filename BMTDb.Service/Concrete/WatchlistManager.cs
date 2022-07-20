@@ -1,5 +1,4 @@
 ﻿using BMTDb.Data.Abstract;
-using BMTDb.Entity;
 using BMTDb.Entity.Lists;
 using BMTDb.Service.Abstract;
 using System;
@@ -12,20 +11,22 @@ namespace BMTDb.Service.Concrete
 {
     public class WatchlistManager : IWatchlistService
     {
-        private readonly IWatchlistRepository _watchlistRepository;
-        public WatchlistManager(IWatchlistRepository watchlistRepository)
+        private readonly IUnitofWork _unitofWork;
+
+        public WatchlistManager(IUnitofWork unitofWork)
         {
-            _watchlistRepository = watchlistRepository;
+            _unitofWork = unitofWork;
         }
 
         public void InitializeWatchlist(string userId)
         {
-            _watchlistRepository.Create(new Watchlist() { UserId = userId });
+            _unitofWork.Watchlists.Create(new Watchlist() { UserId = userId });
+            _unitofWork.Save();
         }
 
         public Watchlist GetWatchlistbyUserId(string userId)
         {
-            return _watchlistRepository.GetByUserId(userId);
+            return _unitofWork.Watchlists.GetByUserId(userId);
         }
 
         public void AddtoWatchlist(string userId, int MovieId, DateTime AddedDate)
@@ -42,8 +43,9 @@ namespace BMTDb.Service.Concrete
                         AddedDate = AddedDate,
                         WatchlistId = watchlist.Id
                     });
-                    _watchlistRepository.Update(watchlist);
-                }                
+                    _unitofWork.Watchlists.Update(watchlist);
+                    _unitofWork.Save();
+                }
             }
         }
 
@@ -52,7 +54,8 @@ namespace BMTDb.Service.Concrete
             var watchlist = GetWatchlistbyUserId(userId);
             if (watchlist != null)
             {
-                _watchlistRepository.RemoveFromWatchlist(watchlist.Id, movieId);
+                _unitofWork.Watchlists.RemoveFromWatchlist(watchlist.Id, movieId);
+                _unitofWork.Save();
             }
         }
     }

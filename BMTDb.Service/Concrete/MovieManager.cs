@@ -1,6 +1,4 @@
-﻿#pragma warning disable CS8604 // Possible null reference argument.
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor.
-#pragma warning disable IDE0063 // Use simple 'using' statement
+﻿#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor.
 
 using BMTDb.Data.Abstract;
 using BMTDb.Data.Concrete.EFCore;
@@ -16,9 +14,13 @@ namespace BMTDb.Service.Concrete
 {
     public class MovieManager : IMovieService
     {
-        private readonly IMovieRepository _movieRepository;
+        private readonly IUnitofWork _unitofWork;
 
-        public string ErrorMessage {get; set;}
+        public MovieManager(IUnitofWork unitofWork)
+        {
+            _unitofWork = unitofWork;
+        }
+        public string ErrorMessage { get; set; }
 
         public bool Validation(Movie entity)
         {
@@ -27,38 +29,33 @@ namespace BMTDb.Service.Concrete
             return isValid;
         }
 
-        public MovieManager(IMovieRepository movieRepository)
-        {
-            _movieRepository = movieRepository;
-        }
-
         public bool Create(Movie entity)
         {
             if (Validation(entity))
             {
-                using (var context = new BMTDbContext())
+                var movies = _unitofWork.Movies.GetAll();
+                if ((movies.Any(i => i.Title == entity.Title)) && (movies.Any(i => i.ReleaseDate == entity.ReleaseDate)))
                 {
-                    var movies = context.Movies;
-                    if ((movies.Any(i => i.Title == entity.Title)) && (movies.Any(i => i.ReleaseDate == entity.ReleaseDate)))
-                    {
-                        ErrorMessage = "Movie is Already Exist";
-                        return false;
-                    }
-                    _movieRepository.Create(entity);
-                    return true;
+                    ErrorMessage = "Movie is Already Exist";
+                    return false;
                 }
+                _unitofWork.Movies.Create(entity);
+                _unitofWork.Save();
+                return true;
             }
             return false;
         }
 
         public void Delete(Movie entity)
         {
-            _movieRepository.Delete(entity);
+            _unitofWork.Movies.Delete(entity);
+            _unitofWork.Save();
         }
 
         public void Update(Movie entity)
         {
-            _movieRepository.Update(entity);
+            _unitofWork.Movies.Update(entity);
+            _unitofWork.Save();
         }
 
         public bool Update(Movie entity, int[] genreIds, int[] studioIds, int[] crewIds)
@@ -67,7 +64,8 @@ namespace BMTDb.Service.Concrete
             {
                 if (studioIds.Length >= 0 && studioIds.Length <= 1)
                 {
-                    _movieRepository.Update(entity, genreIds, studioIds, crewIds);
+                    _unitofWork.Movies.Update(entity, genreIds, studioIds, crewIds);
+                    _unitofWork.Save();
                     return true;
                 }
                 ErrorMessage = "Select Only One Studio";
@@ -78,55 +76,55 @@ namespace BMTDb.Service.Concrete
 
         public List<Movie> GetAll()
         {
-            return _movieRepository.GetAll();
+            return _unitofWork.Movies.GetAll();
         }
 
         public Movie GetById(int id)
         {
-            return _movieRepository.GetById(id);
+            return _unitofWork.Movies.GetById(id);
         }
 
         public List<Movie> GetByPopularity()
         {
-            return _movieRepository.GetByPopularity();
+            return _unitofWork.Movies.GetByPopularity();
         }
 
         public Movie GetMovieDetails(int id)
         {
-            return _movieRepository.GetMovieDetails(id);
+            return _unitofWork.Movies.GetMovieDetails(id);
         }
 
         public List<Movie> GetMoviebyFilter(string name, string Studio_Name, string sortOrder, int page, int pageSize)
         {
-            return _movieRepository.GetMoviebyFilter(name, Studio_Name, sortOrder, page, pageSize);
+            return _unitofWork.Movies.GetMoviebyFilter(name, Studio_Name, sortOrder, page, pageSize);
         }
 
         public List<Movie> GetMovies(int page, int pageSize)
         {
-            return _movieRepository.GetMovies(page, pageSize);
+            return _unitofWork.Movies.GetMovies(page, pageSize);
         }
 
         public int GetCountbyFilter(string genre, string studio)
         {
-            return _movieRepository.GetCountbyFilter(genre, studio);
+            return _unitofWork.Movies.GetCountbyFilter(genre, studio);
         }
         public int GetMovieCount()
         {
-            return _movieRepository.GetMovieCount();
+            return _unitofWork.Movies.GetMovieCount();
         }
 
         public List<Movie> GetSearchResult(string searchString)
         {
-            return _movieRepository.GetSearchResult(searchString);
+            return _unitofWork.Movies.GetSearchResult(searchString);
         }
 
         public List<Movie> GetUserMovielist(List<int> data, string username)
         {
-            return _movieRepository.GetUserMovielist(data, username);
+            return _unitofWork.Movies.GetUserMovielist(data, username);
         }
         public void RemoveFromRecentlyViewed(string username, int movieId)
         {
-            _movieRepository.RemoveFromRecentlyViewed(username, movieId);
+            _unitofWork.Movies.RemoveFromRecentlyViewed(username, movieId);
         }
     }
 }

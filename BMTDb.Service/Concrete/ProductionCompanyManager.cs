@@ -9,35 +9,36 @@ using System.Threading.Tasks;
 
 namespace BMTDb.Service.Concrete
 {
-    public class StudioManager : IStudioService
+    public class ProductionCompanyManager : IProductionCompanyService
     {
-        private readonly IStudioRepository _studioRepository;
-        public StudioManager(IStudioRepository studioRepository)
+        private readonly IUnitofWork _unitofWork;
+
+        public ProductionCompanyManager(IUnitofWork unitofWork)
         {
-            _studioRepository = studioRepository;
+            _unitofWork = unitofWork;
         }
 
-        public void Create(Studio entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Delete(Studio entity)
+        public void Create(ProductionCompany entity)
         {
             throw new NotImplementedException();
         }
 
-        public void Update(Studio entity)
+        public void Delete(ProductionCompany entity)
         {
             throw new NotImplementedException();
         }
 
-        public List<Studio> GetAll()
+        public void Update(ProductionCompany entity)
         {
-            return _studioRepository.GetAll();
+            throw new NotImplementedException();
         }
 
-        public Studio GetById(int id)
+        public List<ProductionCompany> GetAll()
+        {
+            return _unitofWork.ProductionCompanies.GetAll();
+        }
+
+        public ProductionCompany GetById(int id)
         {
             throw new NotImplementedException();
         }

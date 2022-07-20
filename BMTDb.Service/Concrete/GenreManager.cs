@@ -11,10 +11,11 @@ namespace BMTDb.Service.Concrete
 {
     public class GenreManager : IGenreService
     {
-        private readonly IGenreRepository _genreRepository;
-        public GenreManager(IGenreRepository genreRepository)
+        private readonly IUnitofWork _unitofWork;
+
+        public GenreManager(IUnitofWork unitofWork)
         {
-            _genreRepository = genreRepository;
+            _unitofWork = unitofWork;
         }
 
         public void Create(Genre entity)
@@ -33,14 +34,12 @@ namespace BMTDb.Service.Concrete
 
         public List<Genre> GetAll()
         {
-            return _genreRepository.GetAll();
+            return _unitofWork.Genres.GetAll();
         }
 
         public Genre GetById(int id)
         {
             throw new NotImplementedException();
         }
-
-
     }
 }

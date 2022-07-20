@@ -1,6 +1,4 @@
-﻿#pragma warning disable CS8604 // Possible null reference argument.
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor.
-#pragma warning disable IDE0063 // Use simple 'using' statement
+﻿#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor.
 
 using BMTDb.Data.Abstract;
 using BMTDb.Data.Concrete.EFCore;
@@ -16,7 +14,12 @@ namespace BMTDb.Service.Concrete
 {
     public class PersonManager : IPersonService
     {
-        private readonly IPersonRepository _personRepository;
+        private readonly IUnitofWork _unitofWork;
+
+        public PersonManager(IUnitofWork unitofWork)
+        {
+            _unitofWork = unitofWork;
+        }
 
         public string ErrorMessage { get; set; }
         public bool Validation(Person entity)
@@ -26,56 +29,52 @@ namespace BMTDb.Service.Concrete
             return isValid;
         }
 
-        public PersonManager (IPersonRepository personRepository)
-        {
-            _personRepository = personRepository;
-        }
         public bool Create(Person entity)
         {
             if (Validation(entity))
             {
-                using (var context = new BMTDbContext())
+                var persons = _unitofWork.Persons.GetAll();
+                if ((persons.Any(i => i.Name == entity.Name)) && (persons.Any(i => i.Birthday == entity.Birthday)))
                 {
-                    var persons = context.Persons;
-                    if ((persons.Any(i => i.Name == entity.Name)) && (persons.Any(i => i.Birthday == entity.Birthday)))
-                    {
-                        ErrorMessage = "Person is Already Exist";
-                        return false;
-                    }
-                    _personRepository.Create(entity);
-                    return true;
+                    ErrorMessage = "Person is Already Exist";
+                    return false;
                 }
+                _unitofWork.Persons.Create(entity);
+                _unitofWork.Save();
+                return true;
             }
             return false;
         }
 
         public void Delete(Person entity)
         {
-            _personRepository.Delete(entity);
+            _unitofWork.Persons.Delete(entity);
+            _unitofWork.Save();
         }
         public void Update(Person entity)
         {
-            _personRepository.Update(entity);
+            _unitofWork.Persons.Create(entity);
+            _unitofWork.Save();
         }
 
         public List<Person> GetAll()
         {
-            return _personRepository.GetAll();
+            return _unitofWork.Persons.GetAll();
         }
 
         public Person GetById(int id)
         {
-            return _personRepository.GetById(id);
+            return _unitofWork.Persons.GetById(id);
         }
 
         public List<Person> GetPersons(int page, int pageSize)
         {
-            return _personRepository.GetPersons(page, pageSize);
+            return _unitofWork.Persons.GetPersons(page, pageSize);
         }
 
         public int GetPersonCount()
         {
-            return _personRepository.GetPersonCount();
+            return _unitofWork.Persons.GetPersonCount();
         }
     }
 }
