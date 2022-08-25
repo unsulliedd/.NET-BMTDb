@@ -29,14 +29,14 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: 760px;
+    height: 822px;
     object-fit: cover;
     object-position: center;
     opacity: 0.8;
 }
 
 .carousel-item {
-    height: 540px;
+    height: 822px;
     background: #000000;
     min-width: 100%;
 }
