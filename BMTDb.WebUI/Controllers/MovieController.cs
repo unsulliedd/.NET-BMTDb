@@ -13,9 +13,12 @@ namespace BMTDb.WebUI.Controllers
     public class MovieController : Controller
     {
         private readonly IMovieService _movieService;
-        public MovieController(IMovieService movieService)
+        private readonly IConfiguration _configuration;
+
+        public MovieController(IMovieService movieService, IConfiguration configuration)
         {
             _movieService = movieService;
+            _configuration = configuration;
         }
 
         public IActionResult Index(string genre, string studio, string sortOrder, int page = 1)
@@ -48,8 +51,8 @@ namespace BMTDb.WebUI.Controllers
             string? ImdbId = movies?.IMDBId;
             string? TmdbId = movies?.TMDbId;
 
-            string OMDBapiKey = "5c3ac17d";
-            string TMDBapiKey = "e9e71fba25c4cdd53c7ced78867ba28d";
+            string OMDBapiKey = _configuration["ApiKeys:OmdbApiKey"];
+            string TMDBapiKey = _configuration["ApiKeys:TmdbApiKey"];
 
             var baseAddressOMDB = new Uri("http://www.omdbapi.com/");
             var baseAddressTMDB = new Uri("http://api.themoviedb.org/3/");

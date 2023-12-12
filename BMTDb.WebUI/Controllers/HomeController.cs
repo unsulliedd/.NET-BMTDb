@@ -13,16 +13,18 @@ namespace BMTDb.WebUI.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IMovieService _movieService;
+        private readonly IConfiguration _configuration;
 
-        public HomeController(ILogger<HomeController> logger, IMovieService movieService)
+        public HomeController(ILogger<HomeController> logger, IMovieService movieService, IConfiguration configuration)
         {
             _logger = logger;
             _movieService = movieService;
+            _configuration = configuration;
         }
 
         public async Task<IActionResult> IndexAsync()
         {
-            string apiKey = "";
+            string apiKey = _configuration["ApiKeys:TmdbApiKey"];
 
             var baseAddress = new Uri("http://api.themoviedb.org/3/");
             using var httpClient = new HttpClient { BaseAddress = baseAddress };

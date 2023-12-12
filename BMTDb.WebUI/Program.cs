@@ -75,6 +75,15 @@ builder.Services.AddScoped<IEmailSender, SmtpEmailSender>(i =>
         builder.Configuration["EmailSender:Password"])
     );
 
+//Reads ApiKeys from Appsettings.json
+string tmdbApiKey = builder.Configuration["ApiKeys:TmdbApiKey"];
+string omdbApiKey = builder.Configuration["ApiKeys:OmdbApiKey"];
+
+if (string.IsNullOrEmpty(tmdbApiKey) || string.IsNullOrEmpty(omdbApiKey))
+{
+    throw new ApplicationException("API keys are missing.");
+}
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

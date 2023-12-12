@@ -23,10 +23,12 @@ namespace BMTDb.WebUI.Controllers
         private readonly IPersonService _personService;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UserManager<User> _userManager;
+        private readonly IConfiguration _configuration;
+
 
         public AdminController(IMovieService movieService, IPersonService personService, 
             IGenreService genreService, IProductionCompanyService studioService,
-            RoleManager<IdentityRole> roleManager, UserManager<User> userManager)
+            RoleManager<IdentityRole> roleManager, UserManager<User> userManager, IConfiguration configuration)
         {
             _movieService = movieService;
             _personService = personService;
@@ -34,6 +36,7 @@ namespace BMTDb.WebUI.Controllers
             _studioService = studioService;
             _roleManager = roleManager;
             _userManager = userManager;
+            _configuration = configuration;
         }
 
         public IActionResult AdminDashboard()
@@ -596,14 +599,15 @@ namespace BMTDb.WebUI.Controllers
         {
             string json = "start";
             var idlist = new List<IdList>();
-            using StreamReader jsonfile = new(@"C:\Users\berkk\Downloads\person_ids_06_16_2022.json");
+            var personDatabase = ""; //Path to json file
+            using StreamReader jsonfile = new(personDatabase);
             json = jsonfile.ReadToEnd();
             idlist = JsonConvert.DeserializeObject<List<IdList>>(json);
             if (idlist != null)
             {
                 foreach (var TmdbId in idlist.Select(i => i.id))
                 {
-                    string TMDBapiKey = "e9e71fba25c4cdd53c7ced78867ba28d";
+                    string TMDBapiKey = _configuration["ApiKeys:TmdbApiKey"];
                     var baseAddressTMDB = new Uri("http://api.themoviedb.org/3/");
                     using var httpClientTMDB = new HttpClient { BaseAddress = baseAddressTMDB };
                     httpClientTMDB.DefaultRequestHeaders.TryAddWithoutValidation("accept", "application/json");
@@ -651,7 +655,7 @@ namespace BMTDb.WebUI.Controllers
 
         public async Task<IActionResult> AddMovieFromTmdbAsync(string TmdbId) 
         {
-            string TMDBapiKey = "e9e71fba25c4cdd53c7ced78867ba28d";
+            string TMDBapiKey = _configuration["ApiKeys:TmdbApiKey"];
 
             var baseAddressTMDB = new Uri("http://api.themoviedb.org/3/");
             using var httpClientTMDB = new HttpClient { BaseAddress = baseAddressTMDB };
