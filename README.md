@@ -51,8 +51,8 @@ The Unit of Work Pattern is employed to manage transactions and coordinate multi
 <div style="display: flex; justify-content: space-between;">
 
 ### &darr; Home Screen Carousel and Lists
-<img src="https://github.com/unsulliedd/.NET-BMTDb/assets/105812897/262618f2-fb61-43f0-aeac-acf12e7ba4bd" alt="Home Screen Carousel" width="500">
-<img src="https://github.com/unsulliedd/.NET-BMTDb/assets/105812897/187a6cca-3950-4b88-bd90-cd61d7099493" alt="Home Screen Movie Lists" width="500">
+<img src="https://github.com/unsulliedd/.NET-BMTDb/assets/105812897/262618f2-fb61-43f0-aeac-acf12e7ba4bd" alt="Home Screen Carousel" width="412">
+<img src="https://github.com/unsulliedd/.NET-BMTDb/assets/105812897/187a6cca-3950-4b88-bd90-cd61d7099493" alt="Home Screen Movie Lists" width="412">
 
 </div>
 
