@@ -362,4 +362,3 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /BMTDb.WebUI/wwwroot/img/UserPictures
-BMTDb.WebUI/appsettings.json
