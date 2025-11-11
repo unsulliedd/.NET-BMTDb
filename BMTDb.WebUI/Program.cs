@@ -4,16 +4,16 @@ using BMTDb.Service.Abstract;
 using BMTDb.Service.Concrete;
 using BMTDb.WebUI.Identity;
 using BMTDb.WebUI.EmailServices;
+using BMTDb.WebUI.Filters;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using BMTDb.WebUI.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllersWithViews(                                    
-    options => {options.Filters.Add(typeof(UserActivityFilter));}
+    options => {options.Filters.Add<UserActivityFilter>(); }
     );
 
 builder.Services.AddDbContext<BMTDbContext>         //BMTDbContext Connection String
@@ -53,6 +53,14 @@ builder.Services.ConfigureApplicationCookie(options => {
     };
 });
 
+//HttpClient for TMDB API
+builder.Services.AddHttpClient("Tmdb", client =>
+{
+    client.BaseAddress = new Uri("https://api.themoviedb.org/3/");
+    client.Timeout = TimeSpan.FromSeconds(30);
+    client.DefaultRequestHeaders.Add("accept", "application/json");
+});
+
 //Inject Services
 builder.Services.AddScoped<IUnitofWork, UnitofWork>();
 
@@ -67,22 +75,27 @@ builder.Services.AddScoped<UserActivityFilter>();
 
 //Reads Appsettings.json
 builder.Services.AddScoped<IEmailSender, SmtpEmailSender>(i =>
-    new SmtpEmailSender(
-        builder.Configuration["EmailSender:Host"],
-        builder.Configuration.GetValue<int>("EmailSender:Port"),
-        builder.Configuration.GetValue<bool>("EmailSender:EnableSSL"),
-        builder.Configuration["EmailSender:UserName"],
-        builder.Configuration["EmailSender:Password"])
-    );
-
-//Reads ApiKeys from Appsettings.json
-string tmdbApiKey = builder.Configuration["ApiKeys:TmdbApiKey"];
-string omdbApiKey = builder.Configuration["ApiKeys:OmdbApiKey"];
-
-if (string.IsNullOrEmpty(tmdbApiKey) || string.IsNullOrEmpty(omdbApiKey))
 {
-    throw new ApplicationException("API keys are missing.");
-}
+    var host = builder.Configuration["EmailSender:Host"] ?? throw new InvalidOperationException("EmailSender:Host is missing.");
+    var port = builder.Configuration.GetValue<int>("EmailSender:Port");
+    var enableSSL = builder.Configuration.GetValue<bool>("EmailSender:EnableSSL");
+    var username = builder.Configuration["EmailSender:UserName"] ?? throw new InvalidOperationException("EmailSender:UserName is missing.");
+    var password = builder.Configuration["EmailSender:Password"] ?? throw new InvalidOperationException("EmailSender:Password is missing.");
+
+    return new SmtpEmailSender(host, port, enableSSL, username, password);
+});
+
+// API keys
+var logger = LoggerFactory.Create(config => config.AddConsole()).CreateLogger("Startup");
+
+string? tmdbApiKey = builder.Configuration["ApiKeys:TmdbApiKey"];
+string? omdbApiKey = builder.Configuration["ApiKeys:OmdbApiKey"];
+
+if (string.IsNullOrEmpty(tmdbApiKey))
+    logger.LogWarning("TMDB API key not configured. External movie data will be unavailable.");
+
+if (string.IsNullOrEmpty(omdbApiKey))
+    logger.LogWarning("OMDB API key not configured. External movie data will be unavailable.");
 
 var app = builder.Build();
 
