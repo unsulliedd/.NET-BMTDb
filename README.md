@@ -1,6 +1,6 @@
 # BMTDb
 
-- This is a basic movie database written in C# using the ASP.NET Core 6.
+- This is a basic movie database written in C# using the ASP.NET Core 6. [Updated .Net 9]
 - The project follows a layered architecture, Code First approach, and incorporates modern software development principles such as Repository Pattern and Unit of Work Pattern.
 
 ## Features
@@ -79,16 +79,15 @@ The Unit of Work Pattern is employed to manage transactions and coordinate multi
 
 To run this project, you'll need to have the following installed:
 
-- [.NET 6 SDK](https://dotnet.microsoft.com/en-us/download/dotnet) or can upgrade to .NET 8
+- [.NET 9 SDK](https://dotnet.microsoft.com/en-us/download/dotnet)
 - [Visual Studio](https://visualstudio.com/) or another code editor of your choice.
   
 ### Dependencies
 
-- [Microsoft.AspNetCore.Identity.EntityFrameworkCore](https://www.nuget.org/packages/Microsoft.AspNetCore.Identity.EntityFrameworkCore/6.0.9?_src=template) - Provides the ASP.NET Core Identity entity framework core user, role, and claim stores.
-- [Microsoft.EntityFrameworkCore.Design](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Design/6.0.9?_src=template) - Design-time Entity Framework Core tools for generating code, adding migrations, and updating the database.
-- [Microsoft.EntityFrameworkCore.SqlServer](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.SqlServer/6.0.9?_src=template) - SQL Server database provider for Entity Framework Core.
-- [Microsoft.EntityFrameworkCore.Tools](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Tools/6.0.9?_src=template) - Additional tools for Entity Framework Core commands in the .NET CLI.
-- [Newtonsoft.Json](https://www.nuget.org/packages/Newtonsoft.Json/13.0.1?_src=template) - JSON framework for .NET, providing features like JSON serialization and deserialization.
+- [Microsoft.AspNetCore.Identity.EntityFrameworkCore](https://www.nuget.org/packages/Microsoft.AspNetCore.Identity.EntityFrameworkCore/9.0.11?_src=template) - Provides the ASP.NET Core Identity entity framework core user, role, and claim stores.
+- [Microsoft.EntityFrameworkCore.Design](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Design/9.0.11?_src=template) - Design-time Entity Framework Core tools for generating code, adding migrations, and updating the database.
+- [Microsoft.EntityFrameworkCore.SqlServer](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.SqlServer/9.0.11?_src=template) - SQL Server database provider for Entity Framework Core.
+- [Microsoft.EntityFrameworkCore.Tools](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Tools/9.0.11?_src=template) - Additional tools for Entity Framework Core commands in the .NET CLI.
 
 ### Api Keys Setup
 Open the `appsettings.json` file in the `BMTDb` project.
