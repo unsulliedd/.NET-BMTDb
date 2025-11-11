@@ -1,24 +1,28 @@
-#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
-
-
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace BMTDb.WebUI.Extensions
 {
     public static class TempDataExtensions
     {
-        public static void Put<T>(this ITempDataDictionary tempData,string key,T value) where T: class
+        private static readonly JsonSerializerOptions _jsonOptions = new()
         {
-            tempData[key] = JsonConvert.SerializeObject(value);
+            PropertyNameCaseInsensitive = true
+        };
+
+        public static void Put<T>(this ITempDataDictionary tempData, string key, T value) where T : class
+        {
+            tempData[key] = JsonSerializer.Serialize(value, _jsonOptions);
         }
 
-        public static T? Get<T>(this ITempDataDictionary tempData,string key) where T: class
+        public static T? Get<T>(this ITempDataDictionary tempData, string key) where T : class
         {
+            if (!tempData.TryGetValue(key, out var value) || value is not string json)
+            {
+                return null;
+            }
 
-            tempData.TryGetValue(key, out object o);
-            return o==null?null:JsonConvert.DeserializeObject<T>((string)o);
+            return JsonSerializer.Deserialize<T>(json, _jsonOptions);
         }
-
     }
 }
