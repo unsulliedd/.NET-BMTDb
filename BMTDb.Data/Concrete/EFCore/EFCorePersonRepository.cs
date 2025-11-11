@@ -3,11 +3,6 @@
 
 using BMTDb.Data.Abstract;
 using BMTDb.Entity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BMTDb.Data.Concrete.EFCore
 {
@@ -17,15 +12,12 @@ namespace BMTDb.Data.Concrete.EFCore
         {
 
         }
-        private BMTDbContext BMTDbContext
-        {
-            get { return context as BMTDbContext; }
-        }
+        private BMTDbContext BMTDbContext => context as BMTDbContext;
 
         public int GetPersonCount()
         {
-                var persons = BMTDbContext.Persons.AsQueryable();
-                return persons.Count();
+            var persons = BMTDbContext.Persons.AsQueryable();
+            return persons.Count();
         }
 
         public List<Person> GetPersons(int page, int pageSize)

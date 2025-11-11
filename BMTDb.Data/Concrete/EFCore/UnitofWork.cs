@@ -1,11 +1,6 @@
 ﻿#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor.
 
 using BMTDb.Data.Abstract;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BMTDb.Data.Concrete.EFCore
 {
@@ -25,22 +20,22 @@ namespace BMTDb.Data.Concrete.EFCore
         private EFCoreFavouriteRepository _favouriteRepository;
 
         public IMovieRepository Movies =>
-            _movieRepository = _movieRepository ?? new EfCoreMovieRepository(_context);
+            _movieRepository ??= new EfCoreMovieRepository(_context);
 
-        public IGenreRepository Genres => 
-            _genreRepository = _genreRepository ?? new EfCoreGenreRepository(_context);
+        public IGenreRepository Genres =>
+            _genreRepository ??= new EfCoreGenreRepository(_context);
 
         public IProductionCompanyRepository ProductionCompanies =>
-            _productionCompanyRepository = _productionCompanyRepository ?? new EFCoreProductionCompanyRepository(_context);
+            _productionCompanyRepository ??= new EFCoreProductionCompanyRepository(_context);
 
-        public IPersonRepository Persons => 
-            _personRepository = _personRepository ?? new EFCorePersonRepository(_context);
+        public IPersonRepository Persons =>
+            _personRepository ??= new EFCorePersonRepository(_context);
 
-        public IWatchlistRepository Watchlists => 
-            _watchlistRepository = _watchlistRepository ?? new EFCoreWatchlistRepository(_context);
+        public IWatchlistRepository Watchlists =>
+            _watchlistRepository ??= new EFCoreWatchlistRepository(_context);
 
-        public IFavouriteRepository Favourites => 
-            _favouriteRepository = _favouriteRepository ?? new EFCoreFavouriteRepository(_context);
+        public IFavouriteRepository Favourites =>
+            _favouriteRepository ??= new EFCoreFavouriteRepository(_context);
 
         public void Dispose()
         {

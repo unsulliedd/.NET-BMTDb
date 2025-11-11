@@ -4,16 +4,16 @@ using BMTDb.Entity;
 
 namespace BMTDb.WebUI.Models
 {
-        public class AdminPageInfo
+    public class AdminPageInfo
+    {
+        public int TotalAdminItem { get; set; }
+        public int AdminItemPerPage { get; set; }
+        public int AdminCurrentPage { get; set; }
+        public int TotalAdminPages()
         {
-            public int TotalAdminItem { get; set; }
-            public int AdminItemPerPage { get; set; }
-            public int AdminCurrentPage { get; set; }
-            public int TotalAdminPages()
-            {
-                return (int)Math.Ceiling((decimal)TotalAdminItem / AdminItemPerPage);
-            }
+            return (int)Math.Ceiling((decimal)TotalAdminItem / AdminItemPerPage);
         }
+    }
     public class AdminItemListModel
     {
         public List<Movie> Movies { get; set; }

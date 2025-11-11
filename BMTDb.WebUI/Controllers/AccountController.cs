@@ -1,13 +1,13 @@
 ﻿#pragma warning disable IDE0037 // Use inferred member name
 #pragma warning disable IDE0059 // Unnecessary assignment of a value
 
+using BMTDb.Service.Abstract;
+using BMTDb.WebUI.EmailServices;
+using BMTDb.WebUI.Extensions;
 using BMTDb.WebUI.Identity;
 using BMTDb.WebUI.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using BMTDb.WebUI.EmailServices;
-using BMTDb.WebUI.Extensions;
-using BMTDb.Service.Abstract;
 
 namespace BMTDb.WebUI.Controllers
 {
@@ -41,19 +41,19 @@ namespace BMTDb.WebUI.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SignIn(SignInModel model)
         {
-            if (!ModelState.IsValid) 
-            { 
-                return View(model); 
+            if (!ModelState.IsValid)
+            {
+                return View(model);
             }
             var user = await _userManager.FindByNameAsync(model.UserName);
 
-            if(user == null)
+            if (user == null)
             {
                 ModelState.AddModelError("UserName", "Username is not valid");
                 return View(model);
             }
 
-            if(!await _userManager.IsEmailConfirmedAsync(user))
+            if (!await _userManager.IsEmailConfirmedAsync(user))
             {
                 ModelState.AddModelError("", "Please Confirm Your Email");
                 return View(model);
@@ -96,7 +96,7 @@ namespace BMTDb.WebUI.Controllers
                 CreationDate = DateTime.UtcNow,
 
             };
-            var result = await _userManager.CreateAsync(user,model.Password);
+            var result = await _userManager.CreateAsync(user, model.Password);
             if (result.Succeeded)
             {
                 //token url
@@ -108,7 +108,7 @@ namespace BMTDb.WebUI.Controllers
                 });
                 //confirm email
                 await _emailSender.SendEmailAsync
-                    (model.Email, "BMTDb - Confirm Your Mail", 
+                    (model.Email, "BMTDb - Confirm Your Mail",
                     $"<h3>BMTDb</h3>" +
                     $"<div>Username: {user.UserName} </div>" +
                     $"<div>Please confirm your email.</div> " +
@@ -132,9 +132,9 @@ namespace BMTDb.WebUI.Controllers
             return Redirect("~/");
         }
 
-        public async Task<IActionResult> ConfirmEmail(string userId,string token)
+        public async Task<IActionResult> ConfirmEmail(string userId, string token)
         {
-            if(userId == null || token==null)
+            if (userId == null || token == null)
             {
                 TempData.Put("message", new NotificationModel
                 {
@@ -145,7 +145,7 @@ namespace BMTDb.WebUI.Controllers
                 return View();
             }
             var user = await _userManager.FindByIdAsync(userId);
-            if(user != null)
+            if (user != null)
             {
                 var result = await _userManager.ConfirmEmailAsync(user, token);
                 if (result.Succeeded)
@@ -188,11 +188,11 @@ namespace BMTDb.WebUI.Controllers
                     Message = "Email is not valid",
                     MessageType = "error",
                     MessageIcon = "fa-exclamation"
-                }); 
+                });
                 return View();
             }
 
-            var user = await _userManager.FindByEmailAsync((Email));
+            var user = await _userManager.FindByEmailAsync(Email);
 
             if (user == null)
             {
@@ -223,7 +223,7 @@ namespace BMTDb.WebUI.Controllers
             return RedirectToAction("SignIn", "Account");
         }
 
-        public IActionResult ResetPassword(string userId,string token)
+        public IActionResult ResetPassword(string userId, string token)
         {
             if (userId == null || token == null)
             {
@@ -236,8 +236,8 @@ namespace BMTDb.WebUI.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            var model = new ResetPasswordModel 
-            { 
+            var model = new ResetPasswordModel
+            {
                 Token = token,
             };
 
@@ -271,9 +271,9 @@ namespace BMTDb.WebUI.Controllers
             {
                 TempData.Put("message", new NotificationModel
                 {
-                    Message= "Password is changed. Please Login Again",
-                    MessageType="success",
-                    MessageIcon= "fa-solid fa-check"
+                    Message = "Password is changed. Please Login Again",
+                    MessageType = "success",
+                    MessageIcon = "fa-solid fa-check"
                 });
                 return RedirectToAction("SignIn", "Account");
             }
@@ -282,8 +282,8 @@ namespace BMTDb.WebUI.Controllers
         }
 
         public IActionResult AccessDenied()
-        { 
-            return View(); 
+        {
+            return View();
         }
     }
 }

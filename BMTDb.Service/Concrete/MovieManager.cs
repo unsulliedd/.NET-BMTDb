@@ -1,14 +1,8 @@
 ﻿#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor.
 
 using BMTDb.Data.Abstract;
-using BMTDb.Data.Concrete.EFCore;
 using BMTDb.Entity;
 using BMTDb.Service.Abstract;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BMTDb.Service.Concrete
 {
@@ -34,7 +28,7 @@ namespace BMTDb.Service.Concrete
             if (Validation(entity))
             {
                 var movies = _unitofWork.Movies.GetAll();
-                if ((movies.Any(i => i.Title == entity.Title)) && (movies.Any(i => i.ReleaseDate == entity.ReleaseDate)))
+                if (movies.Any(i => i.Title == entity.Title) && movies.Any(i => i.ReleaseDate == entity.ReleaseDate))
                 {
                     ErrorMessage = "Movie is Already Exist";
                     return false;

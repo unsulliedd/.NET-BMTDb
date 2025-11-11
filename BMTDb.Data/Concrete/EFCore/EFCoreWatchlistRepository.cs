@@ -5,11 +5,6 @@
 using BMTDb.Data.Abstract;
 using BMTDb.Entity.Lists;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BMTDb.Data.Concrete.EFCore
 {
@@ -19,10 +14,7 @@ namespace BMTDb.Data.Concrete.EFCore
         {
 
         }
-        private BMTDbContext BMTDbContext
-        {
-            get { return context as BMTDbContext; }
-        }
+        private BMTDbContext BMTDbContext => context as BMTDbContext;
 
         public Watchlist GetByUserId(string userId)
         {

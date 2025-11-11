@@ -1,9 +1,4 @@
 ﻿using BMTDb.Entity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BMTDb.Data.Abstract
 {
@@ -16,7 +11,7 @@ namespace BMTDb.Data.Abstract
         List<Movie> GetSearchResult(string searchString);
         int GetCountbyFilter(string genre, string studio);
         int GetMovieCount();
-        List<Movie> GetUserMovielist(List<int> data,string username);
+        List<Movie> GetUserMovielist(List<int> data, string username);
         void RemoveFromRecentlyViewed(string username, int movieId);
         List<Movie> GetByPopularity();
     }

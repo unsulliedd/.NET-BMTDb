@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BMTDb.Entity
-{ 
+﻿namespace BMTDb.Entity
+{
     public class PersonCrew
     {
         public int PersonId { get; set; }

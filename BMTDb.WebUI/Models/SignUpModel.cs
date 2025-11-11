@@ -20,7 +20,7 @@ namespace BMTDb.WebUI.Models
 
         [Required]
         [DataType(DataType.Password)]
-        [Compare("Password" ,ErrorMessage = "Passwords do not match")]
+        [Compare("Password", ErrorMessage = "Passwords do not match")]
         public string RePassword { get; set; }
 
         [DataType(DataType.Date)]

@@ -16,7 +16,7 @@ namespace BMTDb.WebUI.Models
         [MinLength(50, ErrorMessage = "Minumum Character More Than 50")]
         public string? MovieInfo { get; set; }
         [RegularExpression(@"^.*youtube.com/embed/.*$", ErrorMessage = "Url Must Contains \"embed\" link")]
-        [Url (ErrorMessage = "Must be valid Url")]
+        [Url(ErrorMessage = "Must be valid Url")]
         public string? Trailer { get; set; }
         public string? MoviePoster { get; set; }
         public string? MovieBackdrop { get; set; }
@@ -26,12 +26,12 @@ namespace BMTDb.WebUI.Models
         public int? RunTime { get; set; }
         public double? Budget { get; set; }
         public string? Status { get; set; }
-        [RegularExpression(@"^tt[0-9]*$", ErrorMessage ="IMDb Id must start with \"tt\" and follows with number")]
+        [RegularExpression(@"^tt[0-9]*$", ErrorMessage = "IMDb Id must start with \"tt\" and follows with number")]
         public string? IMDBId { get; set; }
         [RegularExpression(@"^[0-9]*$", ErrorMessage = "TMDb Id must be number")]
-        [Required(ErrorMessage = "TMDb Id can't be empty") ]
+        [Required(ErrorMessage = "TMDb Id can't be empty")]
         public string? TMDbId { get; set; }
-        
+
         public List<ProductionCompany>? SelectedStudios { get; set; }
         public List<Genre>? SelectedGenres { get; set; }
     }

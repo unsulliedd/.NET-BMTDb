@@ -1,5 +1,4 @@
-﻿using BMTDb.Entity;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace BMTDb.WebUI.Models
 {

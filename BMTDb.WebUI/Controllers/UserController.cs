@@ -20,7 +20,7 @@ namespace BMTDb.WebUI.Controllers
         private readonly IFavouriteService _favouriteService;
         private readonly UserActivityFilter _userActivityFilter;
 
-        public UserController(IMovieService movieService, UserManager<User> userManager, IWatchlistService watchlistService, 
+        public UserController(IMovieService movieService, UserManager<User> userManager, IWatchlistService watchlistService,
             IFavouriteService favouriteService, UserActivityFilter userActivityFilter)
         {
             _movieService = movieService;
@@ -34,13 +34,11 @@ namespace BMTDb.WebUI.Controllers
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
             var userActivity = _userActivityFilter.GetUserActivity(user.UserName);
-            var movies = _movieService.GetUserMovielist(userActivity.Select(i => i.Data).ToList(),user.UserName);
+            var movies = _movieService.GetUserMovielist(userActivity.Select(i => i.Data).ToList(), user.UserName);
 
-            if (user != null)
-            {
-                if (movies != null)
-                {
-                    return View(new UserProfileModel()
+            return user != null
+                ? movies != null
+                    ? View(new UserProfileModel()
                     {
                         UserName = user.UserName,
                         FirstName = user.FirstName,
@@ -49,19 +47,17 @@ namespace BMTDb.WebUI.Controllers
                         ProfilePic = user.ProfilePic,
                         CreationDate = user.CreationDate,
                         Movie = movies,
-                    });
-                }
-                return View(new UserProfileModel()
-                {
-                    UserName = user.UserName,
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    Gender = user.Gender,
-                    ProfilePic = user.ProfilePic,
-                    CreationDate = user.CreationDate,
-                });
-            }
-            return RedirectToAction("Index", "Home");
+                    })
+                    : View(new UserProfileModel()
+                    {
+                        UserName = user.UserName,
+                        FirstName = user.FirstName,
+                        LastName = user.LastName,
+                        Gender = user.Gender,
+                        ProfilePic = user.ProfilePic,
+                        CreationDate = user.CreationDate,
+                    })
+                : RedirectToAction("Index", "Home");
         }
 
         public IActionResult RemoveFromRecentlyViewed(int movieId)
@@ -75,9 +71,8 @@ namespace BMTDb.WebUI.Controllers
         {
             var userid = _userManager.GetUserId(HttpContext.User);
             var user = await _userManager.FindByIdAsync(userid);
-            if (user != null)
-            {
-                return View(new UserDetailsModel()
+            return user != null
+                ? View(new UserDetailsModel()
                 {
                     UserId = user.Id,
                     UserName = user.UserName,
@@ -87,13 +82,12 @@ namespace BMTDb.WebUI.Controllers
                     Gender = user.Gender,
                     Email = user.Email,
                     ProfilePic = user.ProfilePic,
-                });
-            }
-            return Redirect("~/User/UserProfile");
+                })
+                : Redirect("~/User/UserProfile");
         }
 
         [HttpPost]
-        public async Task<IActionResult> ProfileEdit(UserDetailsModel model, IFormFile file )
+        public async Task<IActionResult> ProfileEdit(UserDetailsModel model, IFormFile file)
         {
             if (ModelState.IsValid)
             {
@@ -150,11 +144,9 @@ namespace BMTDb.WebUI.Controllers
         public IActionResult Favourite(string sortOrder)
         {
             var favourite = _favouriteService.GetFavouritebyUserId(_userManager.GetUserId(User));
-            if (favourite != null)
-            {
-                if (sortOrder == null)
-                {
-                    return View(new FavouriteModel
+            return favourite != null
+                ? sortOrder == null
+                    ? View(new FavouriteModel
                     {
                         FavouriteId = favourite.Id,
                         FavouriteItems = favourite.FavouriteItems.Select(i => new FavouriteItemModel()
@@ -176,65 +168,55 @@ namespace BMTDb.WebUI.Controllers
                             ProductionCompanies = i.Movie.MovieProductionCompanies.Select(i => i.ProductionCompanies).ToList(),
 
                         }).ToList()
-                    });
-                }
-                else if (sortOrder.Contains("Ascending"))
-                {
-                    return View(new FavouriteModel
-                    {
-                        FavouriteId = favourite.Id,
-                        FavouriteItems = favourite.FavouriteItems.Select(i => new FavouriteItemModel()
+                    })
+                    : sortOrder.Contains("Ascending")
+                        ? View(new FavouriteModel
                         {
-                            FavouriteItemId = i.Id,
-                            MovieId = i.MovieId,
-                            Title = i.Movie.Title,
-                            MoviePoster = i.Movie.Poster,
-                            MovieBackdrop = i.Movie.Backdrop,
-                            Director = i.Movie.Director,
-                            MovieInfo = i.Movie.Info,
-                            MovieTagline = i.Movie.Tagline,
-                            MovieRatings = i.Movie.Ratings,
-                            RunTime = i.Movie.RunTime,
-                            Status = i.Movie.Status,
-                            ReleaseDate = i.Movie.ReleaseDate,
-                            AddedDate = i.AddedDate,
-                            Genres = i.Movie.MovieGenres.Select(i => i.Genre).ToList(),
-                            ProductionCompanies = i.Movie.MovieProductionCompanies.Select(i => i.ProductionCompanies).ToList(),
+                            FavouriteId = favourite.Id,
+                            FavouriteItems = favourite.FavouriteItems.Select(i => new FavouriteItemModel()
+                            {
+                                FavouriteItemId = i.Id,
+                                MovieId = i.MovieId,
+                                Title = i.Movie.Title,
+                                MoviePoster = i.Movie.Poster,
+                                MovieBackdrop = i.Movie.Backdrop,
+                                Director = i.Movie.Director,
+                                MovieInfo = i.Movie.Info,
+                                MovieTagline = i.Movie.Tagline,
+                                MovieRatings = i.Movie.Ratings,
+                                RunTime = i.Movie.RunTime,
+                                Status = i.Movie.Status,
+                                ReleaseDate = i.Movie.ReleaseDate,
+                                AddedDate = i.AddedDate,
+                                Genres = i.Movie.MovieGenres.Select(i => i.Genre).ToList(),
+                                ProductionCompanies = i.Movie.MovieProductionCompanies.Select(i => i.ProductionCompanies).ToList(),
 
-                        }).OrderBy(i => i.GetType().GetProperty(sortOrder.Split('_').Last()).GetValue(i)).ToList()
-                    });
-                }
-                else
-                {
-                    return View(new FavouriteModel
-                    {
-                        FavouriteId = favourite.Id,
-                        FavouriteItems = favourite.FavouriteItems.Select(i => new FavouriteItemModel()
+                            }).OrderBy(i => i.GetType().GetProperty(sortOrder.Split('_').Last()).GetValue(i)).ToList()
+                        })
+                        : View(new FavouriteModel
                         {
-                            FavouriteItemId = i.Id,
-                            MovieId = i.MovieId,
-                            Title = i.Movie.Title,
-                            MoviePoster = i.Movie.Poster,
-                            MovieBackdrop = i.Movie.Backdrop,
-                            Director = i.Movie.Director,
-                            MovieInfo = i.Movie.Info,
-                            MovieTagline = i.Movie.Tagline,
-                            MovieRatings = i.Movie.Ratings,
-                            RunTime = i.Movie.RunTime,
-                            Status = i.Movie.Status,
-                            ReleaseDate = i.Movie.ReleaseDate,
-                            AddedDate = i.AddedDate,
-                            Genres = i.Movie.MovieGenres.Select(i => i.Genre).ToList(),
-                            ProductionCompanies = i.Movie.MovieProductionCompanies.Select(i => i.ProductionCompanies).ToList(),
+                            FavouriteId = favourite.Id,
+                            FavouriteItems = favourite.FavouriteItems.Select(i => new FavouriteItemModel()
+                            {
+                                FavouriteItemId = i.Id,
+                                MovieId = i.MovieId,
+                                Title = i.Movie.Title,
+                                MoviePoster = i.Movie.Poster,
+                                MovieBackdrop = i.Movie.Backdrop,
+                                Director = i.Movie.Director,
+                                MovieInfo = i.Movie.Info,
+                                MovieTagline = i.Movie.Tagline,
+                                MovieRatings = i.Movie.Ratings,
+                                RunTime = i.Movie.RunTime,
+                                Status = i.Movie.Status,
+                                ReleaseDate = i.Movie.ReleaseDate,
+                                AddedDate = i.AddedDate,
+                                Genres = i.Movie.MovieGenres.Select(i => i.Genre).ToList(),
+                                ProductionCompanies = i.Movie.MovieProductionCompanies.Select(i => i.ProductionCompanies).ToList(),
 
-                        }).OrderByDescending(i => i.GetType().GetProperty(sortOrder.Split('_').Last()).GetValue(i)).ToList()
-                    });
-                }
-            }
-            else
-            {
-                return View();
-            }
+                            }).OrderByDescending(i => i.GetType().GetProperty(sortOrder.Split('_').Last()).GetValue(i)).ToList()
+                        })
+                : View();
         }
 
         [Authorize]
@@ -243,7 +225,7 @@ namespace BMTDb.WebUI.Controllers
         {
             var userId = _userManager.GetUserId(User);
             _favouriteService.AddtoFavourite(userId, MovieId, AddedDate);
-            return RedirectToAction("Index","Movie");
+            return RedirectToAction("Index", "Movie");
         }
 
         [Authorize]
@@ -260,11 +242,9 @@ namespace BMTDb.WebUI.Controllers
         public IActionResult Watchlist(string sortOrder)
         {
             var watchlist = _watchlistService.GetWatchlistbyUserId(_userManager.GetUserId(User));
-            if (watchlist != null)
-            {
-                if (sortOrder == null)
-                {
-                    return View(new WatchlistModel
+            return watchlist != null
+                ? sortOrder == null
+                    ? View(new WatchlistModel
                     {
                         WatchlistId = watchlist.Id,
                         WatchlistItems = watchlist.WatchlistItems.Select(i => new WatchlistItemModel()
@@ -286,66 +266,55 @@ namespace BMTDb.WebUI.Controllers
                             ProductionCompanies = i.Movie.MovieProductionCompanies.Select(i => i.ProductionCompanies).ToList(),
 
                         }).ToList()
-                    });
-                }
-                else if(sortOrder.Contains("Ascending"))
-                {
-                    return View(new WatchlistModel
-                    {
-                        WatchlistId = watchlist.Id,
-                        WatchlistItems = watchlist.WatchlistItems.Select(i => new WatchlistItemModel()
+                    })
+                    : sortOrder.Contains("Ascending")
+                        ? View(new WatchlistModel
                         {
-                            WatchlistItemId = i.Id,
-                            MovieId = i.MovieId,
-                            Title = i.Movie.Title,
-                            MoviePoster = i.Movie.Poster,
-                            MovieBackdrop = i.Movie.Backdrop,
-                            Director = i.Movie.Director,
-                            MovieInfo = i.Movie.Info,
-                            MovieTagline = i.Movie.Tagline,
-                            MovieRatings = i.Movie.Ratings,
-                            RunTime = i.Movie.RunTime,
-                            Status = i.Movie.Status,
-                            ReleaseDate = i.Movie.ReleaseDate,
-                            AddedDate = i.AddedDate,
-                            Genres = i.Movie.MovieGenres.Select(i => i.Genre).ToList(),
-                            ProductionCompanies = i.Movie.MovieProductionCompanies.Select(i => i.ProductionCompanies).ToList(),
+                            WatchlistId = watchlist.Id,
+                            WatchlistItems = watchlist.WatchlistItems.Select(i => new WatchlistItemModel()
+                            {
+                                WatchlistItemId = i.Id,
+                                MovieId = i.MovieId,
+                                Title = i.Movie.Title,
+                                MoviePoster = i.Movie.Poster,
+                                MovieBackdrop = i.Movie.Backdrop,
+                                Director = i.Movie.Director,
+                                MovieInfo = i.Movie.Info,
+                                MovieTagline = i.Movie.Tagline,
+                                MovieRatings = i.Movie.Ratings,
+                                RunTime = i.Movie.RunTime,
+                                Status = i.Movie.Status,
+                                ReleaseDate = i.Movie.ReleaseDate,
+                                AddedDate = i.AddedDate,
+                                Genres = i.Movie.MovieGenres.Select(i => i.Genre).ToList(),
+                                ProductionCompanies = i.Movie.MovieProductionCompanies.Select(i => i.ProductionCompanies).ToList(),
 
-                        }).OrderBy(i => i.GetType().GetProperty(sortOrder.Split('_').Last()).GetValue(i)).ToList()
-                    });
-                }
-                else
-                {
-                    return View(new WatchlistModel
-                    {
-                        WatchlistId = watchlist.Id,
-                        WatchlistItems = watchlist.WatchlistItems.Select(i => new WatchlistItemModel()
+                            }).OrderBy(i => i.GetType().GetProperty(sortOrder.Split('_').Last()).GetValue(i)).ToList()
+                        })
+                        : View(new WatchlistModel
                         {
-                            WatchlistItemId = i.Id,
-                            MovieId = i.MovieId,
-                            Title = i.Movie.Title,
-                            MoviePoster = i.Movie.Poster,
-                            MovieBackdrop = i.Movie.Backdrop,
-                            Director = i.Movie.Director,
-                            MovieInfo = i.Movie.Info,
-                            MovieTagline = i.Movie.Tagline,
-                            MovieRatings = i.Movie.Ratings,
-                            RunTime = i.Movie.RunTime,
-                            Status = i.Movie.Status,
-                            ReleaseDate = i.Movie.ReleaseDate,
-                            AddedDate = i.AddedDate,
-                            Genres = i.Movie.MovieGenres.Select(i => i.Genre).ToList(),
-                            ProductionCompanies = i.Movie.MovieProductionCompanies.Select(i => i.ProductionCompanies).ToList(),
+                            WatchlistId = watchlist.Id,
+                            WatchlistItems = watchlist.WatchlistItems.Select(i => new WatchlistItemModel()
+                            {
+                                WatchlistItemId = i.Id,
+                                MovieId = i.MovieId,
+                                Title = i.Movie.Title,
+                                MoviePoster = i.Movie.Poster,
+                                MovieBackdrop = i.Movie.Backdrop,
+                                Director = i.Movie.Director,
+                                MovieInfo = i.Movie.Info,
+                                MovieTagline = i.Movie.Tagline,
+                                MovieRatings = i.Movie.Ratings,
+                                RunTime = i.Movie.RunTime,
+                                Status = i.Movie.Status,
+                                ReleaseDate = i.Movie.ReleaseDate,
+                                AddedDate = i.AddedDate,
+                                Genres = i.Movie.MovieGenres.Select(i => i.Genre).ToList(),
+                                ProductionCompanies = i.Movie.MovieProductionCompanies.Select(i => i.ProductionCompanies).ToList(),
 
-                        }).OrderByDescending(i => i.GetType().GetProperty(sortOrder).GetValue(i)).ToList()
-                    });
-                }
-            }
-            
-            else
-            {
-                return View();
-            }
+                            }).OrderByDescending(i => i.GetType().GetProperty(sortOrder).GetValue(i)).ToList()
+                        })
+                : View();
         }
 
         [Authorize]
@@ -376,7 +345,7 @@ namespace BMTDb.WebUI.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UserAddMovie(UserMovieModel model,IFormFile file)
+        public async Task<IActionResult> UserAddMovie(UserMovieModel model, IFormFile file)
         {
             if (ModelState.IsValid)
             {
@@ -402,7 +371,7 @@ namespace BMTDb.WebUI.Controllers
                     var extention = Path.GetExtension(file.FileName);
                     var randomName = string.Format($"{Guid.NewGuid()}{extention}");
                     entity.Poster = randomName;
-                    var path = Path.Combine(Directory.GetCurrentDirectory(),"wwwroot\\img\\Content",randomName);
+                    var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\img\\Content", randomName);
 
                     using var stream = new FileStream(path, FileMode.Create);
                     await file.CopyToAsync(stream);

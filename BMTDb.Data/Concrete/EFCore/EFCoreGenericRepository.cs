@@ -2,16 +2,11 @@
 
 using BMTDb.Data.Abstract;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BMTDb.Data.Concrete.EFCore
 {
     public class EFCoreGenericRepository<TEntity> : IRepository<TEntity>
-        where TEntity  : class
+        where TEntity : class
     {
         protected readonly DbContext context;
         public EFCoreGenericRepository(DbContext context)

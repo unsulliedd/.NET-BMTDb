@@ -2,9 +2,9 @@ using BMTDb.Data.Abstract;
 using BMTDb.Data.Concrete.EFCore;
 using BMTDb.Service.Abstract;
 using BMTDb.Service.Concrete;
-using BMTDb.WebUI.Identity;
 using BMTDb.WebUI.EmailServices;
 using BMTDb.WebUI.Filters;
+using BMTDb.WebUI.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,8 +12,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllersWithViews(                                    
-    options => {options.Filters.Add<UserActivityFilter>(); }
+builder.Services.AddControllersWithViews(
+    options => { options.Filters.Add<UserActivityFilter>(); }
     );
 
 builder.Services.AddDbContext<BMTDbContext>         //BMTDbContext Connection String
@@ -24,7 +24,8 @@ builder.Services.AddDbContext<ApplicationContext>   //ApplicationContext Connect
 builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<ApplicationContext>().AddDefaultTokenProviders();
 
 //IdentityOptions Service
-builder.Services.Configure<IdentityOptions>(options => {
+builder.Services.Configure<IdentityOptions>(options =>
+{
 
     //password
     options.Password.RequireDigit = true;
@@ -40,8 +41,9 @@ builder.Services.Configure<IdentityOptions>(options => {
 });
 
 //Cookie
-builder.Services.ConfigureApplicationCookie(options => {
-    options.LoginPath =  "/account/signin";
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/account/signin";
     options.LogoutPath = "/account/signout";
     options.AccessDeniedPath = "/account/accessdenied";
     options.SlidingExpiration = true;

@@ -13,7 +13,7 @@ namespace BMTDb.WebUI.ViewComponents
         {
             _productionCompanyService = productionCompanyService;
         }
-        public IViewComponentResult Invoke() 
+        public IViewComponentResult Invoke()
         {
             if (RouteData.Values["studio"] != null)
                 ViewBag.SelectedStudio = RouteData?.Values["studio"];

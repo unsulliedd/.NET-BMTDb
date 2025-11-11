@@ -5,11 +5,6 @@
 using BMTDb.Data.Abstract;
 using BMTDb.Entity;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BMTDb.Data.Concrete.EFCore
 {
@@ -19,10 +14,7 @@ namespace BMTDb.Data.Concrete.EFCore
         {
 
         }
-        private BMTDbContext BMTDbContext
-        {
-            get { return context as BMTDbContext; }
-        }
+        private BMTDbContext BMTDbContext => context as BMTDbContext;
 
         public int GetCountbyFilter(string genre, string studio)
         {
@@ -47,7 +39,7 @@ namespace BMTDb.Data.Concrete.EFCore
 
             return movies.Count();
         }
-        
+
 
         public List<Movie> GetMoviebyFilter(string name, string Studio_Name, string sortOrder, int page, int pageSize)
         {
@@ -55,8 +47,8 @@ namespace BMTDb.Data.Concrete.EFCore
             if (!string.IsNullOrEmpty(name))
             {
                 movies = movies
-                            .Include(i => i.MovieGenres)          
-                            .ThenInclude(i => i.Genre)            
+                            .Include(i => i.MovieGenres)
+                            .ThenInclude(i => i.Genre)
                             .Where(i => i.MovieGenres.Any(a => a.Genre.Name.ToLower() == name.ToLower()));
             }
 
@@ -74,7 +66,7 @@ namespace BMTDb.Data.Concrete.EFCore
                 case "Name_Ascending":
                     return movies.OrderBy(i => i.Title).Skip((page - 1) * pageSize).Take(pageSize).ToList();
                 case "Name_Descending":
-                    return movies.OrderByDescending(i => i.Title).Skip((page - 1) * pageSize).Take(pageSize).ToList(); 
+                    return movies.OrderByDescending(i => i.Title).Skip((page - 1) * pageSize).Take(pageSize).ToList();
                 case "Date_Ascending":
                     return movies.OrderBy(i => i.ReleaseDate).Skip((page - 1) * pageSize).Take(pageSize).ToList();
                 case "Date_Descending":
@@ -84,7 +76,7 @@ namespace BMTDb.Data.Concrete.EFCore
                 case "Rating_Descending":
                     return movies.OrderByDescending(i => i.Ratings).Skip((page - 1) * pageSize).Take(pageSize).ToList();
                 default:
-                    return movies.Skip((page - 1) * pageSize).Take(pageSize).ToList(); 
+                    return movies.Skip((page - 1) * pageSize).Take(pageSize).ToList();
             }
         }
 
@@ -131,7 +123,7 @@ namespace BMTDb.Data.Concrete.EFCore
         }
         public List<Movie> GetMovies(int page, int pageSize)
         {
-            var movies = BMTDbContext.Movies.AsQueryable();  
+            var movies = BMTDbContext.Movies.AsQueryable();
             return movies.Skip((page - 1) * pageSize).Take(pageSize).ToList();
         }
 
@@ -160,10 +152,10 @@ namespace BMTDb.Data.Concrete.EFCore
                 movies.Logo = entity.Logo;
                 movies.Trailer = entity.Trailer;
 
-                movies.MovieGenres = genreIds.Select(sgenreid=> new MovieGenre()
+                movies.MovieGenres = genreIds.Select(sgenreid => new MovieGenre()
                 {
-                    MovieId=entity.MovieId,
-                    GenreId=sgenreid,
+                    MovieId = entity.MovieId,
+                    GenreId = sgenreid,
 
                 }).ToList();
 
@@ -183,7 +175,7 @@ namespace BMTDb.Data.Concrete.EFCore
             }
         }
 
-        public List<Movie> GetUserMovielist(List<int> data,string username)
+        public List<Movie> GetUserMovielist(List<int> data, string username)
         {
             var movies = BMTDbContext.Movies.AsQueryable();
             Movie? movie = null;
@@ -220,7 +212,7 @@ namespace BMTDb.Data.Concrete.EFCore
         public List<Movie> GetByPopularity()
         {
             var movies = BMTDbContext.Movies.AsQueryable();
-            return movies.OrderByDescending(i => (i.Popularity)).Take(20).ToList();
+            return movies.OrderByDescending(i => i.Popularity).Take(20).ToList();
         }
     }
 }

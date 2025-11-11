@@ -17,12 +17,9 @@ namespace BMTDb.WebUI.Extensions
 
         public static T? Get<T>(this ITempDataDictionary tempData, string key) where T : class
         {
-            if (!tempData.TryGetValue(key, out var value) || value is not string json)
-            {
-                return null;
-            }
-
-            return JsonSerializer.Deserialize<T>(json, _jsonOptions);
+            return !tempData.TryGetValue(key, out var value) || value is not string json
+                ? null
+                : JsonSerializer.Deserialize<T>(json, _jsonOptions);
         }
     }
 }

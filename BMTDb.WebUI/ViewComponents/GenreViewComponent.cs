@@ -13,7 +13,7 @@ namespace BMTDb.WebUI.ViewComponents
         {
             _genreService = genreService;
         }
-        public IViewComponentResult Invoke() 
+        public IViewComponentResult Invoke()
         {
             if (RouteData.Values["genre"] != null)
                 ViewBag.SelectedGenre = RouteData?.Values["genre"];

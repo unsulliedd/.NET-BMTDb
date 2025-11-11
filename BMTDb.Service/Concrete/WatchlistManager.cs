@@ -1,11 +1,6 @@
 ﻿using BMTDb.Data.Abstract;
 using BMTDb.Entity.Lists;
 using BMTDb.Service.Abstract;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BMTDb.Service.Concrete
 {
@@ -32,10 +27,10 @@ namespace BMTDb.Service.Concrete
         public void AddtoWatchlist(string userId, int MovieId, DateTime AddedDate)
         {
             var watchlist = GetWatchlistbyUserId(userId);
-            if(watchlist != null)
+            if (watchlist != null)
             {
                 var index = watchlist.WatchlistItems.FindIndex(i => i.MovieId == MovieId);
-                if(index < 0)
+                if (index < 0)
                 {
                     watchlist.WatchlistItems.Add(new WatchlistItem()
                     {

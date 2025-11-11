@@ -1,11 +1,6 @@
 ﻿using BMTDb.Entity;
 using BMTDb.Entity.Lists;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BMTDb.Data.Concrete.EFCore
 {
@@ -45,7 +40,7 @@ namespace BMTDb.Data.Concrete.EFCore
             modelBuilder.Entity<Credit>()
                 .HasKey(c => new { c.MovieId, c.Id });
             modelBuilder.Entity<Credit>()
-                .HasKey(c => new {c.CastId, c.Id});
+                .HasKey(c => new { c.CastId, c.Id });
             modelBuilder.Entity<Credit>()
                 .HasKey(c => new { c.CrewId, c.Id });
             modelBuilder.Entity<PersonCast>()
