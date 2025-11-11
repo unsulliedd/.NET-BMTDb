@@ -1,63 +1,81 @@
-﻿#pragma warning disable IDE0052 // Remove unread private members
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
-
-using BMTDb.Service.Abstract;
+﻿using BMTDb.Service.Abstract;
 using BMTDb.WebUI.Models;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using System.Diagnostics;
+using System.Text.Json;
 
 namespace BMTDb.WebUI.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController(
+        ILogger<HomeController> logger,
+        IHttpClientFactory httpClientFactory,
+        IMovieService movieService,
+        IConfiguration configuration) : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-        private readonly IMovieService _movieService;
-        private readonly IConfiguration _configuration;
-
-        public HomeController(ILogger<HomeController> logger, IMovieService movieService, IConfiguration configuration)
+        private readonly ILogger<HomeController> _logger = logger;
+        private readonly IHttpClientFactory _httpClientFactory = httpClientFactory;
+        private readonly IMovieService _movieService = movieService;
+        private readonly string? _apiKey = configuration["ApiKeys:TmdbApiKey"];
+        private static readonly JsonSerializerOptions _jsonOptions = new()
         {
-            _logger = logger;
-            _movieService = movieService;
-            _configuration = configuration;
-        }
+            PropertyNameCaseInsensitive = true
+        };
 
         public async Task<IActionResult> IndexAsync()
         {
-            string apiKey = _configuration["ApiKeys:TmdbApiKey"];
-
-            var baseAddress = new Uri("http://api.themoviedb.org/3/");
-            using var httpClient = new HttpClient { BaseAddress = baseAddress };
-
-            httpClient.DefaultRequestHeaders.TryAddWithoutValidation("accept", "application/json");
-            if (apiKey != null)
+            var lists = new TMDBListsApiResults
             {
-                using var responsePopular = await httpClient.GetAsync("movie/popular?api_key=" + apiKey + "&language=en-US&page=1");
-                using var responseUpcoming = await httpClient.GetAsync("movie/upcoming?api_key=" + apiKey + "&language=en-US&page=1");
-                using var responseAiringTodayTv = await httpClient.GetAsync("tv/airing_today?api_key=" + apiKey + "&language=en-US&page=1");
-                using var responseOnAirTv = await httpClient.GetAsync("tv/on_the_air?api_key=" + apiKey + "&language=en-US&page=2");
+                Movies = _movieService.GetByPopularity()
+            };
 
-                string apiResponsePopular = await responsePopular.Content.ReadAsStringAsync();
-                string apiResponseUpcoming = await responseUpcoming.Content.ReadAsStringAsync();
-                string apiResponseAiringTodayTv = await responseAiringTodayTv.Content.ReadAsStringAsync();
-                string apiResponseOnAirTv = await responseOnAirTv.Content.ReadAsStringAsync();
-
-                TMDBApiPopular? rootObjectPopular = JsonConvert.DeserializeObject<TMDBApiPopular>(apiResponsePopular);
-                TMDBApiUpcoming? rootObjectUpcoming = JsonConvert.DeserializeObject<TMDBApiUpcoming>(apiResponseUpcoming);
-                TMDBApiAiringTodayTv? rootObjectAiringTodayTv = JsonConvert.DeserializeObject<TMDBApiAiringTodayTv>(apiResponseAiringTodayTv);
-                TMDBApiOnAirTv? rootObjectOnAirTv = JsonConvert.DeserializeObject<TMDBApiOnAirTv>(apiResponseOnAirTv);
-
-                TMDBListsApiResults lists = new()
-                {
-                    TMDBApiPopular = rootObjectPopular.results,
-                    TMDBApiUpcoming = rootObjectUpcoming.results,
-                    TMDBApiAiringTodayTv = rootObjectAiringTodayTv.results,
-                    TMDBApiOnAirTv = rootObjectOnAirTv.results,
-                    Movies = _movieService.GetByPopularity()
-                };
+            if (string.IsNullOrEmpty(_apiKey))
+            {
+                _logger.LogWarning("TMDB API key not configured");
                 return View(lists);
             }
-            return View();
+
+            try
+            {
+                var client = _httpClientFactory.CreateClient("Tmdb");
+                client.DefaultRequestHeaders.Authorization =
+                    new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _apiKey);
+
+                var tasks = new[]
+                {
+                    FetchAsync<TMDBApiPopular>(client, "movie/popular?language=en-US&page=1"),
+                    FetchAsync<TMDBApiUpcoming>(client, "movie/upcoming?language=en-US&page=1"),
+                    FetchAsync<TMDBApiAiringTodayTv>(client, "tv/airing_today?language=en-US&page=1"),
+                    FetchAsync<TMDBApiOnAirTv>(client, "tv/on_the_air?language=en-US&page=1")
+                };
+
+                var results = await Task.WhenAll(tasks);
+
+                lists.TMDBApiPopular = results[0];
+                lists.TMDBApiUpcoming = results[1];
+                lists.TMDBApiAiringTodayTv = results[2];
+                lists.TMDBApiOnAirTv = results[3];
+            }
+            catch (HttpRequestException ex)
+            {
+                _logger.LogError(ex, "Failed to fetch data from TMDB API");
+            }
+            catch (TaskCanceledException ex)
+            {
+                _logger.LogError(ex, "TMDB API request timed out");
+            }
+
+            return View(lists);
+        }
+
+        private static async Task<dynamic?> FetchAsync<T>(HttpClient client, string endpoint)
+        {
+            var response = await client.GetAsync(endpoint);
+            response.EnsureSuccessStatusCode();
+
+            var content = await response.Content.ReadAsStringAsync();
+            var result = JsonSerializer.Deserialize<T>(content, _jsonOptions);
+
+            return (result as dynamic)?.results;
         }
 
         public IActionResult About()

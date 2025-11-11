@@ -1,7 +1,4 @@
-﻿#pragma warning disable CS8602 // Dereference of a possibly null reference.
-#pragma warning disable CS8604 // Possible null reference argument.
-
-using BMTDb.Entity;
+﻿using BMTDb.Entity;
 using BMTDb.Service.Abstract;
 using BMTDb.WebUI.Extensions;
 using BMTDb.WebUI.Identity;
@@ -10,34 +7,34 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace BMTDb.WebUI.Controllers
 {
     [Authorize(Roles = "Admin")]
-    public class AdminController : Controller
+    public class AdminController(
+        IMovieService movieService,
+        IPersonService personService,
+        IGenreService genreService,
+        IProductionCompanyService studioService,
+        RoleManager<IdentityRole> roleManager,
+        UserManager<User> userManager,
+        IHttpClientFactory httpClientFactory,
+        IConfiguration configuration) : Controller
     {
-        private readonly IMovieService _movieService;
-        private readonly IGenreService _genreService;
-        private readonly IProductionCompanyService _studioService;
-        private readonly IPersonService _personService;
-        private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly UserManager<User> _userManager;
-        private readonly IConfiguration _configuration;
-
-
-        public AdminController(IMovieService movieService, IPersonService personService, 
-            IGenreService genreService, IProductionCompanyService studioService,
-            RoleManager<IdentityRole> roleManager, UserManager<User> userManager, IConfiguration configuration)
+        private readonly IMovieService _movieService = movieService;
+        private readonly IGenreService _genreService = genreService;
+        private readonly IProductionCompanyService _studioService = studioService;
+        private readonly IPersonService _personService = personService;
+        private readonly RoleManager<IdentityRole> _roleManager = roleManager;
+        private readonly UserManager<User> _userManager = userManager;
+        private readonly IHttpClientFactory _httpClientFactory = httpClientFactory;
+        private readonly string? _tmdbApiKey = configuration["ApiKeys:TmdbApiKey"];
+        private static readonly JsonSerializerOptions _jsonOptions = new()
         {
-            _movieService = movieService;
-            _personService = personService;
-            _genreService = genreService;
-            _studioService = studioService;
-            _roleManager = roleManager;
-            _userManager = userManager;
-            _configuration = configuration;
-        }
+            PropertyNameCaseInsensitive = true
+        };
+
 
         public IActionResult AdminDashboard()
         {
@@ -50,7 +47,6 @@ namespace BMTDb.WebUI.Controllers
             });
         }
 
-        //Admin/Movie
         public IActionResult MovieList(int page = 1)
         {
             const int pageSize = 20;
@@ -113,7 +109,6 @@ namespace BMTDb.WebUI.Controllers
                     MessageType = "error",
                     MessageIcon = "fa-solid fa-exclamation"
                 });
-
             }
             return View(model);
         }
@@ -125,7 +120,7 @@ namespace BMTDb.WebUI.Controllers
             {
                 return NotFound();
             }
-            var entity = _movieService.GetMovieDetails((int)id);
+            var entity = _movieService.GetMovieDetails(id.Value);
 
             var model = new AdminMovieModel()
             {
@@ -156,7 +151,7 @@ namespace BMTDb.WebUI.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult EditMovie(AdminMovieModel model, int[] genreIds , int[] studioIds, int[] crewIds)
+        public IActionResult EditMovie(AdminMovieModel model, int[] genreIds, int[] studioIds, int[] crewIds)
         {
             if (ModelState.IsValid)
             {
@@ -182,7 +177,7 @@ namespace BMTDb.WebUI.Controllers
                 entity.Logo = model.MovieLogo;
                 entity.Trailer = model.Trailer;
 
-                if(_movieService.Update(entity, genreIds, studioIds, crewIds))
+                if (_movieService.Update(entity, genreIds, studioIds, crewIds))
                 {
                     TempData.Put("message", new NotificationModel
                     {
@@ -196,7 +191,7 @@ namespace BMTDb.WebUI.Controllers
                 {
                     Message = _movieService.ErrorMessage,
                     MessageType = "error",
-                    MessageIcon = "fa - solid fa - exclamation"
+                    MessageIcon = "fa-solid fa-exclamation"
                 });
             }
             ViewBag.Genres = _genreService.GetAll();
@@ -221,8 +216,7 @@ namespace BMTDb.WebUI.Controllers
             return RedirectToAction("MovieList");
         }
 
-        //Admin/Person
-        public IActionResult PersonList(int page=1)
+        public IActionResult PersonList(int page = 1)
         {
             const int pageSize = 20;
             var adminItemListModel = new AdminItemListModel()
@@ -289,7 +283,7 @@ namespace BMTDb.WebUI.Controllers
             {
                 return NotFound();
             }
-            var entity = _personService.GetById((int)id);
+            var entity = _personService.GetById(id.Value);
 
             var model = new AdminPersonModel()
             {
@@ -359,7 +353,6 @@ namespace BMTDb.WebUI.Controllers
             return RedirectToAction("PersonList");
         }
 
-        //Users
         public IActionResult UserList()
         {
             return View(_userManager.Users);
@@ -411,9 +404,9 @@ namespace BMTDb.WebUI.Controllers
                     if (result.Succeeded)
                     {
                         var userRoles = await _userManager.GetRolesAsync(user);
-                        selectedRoles ??= Array.Empty<string>();
-                        await _userManager.AddToRolesAsync(user, selectedRoles.Except(userRoles).ToArray<string>());
-                        await _userManager.RemoveFromRolesAsync(user, userRoles.Except(selectedRoles).ToArray<string>());
+                        selectedRoles ??= [];
+                        await _userManager.AddToRolesAsync(user, selectedRoles.Except(userRoles).ToArray());
+                        await _userManager.RemoveFromRolesAsync(user, userRoles.Except(selectedRoles).ToArray());
                         TempData.Put("message", new NotificationModel
                         {
                             Message = $"{user.UserName} is updated",
@@ -427,14 +420,13 @@ namespace BMTDb.WebUI.Controllers
             }
 
             return View(model);
-
         }
 
         public async Task<IActionResult> UserDelete(string UserId)
         {
             var user = await _userManager.FindByIdAsync(UserId);
-            if(user != null) 
-            { 
+            if (user != null)
+            {
                 await _userManager.DeleteAsync(user);
                 TempData.Put("message", new NotificationModel
                 {
@@ -448,13 +440,11 @@ namespace BMTDb.WebUI.Controllers
             {
                 Message = "Unknown Error",
                 MessageType = "error",
-                MessageIcon = "fa - solid fa - exclamation"
+                MessageIcon = "fa-solid fa-exclamation"
             });
             return RedirectToAction("UserList");
         }
 
-
-        //Roles
         public IActionResult RoleList()
         {
             return View(_roleManager.Roles);
@@ -483,7 +473,6 @@ namespace BMTDb.WebUI.Controllers
                     });
                     return RedirectToAction("RoleList");
                 }
-
                 else
                 {
                     foreach (var error in result.Errors)
@@ -510,7 +499,6 @@ namespace BMTDb.WebUI.Controllers
                 {
                     members.Add(user);
                 }
-            
                 else
                 {
                     nonmembers.Add(user);
@@ -531,7 +519,8 @@ namespace BMTDb.WebUI.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> RoleEdit(RoleEditModel model)
         {
-            if (ModelState.IsValid) { 
+            if (ModelState.IsValid)
+            {
                 foreach (var userId in model.IdsToAdd ?? Array.Empty<string>())
                 {
                     var user = await _userManager.FindByIdAsync(userId);
@@ -584,138 +573,213 @@ namespace BMTDb.WebUI.Controllers
                     MessageIcon = "fa-solid fa-trash-can"
                 });
                 return RedirectToAction("RoleList");
-
             }
             TempData.Put("message", new NotificationModel
             {
                 Message = "Unknown Error",
                 MessageType = "error",
-                MessageIcon = "fa - solid fa - exclamation"
+                MessageIcon = "fa-solid fa-exclamation"
             });
             return RedirectToAction("RoleList");
         }
 
         public async Task<IActionResult> UpdateDatabase()
         {
-            string json = "start";
-            var idlist = new List<IdList>();
-            var personDatabase = ""; //Path to json file
-            using StreamReader jsonfile = new(personDatabase);
-            json = jsonfile.ReadToEnd();
-            idlist = JsonConvert.DeserializeObject<List<IdList>>(json);
-            if (idlist != null)
+            if (string.IsNullOrEmpty(_tmdbApiKey))
             {
-                foreach (var TmdbId in idlist.Select(i => i.id))
-                {
-                    string TMDBapiKey = _configuration["ApiKeys:TmdbApiKey"];
-                    var baseAddressTMDB = new Uri("http://api.themoviedb.org/3/");
-                    using var httpClientTMDB = new HttpClient { BaseAddress = baseAddressTMDB };
-                    httpClientTMDB.DefaultRequestHeaders.TryAddWithoutValidation("accept", "application/json");
-                    using var responseTMDB = await httpClientTMDB.GetAsync("person/" + TmdbId + "?api_key=" + TMDBapiKey + "&language=en-US");
-                    string TMDBapiResponse = await responseTMDB.Content.ReadAsStringAsync();
-
-                    TMDbApiPersonModel? TMDBrootObject = JsonConvert.DeserializeObject<TMDbApiPersonModel>(TMDBapiResponse);
-                    if (TMDBrootObject != null)
-                    {
-                        var entity = new Person()
-                        {
-                            Name = TMDBrootObject.name,
-                            Adult = TMDBrootObject.adult,
-                            Biography = TMDBrootObject.biography,
-                            Birthday = TMDBrootObject.birthday,
-                            Deathday = TMDBrootObject.deathday,
-                            Gender = TMDBrootObject.gender,
-                            Homepage = TMDBrootObject.homepage,
-                            ImdbId = TMDBrootObject.imdb_id,
-                            Known_for_Department = TMDBrootObject.known_for_department,
-                            Place_of_Birth = TMDBrootObject.place_of_birth,
-                            Popularity = TMDBrootObject.popularity,
-                            ProfilePicture = TMDBrootObject.profile_path,
-                        };
-                        _personService.Create(entity);
-                        return RedirectToAction("Dashboard", "Admin");
-                    }
-                    TempData.Put("message", new NotificationModel
-                    {
-                        Message = "Api response returned null",
-                        MessageType = "error",
-                        MessageIcon = "fa-solid fa-exclamation"
-                    });
-                    return RedirectToAction("Dashboard", "Admin");
-                }
-            }
-            TempData.Put("message", new NotificationModel
-            {
-                Message = "Id List is null",
-                MessageType = "error",
-                MessageIcon = "fa-solid fa-exclamation"
-            });
-            return RedirectToAction("Dashboard", "Admin");
-        }
-
-        public async Task<IActionResult> AddMovieFromTmdbAsync(string TmdbId) 
-        {
-            string TMDBapiKey = _configuration["ApiKeys:TmdbApiKey"];
-
-            var baseAddressTMDB = new Uri("http://api.themoviedb.org/3/");
-            using var httpClientTMDB = new HttpClient { BaseAddress = baseAddressTMDB };
-
-            httpClientTMDB.DefaultRequestHeaders.TryAddWithoutValidation("accept", "application/json");
-            using var responseTMDB = await httpClientTMDB.GetAsync("movie/" + TmdbId + "?api_key=" + TMDBapiKey + "&append_to_response=videos,images,credits&language=en");
-            string TMDBapiResponse = await responseTMDB.Content.ReadAsStringAsync();
-
-            TMDbApiMovieDetail? TMDBrootObject = JsonConvert.DeserializeObject<TMDbApiMovieDetail>(TMDBapiResponse);
-
-            if (TMDBrootObject != null)
-            {
-                var entity = new Movie()
-                {
-                    Title = TMDBrootObject.title,
-                    Director = TMDBrootObject.credits.crew.Where(i=>i.job == "Director").Select(i=>i.name).FirstOrDefault(),
-                    Tagline = TMDBrootObject.tagline,
-                    Info = TMDBrootObject.overview,
-                    Poster   = Url.Content("https://image.tmdb.org/t/p/original" + TMDBrootObject.poster_path),
-                    Backdrop = Url.Content("https://image.tmdb.org/t/p/original" + TMDBrootObject.backdrop_path),
-                    ReleaseDate = Convert.ToDateTime(TMDBrootObject.release_date),
-                    Original_Language = TMDBrootObject.original_language,
-                    RunTime = TMDBrootObject.runtime,
-                    Budget = TMDBrootObject.budget,
-                    Ratings = null,
-                    Popularity = TMDBrootObject.popularity,
-                    IMDBId = TMDBrootObject.imdb_id,
-                    TMDbId = TMDBrootObject.id.ToString(),
-                    Logo = Url.Content("https://image.tmdb.org/t/p/original" 
-                                + TMDBrootObject.images.logos.Select(i => i.file_path).FirstOrDefault()),
-                    Trailer = Url.Content("https://youtube.com/embed/" 
-                                + TMDBrootObject.videos.results.Where(i => i.type == "Trailer").Select(i => i.key).FirstOrDefault())
-                };
-                if (_movieService.Create(entity))
-                {
-                    TempData.Put("message", new NotificationModel
-                    {
-                        Message = $"\"{entity.Title}\" is added",
-                        MessageType = "add",
-                        MessageIcon = "fa-solid fa-plus"
-                    });
-                    return RedirectToAction("Dashboard", "Admin");
-
-                }
                 TempData.Put("message", new NotificationModel
                 {
-                    Message = "Unkown Error",
+                    Message = "TMDB API key not configured",
                     MessageType = "error",
                     MessageIcon = "fa-solid fa-exclamation"
                 });
-                return RedirectToAction("Dashboard", "Admin");
+                return RedirectToAction("AdminDashboard");
             }
-            TempData.Put("message", new NotificationModel
+
+            var personDatabase = ""; // Path to json file
+            if (string.IsNullOrEmpty(personDatabase) || !System.IO.File.Exists(personDatabase))
             {
-                Message = "Api Response returned null",
-                MessageType = "error",
-                MessageIcon = "fa-solid fa-exclamation"
-            });
-            return RedirectToAction("Dashboard", "Admin");
+                TempData.Put("message", new NotificationModel
+                {
+                    Message = "Person database file not found",
+                    MessageType = "error",
+                    MessageIcon = "fa-solid fa-exclamation"
+                });
+                return RedirectToAction("AdminDashboard");
+            }
+
+            try
+            {
+                var json = await System.IO.File.ReadAllTextAsync(personDatabase);
+                var idlist = JsonSerializer.Deserialize<List<IdList>>(json);
+
+                if (idlist == null || idlist.Count == 0)
+                {
+                    TempData.Put("message", new NotificationModel
+                    {
+                        Message = "Id List is null or empty",
+                        MessageType = "error",
+                        MessageIcon = "fa-solid fa-exclamation"
+                    });
+                    return RedirectToAction("AdminDashboard");
+                }
+
+                var client = _httpClientFactory.CreateClient("Tmdb");
+                client.DefaultRequestHeaders.Authorization =
+                    new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _tmdbApiKey);
+
+                foreach (var tmdbId in idlist.Select(i => i.Id))
+                {
+                    var person = await FetchTmdbPersonAsync(client, tmdbId);
+                    if (person != null)
+                    {
+                        var entity = new Person()
+                        {
+                            Name = person.name,
+                            Adult = person.adult,
+                            Biography = person.biography,
+                            Birthday = person.birthday,
+                            Deathday = person.deathday,
+                            Gender = person.gender,
+                            Homepage = person.homepage,
+                            ImdbId = person.imdb_id,
+                            Known_for_Department = person.known_for_department,
+                            Place_of_Birth = person.place_of_birth,
+                            Popularity = person.popularity,
+                            ProfilePicture = person.profile_path,
+                        };
+                        _personService.Create(entity);
+                    }
+                }
+
+                TempData.Put("message", new NotificationModel
+                {
+                    Message = "Database updated successfully",
+                    MessageType = "success",
+                    MessageIcon = "fa-solid fa-check"
+                });
+            }
+            catch (Exception)
+            {
+                TempData.Put("message", new NotificationModel
+                {
+                    Message = "Failed to update database",
+                    MessageType = "error",
+                    MessageIcon = "fa-solid fa-exclamation"
+                });
+            }
+
+            return RedirectToAction("AdminDashboard");
         }
 
+        public async Task<IActionResult> AddMovieFromTmdbAsync(string TmdbId)
+        {
+            if (string.IsNullOrEmpty(_tmdbApiKey))
+            {
+                TempData.Put("message", new NotificationModel
+                {
+                    Message = "TMDB API key not configured",
+                    MessageType = "error",
+                    MessageIcon = "fa-solid fa-exclamation"
+                });
+                return RedirectToAction("AdminDashboard");
+            }
+
+            try
+            {
+                var client = _httpClientFactory.CreateClient("Tmdb");
+                client.DefaultRequestHeaders.Authorization =
+                    new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _tmdbApiKey);
+
+                var response = await client.GetAsync($"movie/{TmdbId}?append_to_response=videos,images,credits&language=en");
+                response.EnsureSuccessStatusCode();
+
+                var content = await response.Content.ReadAsStringAsync();
+                var tmdbMovie = JsonSerializer.Deserialize<TMDbApiMovieDetail>(content, _jsonOptions);
+
+                if (tmdbMovie != null)
+                {
+                    var entity = new Movie()
+                    {
+                        Title = tmdbMovie.title,
+                        Director = tmdbMovie.credits?.crew?.FirstOrDefault(i => i.job == "Director")?.name,
+                        Tagline = tmdbMovie.tagline,
+                        Info = tmdbMovie.overview,
+                        Poster = Url.Content("https://image.tmdb.org/t/p/original" + tmdbMovie.poster_path),
+                        Backdrop = Url.Content("https://image.tmdb.org/t/p/original" + tmdbMovie.backdrop_path),
+                        ReleaseDate = Convert.ToDateTime(tmdbMovie.release_date),
+                        Original_Language = tmdbMovie.original_language,
+                        RunTime = tmdbMovie.runtime,
+                        Budget = tmdbMovie.budget,
+                        Ratings = null,
+                        Popularity = tmdbMovie.popularity,
+                        IMDBId = tmdbMovie.imdb_id,
+                        TMDbId = tmdbMovie.id.ToString(),
+                        Logo = Url.Content("https://image.tmdb.org/t/p/original"
+                                    + tmdbMovie.images?.logos?.FirstOrDefault()?.file_path),
+                        Trailer = Url.Content("https://youtube.com/embed/"
+                                    + tmdbMovie.videos?.results?.FirstOrDefault(i => i.type == "Trailer")?.key)
+                    };
+
+                    if (_movieService.Create(entity))
+                    {
+                        TempData.Put("message", new NotificationModel
+                        {
+                            Message = $"\"{entity.Title}\" is added",
+                            MessageType = "add",
+                            MessageIcon = "fa-solid fa-plus"
+                        });
+                        return RedirectToAction("AdminDashboard");
+                    }
+
+                    TempData.Put("message", new NotificationModel
+                    {
+                        Message = "Failed to add movie",
+                        MessageType = "error",
+                        MessageIcon = "fa-solid fa-exclamation"
+                    });
+                    return RedirectToAction("AdminDashboard");
+                }
+
+                TempData.Put("message", new NotificationModel
+                {
+                    Message = "API Response returned null",
+                    MessageType = "error",
+                    MessageIcon = "fa-solid fa-exclamation"
+                });
+            }
+            catch (HttpRequestException)
+            {
+                TempData.Put("message", new NotificationModel
+                {
+                    Message = "Failed to fetch movie from TMDB",
+                    MessageType = "error",
+                    MessageIcon = "fa-solid fa-exclamation"
+                });
+            }
+
+            return RedirectToAction("AdminDashboard");
+        }
+
+        private static async Task<TMDbApiPersonModel?> FetchTmdbPersonAsync(HttpClient client, int tmdbId)
+        {
+            try
+            {
+                var response = await client.GetAsync($"person/{tmdbId}?language=en-US");
+                response.EnsureSuccessStatusCode();
+
+                var content = await response.Content.ReadAsStringAsync();
+                return JsonSerializer.Deserialize<TMDbApiPersonModel>(content, _jsonOptions);
+            }
+            catch (HttpRequestException)
+            {
+                return null;
+            }
+        }
+    }
+
+    public class IdList
+    {
+        public int Id { get; set; }
     }
 }
